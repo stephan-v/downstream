@@ -54,3 +54,8 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     encrypted: true
 });
+
+window.Echo.private('clone-repository')
+    .listen('ShowCloneRepositoryOutput', (e) => {
+        console.log(e.update);
+    });
