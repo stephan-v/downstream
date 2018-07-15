@@ -13898,9 +13898,7 @@ var app = new Vue({
 
     methods: {
         deploy: function deploy() {
-            console.log('Deploying');
-
-            // Make axios AJAX request.
+            axios.post('/deploy');
         }
     }
 });
@@ -13970,8 +13968,8 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
     encrypted: true
 });
 
-window.Echo.private('clone-repository').listen('ShowCloneRepositoryOutput', function (e) {
-    console.log(e.update);
+window.Echo.private('deployment').listen('CloneRepository', function (event) {
+    console.log(event.html);
 });
 
 /***/ }),

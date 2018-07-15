@@ -11,7 +11,11 @@
 |
 */
 
-Route::get('/', 'TasksController@index');
+Route::get('/', function() {
+    return view('welcome');
+});
+
+Route::post('/deploy', 'TasksController@deploy');
 
 Auth::routes();
 

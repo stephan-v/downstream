@@ -55,7 +55,7 @@ window.Echo = new Echo({
     encrypted: true
 });
 
-window.Echo.private('clone-repository')
-    .listen('ShowCloneRepositoryOutput', (e) => {
-        console.log(e.update);
+window.Echo.private('deployment')
+    .listen('CloneRepository', (event) => {
+        console.log(event.html);
     });

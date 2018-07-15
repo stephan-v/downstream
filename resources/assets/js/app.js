@@ -22,9 +22,7 @@ const app = new Vue({
 
     methods: {
         deploy() {
-            console.log('Deploying');
-
-            // Make axios AJAX request.
+            axios.post('/deploy');
         }
     }
 });

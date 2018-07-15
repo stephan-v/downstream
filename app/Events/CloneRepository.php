@@ -37,7 +37,7 @@ class CloneRepository implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('clone-repository');
+        return new PrivateChannel('deployment');
     }
 
     /**

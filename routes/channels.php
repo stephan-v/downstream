@@ -11,6 +11,6 @@
 |
 */
 
-Broadcast::channel('clone-repository', function ($user) {
+Broadcast::channel('deployment', function ($user) {
     return true;
 });

@@ -6,11 +6,10 @@ use App\Jobs\CloneRepository;
 
 class TasksController extends Controller
 {
-    public function index()
+    public function deploy()
     {
-        //
         CloneRepository::dispatch();
 
-        return view('welcome');
+        return 'Starting deployment';
     }
 }
