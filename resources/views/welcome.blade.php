@@ -63,7 +63,15 @@
             }
 
             .m-b-md {
-                margin-bottom: 30px;
+                margin-bottom: 15px;
+            }
+
+            pre#log {
+                margin: 15px 0 0 0;
+                background: #073642;
+                padding: 5px 10px;
+                border-radius: 0;
+                color: white;
             }
         </style>
     </head>
@@ -81,15 +89,13 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
                 <div class="links">
                     <a @click.prevent="deploy" href="#">Run deployment task</a>
-                </div>
-            </div>
-        </div>
+                </div><!-- /.links -->
+
+                <pre id="log"></pre>
+            </div><!-- /.content -->
+        </div><!-- /.flex-center -->
 
         <script src="{{ mix('/js/app.js') }}"></script>
     </body>

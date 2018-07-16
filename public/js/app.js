@@ -13969,7 +13969,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 });
 
 window.Echo.private('deployment').listen('CloneRepository', function (event) {
-    console.log(event.html);
+    $('#log').append(event.html);
 });
 
 /***/ }),

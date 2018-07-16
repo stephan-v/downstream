@@ -57,5 +57,5 @@ window.Echo = new Echo({
 
 window.Echo.private('deployment')
     .listen('CloneRepository', (event) => {
-        console.log(event.html);
+        $('#log').append(event.html);
     });
