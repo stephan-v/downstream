@@ -20,3 +20,6 @@ Route::post('/deploy', 'TasksController@deploy');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Check SSH connection.
+Route::post('/connection', 'TasksController@connection');

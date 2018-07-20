@@ -15,14 +15,22 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
 const app = new Vue({
     el: '#app',
 
     methods: {
         deploy() {
             axios.post('/deploy');
+        },
+
+        // Create a seperate component for the connection status with a spinner and a red light which turns green
+        // When this SSH connection test is successful.
+        getConnectionStatus() {
+            axios.post('/connection').then((response) => {
+                console.log(response)
+            }).catch((response) => {
+                console.log(response);
+            });
         }
     }
 });

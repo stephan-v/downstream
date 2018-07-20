@@ -56,6 +56,6 @@ window.Echo = new Echo({
 });
 
 window.Echo.private('deployment')
-    .listen('CloneRepository', (event) => {
+    .listen('BroadcastSSHOutput', (event) => {
         $('#log').append(event.html);
     });

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\BroadcastSSHOutput;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,14 +33,21 @@ class CloneRepository implements ShouldQueue
      */
     private function getCommands()
     {
-        $project_path = '/home/forge/downstream-test.nl';
+        $app_name = 'downstream-app';
+        $project_path = '/home/forge/downstream-test.nl/'.$app_name;
         $deployment_directory = "$project_path/releases/".time();
         $git_repository = 'git@github.com:stephan-v/beerquest.git';
 
         return [
             "mkdir -p $deployment_directory",
             "git clone --depth 1 $git_repository $deployment_directory",
-            "cd $deployment_directory && composer install -o --no-interaction --prefer-dist",
+            "cd $deployment_directory",
+
+            // Deployment commands specific to our application:
+            "composer install -o --no-interaction --prefer-dist",
+//            "npm install",
+//            "npm run production",
+
             "ln -snf $deployment_directory $project_path/current",
             "cd $project_path/releases && ls -t | tail -n +6 | xargs rm -rf"
         ];
@@ -76,7 +84,7 @@ class CloneRepository implements ShouldQueue
         $process->run(function ($type, $output) use ($converter) {
             $html = $converter->convert($output);
 
-            event(new \App\Events\CloneRepository($html));
+            event(new BroadcastSSHOutput($html));
         });
 
         if (!$process->isSuccessful()) {

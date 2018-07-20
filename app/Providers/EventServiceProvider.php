@@ -12,9 +12,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\CloneRepository' => [
-            'App\Listeners\ShowCloneRepositoryOutput',
-        ],
+        //
     ];
 
     /**
