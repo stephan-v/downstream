@@ -72,6 +72,7 @@
                 padding: 5px 10px;
                 border-radius: 0;
                 color: white;
+                text-align: left;
             }
         </style>
     </head>
