@@ -13867,7 +13867,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(12);
-module.exports = __webpack_require__(45);
+module.exports = __webpack_require__(41);
 
 
 /***/ }),
@@ -13977,9 +13977,11 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
     encrypted: true
 });
 
-window.Echo.private('deployment').listen('BroadcastSSHOutput', function (event) {
+function append(event) {
     $('#log').append(event.html);
-});
+}
+
+window.Echo.private('deployment').listen('.CloneRepository', append).listen('.ComposerInstall', append).listen('.CleanOldReleases', append);
 
 /***/ }),
 /* 14 */
@@ -52316,11 +52318,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(6)))
 
 /***/ }),
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */
+/* 41 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -15,11 +15,13 @@ Route::get('/', function() {
     return view('welcome');
 });
 
-Route::post('/deploy', 'TasksController@deploy');
+// Deploy code.
+Route::post('/deploy', 'DeploymentController@deploy');
+// Check SSH connection.
+Route::post('/connection', 'DeploymentController@connection');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Check SSH connection.
-Route::post('/connection', 'TasksController@connection');
+Route::resource('/projects', 'ProjectsController');

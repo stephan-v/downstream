@@ -21,13 +21,22 @@ class BroadcastSSHOutput implements ShouldBroadcast
     private $html = '';
 
     /**
+     * The event name.
+     *
+     * @var string $name
+     */
+    private $name;
+
+    /**
      * Create a new event instance.
      *
      * @param string $html
+     * @param string $name
      */
-    public function __construct(string $html)
+    public function __construct(string $html, string $name)
     {
         $this->html = $html;
+        $this->name = $name;
     }
 
     /**
@@ -38,6 +47,16 @@ class BroadcastSSHOutput implements ShouldBroadcast
     public function broadcastOn()
     {
         return new PrivateChannel('deployment');
+    }
+
+    /**
+     * The event's broadcast name.
+     *
+     * @return string
+     */
+    public function broadcastAs()
+    {
+        return $this->name;
     }
 
     /**

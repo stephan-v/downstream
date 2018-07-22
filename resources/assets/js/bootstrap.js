@@ -55,7 +55,11 @@ window.Echo = new Echo({
     encrypted: true
 });
 
+function append(event) {
+    $('#log').append(event.html);
+}
+
 window.Echo.private('deployment')
-    .listen('BroadcastSSHOutput', (event) => {
-        $('#log').append(event.html);
-    });
+    .listen('.CloneRepository', append)
+    .listen('.ComposerInstall', append)
+    .listen('.CleanOldReleases', append);

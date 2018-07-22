@@ -3,6 +3,8 @@
 namespace App\Ssh;
 
 use App\Events\BroadcastSSHOutput;
+use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
+use SensioLabs\AnsiConverter\Theme\SolarizedTheme;
 use Symfony\Component\Process\Process;
 
 class SSH {
@@ -13,7 +15,6 @@ class SSH {
      */
     private $commands;
 
-
     /**
      * The server we want to target for our SSH commands.
      *
@@ -22,15 +23,24 @@ class SSH {
     private $target;
 
     /**
+     * The event name.
+     *
+     * @var string $name
+     */
+    private $name;
+
+    /**
      * Run SSH command(s) on the remote server with a here-doc statement.
      *
      * @param array $commands
      * @param string $target
+     * @param string $name
      */
-    public function __construct(array $commands, string $target)
+    public function __construct(array $commands, string $target, string $name)
     {
         $this->commands = $commands;
         $this->target = $target;
+        $this->name = $name;
     }
 
     private function getRemoteProcess(): Process
@@ -61,8 +71,12 @@ class SSH {
     {
         $process = $this->getRemoteProcess();
 
-        $process->run(function ($type, $output) {
-            event(new BroadcastSSHOutput($output));
+        $theme = new SolarizedTheme();
+        $converter = new AnsiToHtmlConverter($theme);
+
+        $process->run(function ($type, $output) use ($converter) {
+            $html = $converter->convert($output);
+            event(new BroadcastSSHOutput($html, $this->name));
         });
 
         if (!$process->isSuccessful()) {

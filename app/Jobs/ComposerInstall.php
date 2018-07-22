@@ -36,6 +36,12 @@ class ComposerInstall extends BaseJob implements ShouldQueue
      */
     public function handle()
     {
-        (new SSH($this->getCommands(), $this->getConfiguredServer()))->fire();
+        $ssh = new SSH(
+            $this->getCommands(),
+            $this->getConfiguredServer(),
+            (new \ReflectionClass($this))->getShortName()
+        );
+
+        $ssh->fire();
     }
 }

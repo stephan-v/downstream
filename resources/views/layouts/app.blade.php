@@ -19,6 +19,19 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        pre#log {
+            margin: 15px 0 0 0;
+            background: #073642;
+            padding: 5px 10px;
+            border-radius: 0;
+            color: white;
+            text-align: left;
+            min-height: 20px;
+            white-space: pre-wrap;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -74,6 +87,6 @@
         <main class="py-4">
             @yield('content')
         </main>
-    </div>
+    </div><!-- /#app -->
 </body>
 </html>

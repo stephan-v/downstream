@@ -8,7 +8,7 @@ use App\Jobs\CloneRepository;
 use App\Jobs\ComposerInstall;
 use App\Ssh\DeploymentConfiguration;
 
-class TasksController extends Controller
+class DeploymentController extends Controller
 {
     /**
      * Create a deployment release.
