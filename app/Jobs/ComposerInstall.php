@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class CloneRepository extends BaseJob implements ShouldQueue
+class ComposerInstall extends BaseJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -20,12 +20,10 @@ class CloneRepository extends BaseJob implements ShouldQueue
     private function getCommands()
     {
         $deploymentPath = $this->getDeploymentPath();
-        $gitRepository = $this->getRepository();
 
         return [
-            "mkdir -p $deploymentPath",
-            "git clone --depth 1 $gitRepository $deploymentPath",
-            "exit"
+            "cd $deploymentPath",
+            "composer install -o --no-interaction --prefer-dist",
         ];
     }
 

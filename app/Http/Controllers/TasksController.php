@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\CheckSSHConnection;
+use App\Jobs\CleanOldReleases;
 use App\Jobs\CloneRepository;
+use App\Jobs\ComposerInstall;
+use App\Jobs\DeploymentConfiguration;
 
 class TasksController extends Controller
 {
@@ -14,7 +17,13 @@ class TasksController extends Controller
      */
     public function deploy()
     {
-        CloneRepository::dispatch();
+        $configuration = new DeploymentConfiguration();
+
+        // This is the default PHP queue, if one of these jobs fail the remaining will not execute.
+        CloneRepository::dispatch($configuration)->chain([
+            new ComposerInstall($configuration),
+            new CleanOldReleases($configuration)
+        ]);
 
         return 'Starting deployment';
     }

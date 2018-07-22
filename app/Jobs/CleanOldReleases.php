@@ -8,18 +8,24 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class CleanOldReleases implements ShouldQueue
+class CleanOldReleases extends BaseJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Create a new job instance.
+     * Get the bash commands that are associated with this job.
      *
-     * @return void
+     * @return array
      */
-    public function __construct()
+    private function getCommands()
     {
-        //
+        $deploymentPath = $this->getDeploymentPath();
+        $projectPath = $this->getProjectPath();
+
+        return [
+            "ln -snf $deploymentPath $projectPath/current",
+            "cd $projectPath/releases && ls -t | tail -n +6 | xargs rm -rf"
+        ];
     }
 
     /**
@@ -29,6 +35,6 @@ class CleanOldReleases implements ShouldQueue
      */
     public function handle()
     {
-        //
+        new SSH($this->getCommands(), $this->getConfiguredServer());
     }
 }
