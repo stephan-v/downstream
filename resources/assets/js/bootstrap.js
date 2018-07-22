@@ -54,12 +54,3 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     encrypted: true
 });
-
-function append(event) {
-    $('#log').append(event.html);
-}
-
-window.Echo.private('deployment')
-    .listen('.CloneRepository', append)
-    .listen('.ComposerInstall', append)
-    .listen('.CleanOldReleases', append);

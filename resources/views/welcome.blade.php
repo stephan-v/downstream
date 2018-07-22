@@ -5,11 +5,20 @@
         <div class="row justify-content-center">
             <div class="content">
                 <div class="links">
-                    <a @click.prevent="getConnectionStatus" href="#">Get connection status</a>
-                    <a @click.prevent="deploy" href="#">Run deployment task</a>
+                    <button type="button" class="btn btn-info" @click="getConnectionStatus">
+                        Get connection status
+                    </button>
+
+                    <button type="button" class="btn btn-success" @click="deploy">
+                        Run deployment task
+                    </button>
                 </div><!-- /.links -->
 
-                <pre id="log"></pre>
+                <h1>Deployment tasks</h1>
+
+                <task-listener name="CloneRepository"></task-listener>
+                <task-listener name="ComposerInstall"></task-listener>
+                <task-listener name="CleanOldReleases"></task-listener>
             </div><!-- /.content -->
         </div><!-- /.row -->
     </div><!-- /.container -->
