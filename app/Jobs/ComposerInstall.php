@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Ssh\BaseJob;
+use App\Ssh\SSH;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -34,6 +36,6 @@ class ComposerInstall extends BaseJob implements ShouldQueue
      */
     public function handle()
     {
-        new SSH($this->getCommands(), $this->getConfiguredServer());
+        (new SSH($this->getCommands(), $this->getConfiguredServer()))->fire();
     }
 }

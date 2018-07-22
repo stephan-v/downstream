@@ -6,7 +6,7 @@ use App\Jobs\CheckSSHConnection;
 use App\Jobs\CleanOldReleases;
 use App\Jobs\CloneRepository;
 use App\Jobs\ComposerInstall;
-use App\Jobs\DeploymentConfiguration;
+use App\Ssh\DeploymentConfiguration;
 
 class TasksController extends Controller
 {
