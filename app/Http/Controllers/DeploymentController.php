@@ -19,7 +19,7 @@ class DeploymentController extends Controller
     {
         $configuration = new DeploymentConfiguration();
 
-        // This is the default PHP queue, if one of these jobs fail the remaining will not execute.
+        // If one of these jobs fail the remaining will not execute.
         CloneRepository::dispatch($configuration)->chain([
             new ComposerInstall($configuration),
             new CleanOldReleases($configuration)
