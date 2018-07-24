@@ -2,7 +2,7 @@
 
 namespace App\Ssh;
 
-abstract class BaseJob {
+abstract class Deployment {
     /**
      * The deployment configuration.
      *
@@ -11,7 +11,7 @@ abstract class BaseJob {
     protected $configuration;
 
     /**
-     * BaseJob constructor.
+     * Deployment constructor.
      *
      * @param DeploymentConfiguration $configuration
      */

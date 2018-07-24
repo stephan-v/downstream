@@ -11,6 +11,10 @@
 |
 */
 
-Broadcast::channel('deployment', function ($user) {
+Broadcast::channel('deployment', function () {
+    return true;
+});
+
+Broadcast::channel('task-status', function () {
     return true;
 });

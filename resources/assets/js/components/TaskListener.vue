@@ -4,7 +4,7 @@
             <div class="card-header">
                 {{ name }}
 
-                <div class="progress" v-show="messages.length">
+                <div class="progress" v-show="running">
                     <div class="progress-bar progress-bar-striped progress-bar-animated"
                          role="progressbar"
                          aria-valuenow="100"
@@ -29,7 +29,8 @@
     export default {
         data() {
             return {
-                messages: []
+                messages: [],
+                running: false
             };
         },
 
@@ -43,10 +44,30 @@
         mounted() {
             const name = `.${this.name}`;
 
+            // Listen for SSH output.
             window.Echo.private('deployment')
                 .listen(name, (message) => {
                     this.messages.push(message.html);
+                });
+
+            // Listen for starting and finished tasks.
+            window.Echo.private('task-status')
+                .listen(this.startedTask, () => {
+                    this.running = true;
                 })
+                .listen(this.finishedTask, () => {
+                    this.running = false;
+                });
+        },
+
+        computed: {
+            startedTask() {
+                return `.started-task-${this.name}`;
+            },
+
+            finishedTask() {
+                return `.finished-task-${this.name}`;
+            }
         }
     }
 </script>

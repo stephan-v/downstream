@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Ssh\BaseJob;
+use App\Ssh\Deployment;
 use App\Ssh\SSH;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class ComposerInstall extends BaseJob implements ShouldQueue
+class ComposerInstall extends Deployment implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

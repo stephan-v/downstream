@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\TaskFinished;
+use App\Events\TaskStarted;
+use Illuminate\Contracts\Queue\Job;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Support\Facades\Log;
@@ -21,11 +24,21 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         Queue::before(function (JobProcessing $event) {
-            Log::info('starting job: ' . $event->job->resolveName());
+            $job = $event->job;
+            $name = $event->job->resolveName();
+
+            if ($this->isJob($job)) {
+                event(new TaskStarted($name));
+            }
         });
 
         Queue::after(function (JobProcessed $event) {
-            Log::info('finishing job: ' . $event->job->resolveName());
+            $job = $event->job;
+            $name = $event->job->resolveName();
+
+            if ($this->isJob($job)) {
+                event(new TaskFinished($name));
+            }
         });
     }
 
@@ -37,5 +50,16 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    /**
+     * Return a boolean check to see whether we are actually dealing with a job.
+     *
+     * @param Job $job
+     * @return bool
+     */
+    private function isJob(Job $job): bool
+    {
+        return str_contains($job->resolveName(), 'Jobs');
     }
 }
