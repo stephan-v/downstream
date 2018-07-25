@@ -46,6 +46,6 @@ class TaskFinished implements ShouldBroadcast
      */
     public function broadcastAs()
     {
-        return 'started-task-'.class_basename($this->name);
+        return 'finished-task-'.class_basename($this->name);
     }
 }

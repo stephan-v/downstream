@@ -1,10 +1,18 @@
 <template>
-    <div class="deployment-task">
+    <div class="deployment-task" :class="{ running }">
         <div class="card">
             <div class="card-header">
-                {{ name }}
+                <div class="d-flex align-items-center justify-content-between z-index-2">
+                    <b>{{ name }}</b>
 
-                <div class="progress" v-show="running">
+                    <span class="badge badge-warning" v-if="running">in progress</span>
+                    <span class="badge badge-secondary" v-if="enqueued">enqueued</span>
+                    <span class="badge badge-success" v-if="completed">completed</span>
+
+                    <console-output :messages="messages"></console-output>
+                </div><!-- /.z-index-2 -->
+
+                <div class="progress">
                     <div class="progress-bar progress-bar-striped progress-bar-animated"
                          role="progressbar"
                          aria-valuenow="100"
@@ -14,10 +22,6 @@
                     </div><!-- /.progress-bar -->
                 </div><!-- /.progress -->
             </div><!-- /.card-header -->
-
-            <div class="card-body" v-show="messages.length">
-                <pre><span v-for="message in messages" v-html="message"></span></pre>
-            </div><!-- /.card-body -->
         </div><!-- /.card -->
     </div><!-- /.deployment-task -->
 </template>
@@ -30,7 +34,8 @@
         data() {
             return {
                 messages: [],
-                running: false
+                running: false,
+                completed: false
             };
         },
 
@@ -57,10 +62,15 @@
                 })
                 .listen(this.finishedTask, () => {
                     this.running = false;
+                    this.completed = true;
                 });
         },
 
         computed: {
+            enqueued() {
+                return !this.completed && !this.running;
+            },
+
             startedTask() {
                 return `.started-task-${this.name}`;
             },
@@ -73,11 +83,46 @@
 </script>
 
 <style lang="scss" scoped>
+    .deployment-task {
+        border-bottom: 1px solid #dadada;
+
+        &.running {
+            .card {
+                .card-header {
+                    color: white;
+                    background-color: #FFB212;
+                }
+            }
+        }
+    }
+
+    .z-index-2 {
+        z-index: 2;
+        position: relative;
+    }
+
     .card {
+        border: 0;
         margin: 1rem 0;
 
         .progress {
-            margin: 0.5rem 0 0 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: transparent;
+
+            .progress-bar {
+                background-color: inherit;
+            }
+        }
+
+        .card-header {
+            border: 0;
+            position: relative;
+            border-radius: calc(0.25rem - 1px);
         }
 
         .card-body {
@@ -85,15 +130,26 @@
         }
     }
 
-    pre {
-        margin: 0;
-        background: #073642;
-        padding: 5px 10px;
-        border-radius: 0;
+    .badge {
+        padding: 0.7em 1em;
         color: white;
-        text-align: left;
-        min-height: 20px;
-        // Text inside pre elements is displayed as it is in the source which would overflow by d.
-        white-space: pre-wrap;
+    }
+
+    .badge-warning {
+        animation-duration: 0.5s;
+        animation-name: inProgress;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        background: #FF9715;
+    }
+
+    @keyframes inProgress {
+        0% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(0.9);
+        }
     }
 </style>
