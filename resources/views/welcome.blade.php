@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container deployment">
         <div class="row justify-content-center">
             <div class="content">
                 <div class="links">
@@ -14,11 +14,19 @@
                     </button>
                 </div><!-- /.links -->
 
-                <h1>Deployment tasks</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Executed action</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
-                <task-listener name="CloneRepository"></task-listener>
-                <task-listener name="ComposerInstall"></task-listener>
-                <task-listener name="CleanOldReleases"></task-listener>
+                    <tbody is="task-listener" name="CloneRepository"></tbody>
+                    <tbody is="task-listener" name="ComposerInstall"></tbody>
+                    <tbody is="task-listener" name="CleanOldReleases"></tbody>
+                </table>
             </div><!-- /.content -->
         </div><!-- /.row -->
     </div><!-- /.container -->

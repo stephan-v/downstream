@@ -1,8 +1,8 @@
 <template>
     <div class="console-output">
-        <a href="#" @click.prevent="openModal">get output</a>
+        <a href="#" @click.prevent="toggle">get output</a>
 
-        <console-modal :messages="messages" v-if="visible"></console-modal>
+        <console-modal :messages="output" v-if="visible" @close="toggle"></console-modal>
     </div><!-- /.console-output -->
 </template>
 
@@ -23,9 +23,16 @@
             }
         },
 
+        computed: {
+            // Output with a placeholder which is used when no messages are received yet.
+            output() {
+                return this.messages.length ? this.messages : ['Awaiting task output...'];
+            }
+        },
+
         methods: {
-            openModal() {
-                this.visible = true;
+            toggle() {
+                this.visible = !this.visible;
             }
         }
     }

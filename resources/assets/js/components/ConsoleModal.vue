@@ -29,6 +29,8 @@
                     content: this.$el,
                     buttons: false,
                     className: 'console-modal'
+                }).then(() => {
+                    this.$emit('close');
                 });
             }
         }
@@ -37,12 +39,19 @@
 
 <style lang="scss">
     .console-modal {
+        width: 800px;
+
         .header {
             background: #2B3351;
             color: white;
             font-weight: bold;
             padding: 0.5em;
             text-align: left;
+        }
+
+        .body {
+            max-height: 500px;
+            overflow-y: auto;
         }
 
         .swal-content {
@@ -57,7 +66,6 @@
             border-radius: 0;
             color: white;
             text-align: left;
-            min-height: 50px;
             // Text inside pre elements is displayed as it is in the source which would overflow by d.
             white-space: pre-wrap;
         }

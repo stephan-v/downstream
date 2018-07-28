@@ -1,29 +1,27 @@
 <template>
-    <div class="deployment-task" :class="{ running }">
-        <div class="card">
-            <div class="card-header">
-                <div class="d-flex align-items-center justify-content-between z-index-2">
-                    <b>{{ name }}</b>
+    <tr  :class="{ running }">
+        <td>{{ name }}</td>
 
-                    <span class="badge badge-warning" v-if="running">in progress</span>
-                    <span class="badge badge-secondary" v-if="enqueued">enqueued</span>
-                    <span class="badge badge-success" v-if="completed">completed</span>
+        <td class="wrap-content">
+            <span class="badge badge-warning" v-if="running">in progress</span>
+            <span class="badge badge-secondary" v-if="enqueued">enqueued</span>
+            <span class="badge badge-success" v-if="completed">completed</span>
+        </td>
 
-                    <console-output :messages="messages"></console-output>
-                </div><!-- /.z-index-2 -->
+        <td class="wrap-content">
+            <console-output :messages="messages"></console-output>
+        </td>
 
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated"
-                         role="progressbar"
-                         aria-valuenow="100"
-                         aria-valuemin="0"
-                         aria-valuemax="100"
-                         style="width: 100%">
-                    </div><!-- /.progress-bar -->
-                </div><!-- /.progress -->
-            </div><!-- /.card-header -->
-        </div><!-- /.card -->
-    </div><!-- /.deployment-task -->
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                 role="progressbar"
+                 aria-valuenow="100"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 style="width: 100%">
+            </div><!-- /.progress-bar -->
+        </div><!-- /.progress -->
+    </tr><!-- /.deployment-task -->
 </template>
 
 <script>
@@ -83,27 +81,19 @@
 </script>
 
 <style lang="scss" scoped>
-    .deployment-task {
-        border-bottom: 1px solid #dadada;
+    td {
+        z-index: 2;
+        position: relative;
 
-        &.running {
-            .card {
-                .card-header {
-                    color: white;
-                    background-color: #FFB212;
-                }
-            }
+        &.wrap-content {
+            width: 1%;
+            white-space: nowrap;
         }
     }
 
-    .z-index-2 {
-        z-index: 2;
-        position: relative;
-    }
-
-    .card {
-        border: 0;
-        margin: 1rem 0;
+    .running {
+        color: white;
+        background-color: #FFB212;
 
         .progress {
             z-index: 1;
@@ -113,21 +103,16 @@
             top: 0;
             left: 0;
             background-color: transparent;
+            display: flex;
 
             .progress-bar {
                 background-color: inherit;
             }
         }
+    }
 
-        .card-header {
-            border: 0;
-            position: relative;
-            border-radius: calc(0.25rem - 1px);
-        }
-
-        .card-body {
-            padding: 0;
-        }
+    .progress {
+        display: none;
     }
 
     .badge {
