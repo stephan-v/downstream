@@ -10,11 +10,14 @@ class ProjectsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('projects/index');
+        $projects = $request->user()->projects;
+
+        return view('projects/index', compact('projects'));
     }
 
     /**
@@ -55,7 +58,9 @@ class ProjectsController extends Controller
      */
     public function show($id)
     {
-        return view('projects/show');
+        $project = Project::findOrFail($id);
+
+        return view('projects/show', compact('project'));
     }
 
     /**
