@@ -25,16 +25,6 @@ const app = new Vue({
     methods: {
         deploy() {
             axios.post('/deploy');
-        },
-
-        // Create a seperate component for the connection status with a spinner and a red light which turns green
-        // When this SSH connection test is successful.
-        getConnectionStatus() {
-            axios.post('/connection').then((response) => {
-                console.log(response)
-            }).catch((response) => {
-                console.log(response);
-            });
         }
     }
 });

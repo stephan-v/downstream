@@ -1,33 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container deployment">
-        <div class="row justify-content-center">
-            <div class="content">
-                <div class="links">
-                    <button type="button" class="btn btn-info" @click="getConnectionStatus">
-                        Get connection status
-                    </button>
+    <div class="container">
+        <h1>Welcome</h1>
 
-                    <button type="button" class="btn btn-success" @click="deploy">
-                        Run deployment task
-                    </button>
-                </div><!-- /.links -->
+        @auth
+            <ul>
+                <li>
+                    <a href="{{ route('projects.index') }}">Projects</a>
+                </li>
+            </ul>
+        @endauth
 
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>Executed action</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-                    <tbody is="task-listener" name="CloneRepository"></tbody>
-                    <tbody is="task-listener" name="ComposerInstall"></tbody>
-                    <tbody is="task-listener" name="CleanOldReleases"></tbody>
-                </table>
-            </div><!-- /.content -->
-        </div><!-- /.row -->
+        @guest
+            <p>Please log in.</p>
+        @endguest
     </div><!-- /.container -->
 @endsection

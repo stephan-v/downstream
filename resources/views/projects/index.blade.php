@@ -29,7 +29,7 @@
 
                                     <td>
                                         <a href="https://github.com/{{ $project->repository }}">
-                                            {{ $project->repository }}
+                                            <i class="fab fa-github"></i> {{ $project->repository }}
                                         </a>
                                     </td>
 
