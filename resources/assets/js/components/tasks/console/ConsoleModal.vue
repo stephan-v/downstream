@@ -3,6 +3,7 @@
         <div class="header">Console output</div>
 
         <div class="body">
+            <!-- do not use whitespace or new lines within the pre tag (verbatim markup) -->
             <pre><span v-for="message in messages" v-html="message"></span></pre>
         </div><!-- /.body -->
     </div><!-- /.console-modal -->
@@ -66,7 +67,6 @@
             border-radius: 0;
             color: white;
             text-align: left;
-            // Text inside pre elements is displayed as it is in the source which would overflow by d.
             white-space: pre-wrap;
         }
     }

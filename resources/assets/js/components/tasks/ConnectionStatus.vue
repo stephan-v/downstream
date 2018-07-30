@@ -10,23 +10,29 @@
     export default {
         methods: {
             getConnectionStatus() {
-                axios.post('/connection').then(() => {
-                    swal({
-                        title: 'Success!',
-                        text: 'Connection established',
-                        icon: 'success',
-                        buttons: false,
-                        timer: 1500
-                    })
-                }).catch(() => {
-                    swal({
-                        title: 'Oops',
-                        text: 'Connection could not be established',
-                        icon: 'error',
-                        buttons: false,
-                        timer: 1500
-                    })
-                });
+                axios.post('/connection')
+                    .then(this.success)
+                    .catch(this.error);
+            },
+
+            success() {
+                swal({
+                    title: 'Success!',
+                    text: 'Connection established',
+                    icon: 'success',
+                    buttons: false,
+                    timer: 1500
+                })
+            },
+
+            error() {
+                swal({
+                    title: 'Oops',
+                    text: 'Connection could not be established',
+                    icon: 'error',
+                    buttons: false,
+                    timer: 1500
+                })
             }
         }
     }

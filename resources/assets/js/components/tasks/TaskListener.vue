@@ -1,11 +1,9 @@
 <template>
-    <tr  :class="{ running }">
+    <tr :class="{ running }">
         <td>{{ name }}</td>
 
         <td class="wrap-content">
-            <span class="badge badge-warning" v-if="running">in progress</span>
-            <span class="badge badge-secondary" v-if="enqueued">enqueued</span>
-            <span class="badge badge-success" v-if="completed">completed</span>
+            <task-status :status="status"></task-status>
         </td>
 
         <td class="wrap-content">
@@ -25,15 +23,11 @@
 </template>
 
 <script>
-    // Be careful with white-spaces or indentation within the <pre> tag because they will be
-    // interpreted verbatim.
-
     export default {
         data() {
             return {
                 messages: [],
-                running: false,
-                completed: false
+                status: 'enqueued'
             };
         },
 
@@ -45,28 +39,14 @@
         },
 
         mounted() {
-            const name = `.${this.name}`;
-
-            // Listen for SSH output.
-            window.Echo.private('deployment')
-                .listen(name, (message) => {
-                    this.messages.push(message.html);
-                });
-
-            // Listen for starting and finished tasks.
-            window.Echo.private('task-status')
-                .listen(this.startedTask, () => {
-                    this.running = true;
-                })
-                .listen(this.finishedTask, () => {
-                    this.running = false;
-                    this.completed = true;
-                });
+            this.setRemoteOutputListener();
+            this.setTaskStartedListener();
+            this.setTaskFinishedListener();
         },
 
         computed: {
-            enqueued() {
-                return !this.completed && !this.running;
+            running() {
+                return this.status === 'running';
             },
 
             startedTask() {
@@ -75,6 +55,29 @@
 
             finishedTask() {
                 return `.finished-task-${this.name}`;
+            }
+        },
+
+        methods: {
+            setRemoteOutputListener() {
+                window.Echo.private('deployment')
+                    .listen(`.${this.name}`, (message) => {
+                        this.messages.push(message.html);
+                    });
+            },
+
+            setTaskStartedListener() {
+                window.Echo.private('task-status')
+                    .listen(this.startedTask, () => {
+                        this.status = 'running';
+                    });
+            },
+
+            setTaskFinishedListener() {
+                window.Echo.private('task-status')
+                    .listen(this.finishedTask, () => {
+                        this.status = 'completed';
+                    });
             }
         }
     }
@@ -113,28 +116,5 @@
 
     .progress {
         display: none;
-    }
-
-    .badge {
-        padding: 0.7em 1em;
-        color: white;
-    }
-
-    .badge-warning {
-        animation-duration: 0.5s;
-        animation-name: inProgress;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-        background: #FF9715;
-    }
-
-    @keyframes inProgress {
-        0% {
-            transform: scale(1);
-        }
-
-        100% {
-            transform: scale(0.9);
-        }
     }
 </style>

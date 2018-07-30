@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Rules\Repository;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
@@ -39,8 +40,8 @@ class ProjectsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'repository' => 'required|string',
+            'name' => ['required', 'string'],
+            'repository' => ['required', 'string', new Repository],
         ]);
 
         Project::create([

@@ -24,9 +24,12 @@
         },
 
         computed: {
-            // Output with a placeholder which is used when no messages are received yet.
+            hasMessages() {
+                return this.messages.length;
+            },
+
             output() {
-                return this.messages.length ? this.messages : ['Awaiting task output...'];
+                return this.hasMessages ? this.messages : ['Awaiting task output...'];
             }
         },
 
