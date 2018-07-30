@@ -38,10 +38,11 @@
             }
         },
 
-        mounted() {
+        created() {
             this.setRemoteOutputListener();
             this.setTaskStartedListener();
             this.setTaskFinishedListener();
+            this.setTaskFailedListener();
         },
 
         computed: {
@@ -55,6 +56,10 @@
 
             finishedTask() {
                 return `.finished-task-${this.name}`;
+            },
+
+            failedTask() {
+                return `.failed-task-${this.name}`;
             }
         },
 
@@ -77,6 +82,13 @@
                 window.Echo.private('task-status')
                     .listen(this.finishedTask, () => {
                         this.status = 'completed';
+                    });
+            },
+
+            setTaskFailedListener() {
+                window.Echo.private('task-status')
+                    .listen(this.failedTask, () => {
+                        this.status = 'failed';
                     });
             }
         }

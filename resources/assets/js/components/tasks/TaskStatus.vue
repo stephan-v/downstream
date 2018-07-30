@@ -22,6 +22,11 @@
                     completed: {
                         css: 'badge-success',
                         text: 'completed'
+                    },
+
+                    failed: {
+                        css: 'badge-danger',
+                        text: 'failed'
                     }
                 }
             };
