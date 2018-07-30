@@ -59,8 +59,23 @@
             },
 
             onSubmit() {
-                // @TODO Show feedback on whether the project was successfully created or not.
-                axios.post('/projects', this.$data);
+                axios.post('/projects', this.$data).then(() => {
+                    swal({
+                        title: 'Success!',
+                        text: 'Project created',
+                        icon: 'success',
+                        buttons: false,
+                        timer: 1500
+                    })
+                }).catch(() => {
+                    swal({
+                        title: 'Oops',
+                        text: 'Project could not be created',
+                        icon: 'error',
+                        buttons: false,
+                        timer: 1500
+                    })
+                });
             }
         }
     };

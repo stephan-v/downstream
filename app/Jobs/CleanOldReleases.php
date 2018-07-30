@@ -26,7 +26,7 @@ class CleanOldReleases extends Deployment implements ShouldQueue
 
         return [
             "ln -snf $deploymentPath $projectPath/current",
-            "cd $projectPath/releases && ls -t | tail -n +6 | xargs rm -rf"
+            "cd $projectPath/releases && ls -t | tail -n +6 | xargs rm -rfv"
         ];
     }
 

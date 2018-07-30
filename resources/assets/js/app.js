@@ -10,6 +10,10 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import Autoloader from 'vue-autoloader';
+import {Tabs, Tab} from 'vue-tabs-component';
+
+Vue.component('tabs', Tabs);
+Vue.component('tab', Tab);
 
 Vue.use(Autoloader);
 
@@ -20,11 +24,5 @@ Vue.use(Autoloader);
  */
 
 const app = new Vue({
-    el: '#app',
-
-    methods: {
-        deploy() {
-            axios.post('/deploy');
-        }
-    }
+    el: '#app'
 });

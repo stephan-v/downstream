@@ -11,17 +11,19 @@
 |
 */
 
-Route::get('/', function() {
-    return view('welcome');
-});
-
 // Deploy code.
-Route::post('/deploy', 'DeploymentController@deploy');
+Route::post('/deploy', 'DeploymentController@deploy')->name('deploy');
+
 // Check SSH connection.
 Route::post('/connection', 'DeploymentController@connection');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('/projects', 'ProjectsController');
+
+// Single deployment view.
+Route::get('/projects/{projectId}/deployments/{deploymentId}', 'DeploymentController@show');
+
+Route::post('/servers', 'ServerController@store');

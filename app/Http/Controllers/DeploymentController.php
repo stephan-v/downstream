@@ -6,7 +6,10 @@ use App\Jobs\CheckSSHConnection;
 use App\Jobs\CleanOldReleases;
 use App\Jobs\CloneRepository;
 use App\Jobs\ComposerInstall;
+use App\Project;
+use App\Server;
 use App\Ssh\DeploymentConfiguration;
+use Illuminate\Http\Request;
 
 class DeploymentController extends Controller
 {
@@ -15,9 +18,12 @@ class DeploymentController extends Controller
      *
      * @return string
      */
-    public function deploy()
+    public function deploy(Request $request)
     {
-        $configuration = new DeploymentConfiguration();
+        $project = Project::findOrFail($request->projectId);
+        $server = Server::findOrFail($request->serverId);
+
+        $configuration = new DeploymentConfiguration($project, $server);
 
         // If one of these jobs fail the remaining will not execute.
         CloneRepository::dispatch($configuration)->chain([
@@ -38,5 +44,16 @@ class DeploymentController extends Controller
         CheckSSHConnection::dispatch();
 
         return 'Checking SSH connection';
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return view('deployments/show');
     }
 }

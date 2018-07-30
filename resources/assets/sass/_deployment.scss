@@ -1,11 +1,10 @@
 .deployment {
-    .content {
-        width: 100%;
+    table {
+        background: white;
+        border-radius: 5px;
 
-        table {
-            th {
-                border-top: 0;
-            }
+        th {
+            border-top: 0;
         }
     }
 }

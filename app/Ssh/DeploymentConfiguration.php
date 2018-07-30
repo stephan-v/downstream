@@ -2,19 +2,41 @@
 
 namespace App\Ssh;
 
+use App\Project;
+use App\Server;
+
 class DeploymentConfiguration {
+    /**
+     * The project coupled to this deployment.
+     *
+     * @var Project $project
+     */
+    private $project;
+
+    /**
+     * The server coupled to this deployment.
+     *
+     * @var Project $server
+     */
+    private $server;
+
     /**
      * The timestamp for this deployment.
      *
      * @var int $timestamp
      */
-    protected $timestamp;
+    private $timestamp;
 
     /**
      * DeploymentConfiguration constructor.
+     *
+     * @param Project $project
+     * @param Server $server
      */
-    public function __construct()
+    public function __construct(Project $project, Server $server)
     {
+        $this->project = $project;
+        $this->server = $server;
         $this->timestamp = time();
     }
 
@@ -27,7 +49,9 @@ class DeploymentConfiguration {
      */
     public function getProjectPath(): string
     {
-        return '/home/forge/downstream-test.nl/' . env('APP_NAME');
+        $path = $this->server->path;
+
+        return $path . env('APP_NAME');
     }
 
     /**
@@ -50,7 +74,9 @@ class DeploymentConfiguration {
      */
     public function getRepository(): string
     {
-        return 'git@github.com:stephan-v/beerquest.git';
+        $repository = $this->project->repository;
+
+        return "git@github.com:{$repository}.git";
     }
 
     /**
@@ -60,6 +86,9 @@ class DeploymentConfiguration {
      */
     public function getConfiguredServer(): string
     {
-        return 'forge@beerquest.nl';
+        $user = $this->server->user;
+        $ip_address = $this->server->ip_address;
+
+        return "{$user}@{$ip_address}";
     }
 }
