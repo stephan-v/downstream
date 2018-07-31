@@ -14,7 +14,7 @@ class Project extends Model
     protected $fillable = ['user_id', 'name', 'repository'];
 
     /**
-     * Get the servers for the project.
+     * Get the servers belonging to this project.
      */
     public function servers()
     {
@@ -22,7 +22,15 @@ class Project extends Model
     }
 
     /**
-     * Get the main server for the project.
+     * Get the deployments belonging to this project.
+     */
+    public function deployments()
+    {
+        return $this->hasMany('App\Deployment')->orderByDesc('created_at');
+    }
+
+    /**
+     * Get the main server belonging to this project.
      */
     public function getServerAttribute()
     {

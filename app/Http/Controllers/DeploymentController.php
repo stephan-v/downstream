@@ -6,6 +6,8 @@ use App\Jobs\CheckSSHConnection;
 use App\Jobs\CleanOldReleases;
 use App\Jobs\CloneRepository;
 use App\Jobs\ComposerInstall;
+use App\Jobs\FinishDeployment;
+use App\Jobs\StartDeployment;
 use App\Project;
 use App\Server;
 use App\Ssh\DeploymentConfiguration;
@@ -25,10 +27,11 @@ class DeploymentController extends Controller
 
         $configuration = new DeploymentConfiguration($project, $server);
 
-        // If one of these jobs fail the remaining will not execute.
-        CloneRepository::dispatch($configuration)->chain([
+        StartDeployment::dispatch($project)->chain([
+            new CloneRepository($configuration),
             new ComposerInstall($configuration),
-            new CleanOldReleases($configuration)
+            new CleanOldReleases($configuration),
+            new FinishDeployment()
         ]);
 
         return 'Starting deployment';

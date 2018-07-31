@@ -12,7 +12,7 @@
                     <span>Repository:</span>
 
                     <a href="https://github.com/{{ $project->repository }}">
-                        <i class="fab fa-github"></i> https://github.com/{{ $project->repository }}
+                        <i class="fab fa-github"></i> {{ $project->repository }}
                     </a>
                 </li>
 
@@ -31,7 +31,25 @@
 
                 <tabs>
                     <tab name="Deployments">
+                        <table class="table position-relative mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Started</th>
+                                    <th>Commit</th>
+                                </tr>
+                            </thead>
 
+                            <tbody>
+                                <tr is="deployment-listener"></tr>
+
+                                @foreach ($project->deployments as $deployment)
+                                    <tr>
+                                        <td>{{ $deployment->created_at->diffForHumans() }}</td>
+                                        <td>{{ $deployment->commit}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </tab>
 
                     <tab name="Servers">
