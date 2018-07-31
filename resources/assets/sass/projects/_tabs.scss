@@ -73,6 +73,8 @@
 }
 
 .tabs-component-panels {
+    z-index: 1;
+    position: relative;
     padding: 4em 0;
 }
 

@@ -78,10 +78,6 @@
                             </tbody>
                         </table>
                     </tab>
-
-                    <tab name="Third tab">
-                        Third tab content
-                    </tab>
                 </tabs>
             </div><!-- /.content -->
         </div><!-- /.row -->
