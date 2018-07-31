@@ -31,25 +31,7 @@
 
                 <tabs>
                     <tab name="Deployments">
-                        <table class="table position-relative mt-3">
-                            <thead>
-                                <tr>
-                                    <th>Started</th>
-                                    <th>Commit</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr is="deployment-listener"></tr>
-
-                                @foreach ($project->deployments as $deployment)
-                                    <tr>
-                                        <td>{{ $deployment->created_at->diffForHumans() }}</td>
-                                        <td>{{ $deployment->commit}}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <deployment-listener :initial-deployments="{{ $project->deployments->toJson() }}"></deployment-listener>
                     </tab>
 
                     <tab name="Servers">

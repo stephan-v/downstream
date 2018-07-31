@@ -2,7 +2,7 @@
 
 namespace App\Ssh;
 
-abstract class Deployment {
+abstract class AbstractDeployment {
     /**
      * The deployment configuration.
      *
@@ -27,7 +27,7 @@ abstract class Deployment {
      *
      * @return string
      */
-    public function getProjectPath(): string
+    protected function getProjectPath(): string
     {
         return $this->configuration->getProjectPath();
     }
@@ -40,7 +40,7 @@ abstract class Deployment {
      *
      * @return string
      */
-    public function getDeploymentPath(): string
+    protected function getDeploymentPath(): string
     {
         return $this->configuration->getDeploymentPath();
     }
@@ -50,7 +50,7 @@ abstract class Deployment {
      *
      * @return string
      */
-    public function getRepository(): string
+    protected function getRepository(): string
     {
         return $this->configuration->getRepository();
     }
@@ -60,8 +60,18 @@ abstract class Deployment {
      *
      * @return string
      */
-    public function getConfiguredServer(): string
+    protected function getServerName(): string
     {
-        return $this->configuration->getConfiguredServer();
+        return $this->configuration->getServerName();
+    }
+
+    /**
+     * Get the short name of the current Job.
+     *
+     * @return string
+     */
+    protected function getShortName(): string
+    {
+        return (new \ReflectionClass($this))->getShortName();
     }
 }

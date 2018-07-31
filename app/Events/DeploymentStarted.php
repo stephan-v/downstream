@@ -20,22 +20,14 @@ class DeploymentStarted implements ShouldBroadcast
      */
     public $deployment;
 
-    public $created_at;
-
-    public $commit;
-
     /**
      * Create a new event instance.
      *
-     * @TODO FIX the model from not serializing properly.
-     *
      * @param Deployment $deployment
      */
-    public function __construct(Deployment $deployment)
+    public function __construct($deployment)
     {
-        $this->$deployment = $deployment;
-        $this->created_at = $deployment->created_at;
-        $this->commit = $deployment->commit;
+        $this->deployment = $deployment;
     }
 
     /**

@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Amsterdam',
 
     /*
     |--------------------------------------------------------------------------
@@ -160,6 +160,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Other Service Providers
+        App\Providers\SSHServiceProvider::class,
     ],
 
     /*

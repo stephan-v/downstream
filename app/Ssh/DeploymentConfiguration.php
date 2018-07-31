@@ -84,7 +84,7 @@ class DeploymentConfiguration {
      *
      * @return string
      */
-    public function getConfiguredServer(): string
+    public function getServerName(): string
     {
         $user = $this->server->user;
         $ip_address = $this->server->ip_address;

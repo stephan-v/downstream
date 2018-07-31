@@ -1,16 +1,41 @@
 <template>
-    <tr v-if="date">
-        <td>{{ date }}</td>
-        <td>{{ commit }}</td>
-    </tr>
+    <table class="table position-relative mt-3">
+        <thead>
+            <tr>
+                <th>Started</th>
+                <th>Commit</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr v-for="deployment in deployments">
+                <td>{{ deployment.created_at | diffForHumans }}</td>
+                <td>{{ deployment.commit }}</td>
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <script>
+    import moment from 'moment';
+
     export default {
         data() {
             return {
-                date: '',
-                commit: ''
+                deployments: this.initialDeployments
+            }
+        },
+
+        filters: {
+            diffForHumans(time) {
+                return moment(time, 'YYYY-MM-DD HH:mm:ss').fromNow();
+            }
+        },
+
+        props: {
+            initialDeployments: {
+                required: true,
+                type: Array
             }
         },
 
@@ -21,9 +46,8 @@
         methods: {
             setDeploymentListeners() {
                 window.Echo.private('deployment')
-                    .listen('DeploymentStarted', (e) => {
-                        this.date = e.created_at.date;
-                        this.commit = e.commit;
+                    .listen('DeploymentStarted', (response) => {
+                        this.deployments.unshift(response.deployment);
                     });
 
                 window.Echo.private('deployment')

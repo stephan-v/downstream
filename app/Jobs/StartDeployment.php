@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Deployment;
 use App\Events\DeploymentStarted;
 use App\Project;
 use Illuminate\Bus\Queueable;
@@ -40,27 +39,18 @@ class StartDeployment implements ShouldQueue
      */
     public function handle()
     {
-        $deployment = $this->createDeployment();
-
-        event(new DeploymentStarted($deployment));
+        event(new DeploymentStarted($this->createDeployment()));
     }
 
     /**
      * Create a new deployment.
      */
-    private function createDeployment(): Deployment
+    private function createDeployment()
     {
         $project = $this->project;
 
-        $deployment = new Deployment();
-        $deployment->commit = 'test';
-
-        $saved = $project->deployments()->save($deployment);
-
-        if ($saved) {
-            return $deployment;
-        }
-
-        throw new \RuntimeException('Deployment could not be created');
+        return $project->deployments()->create([
+            'commit' => 'test'
+        ]);
     }
 }
