@@ -25,13 +25,23 @@ class DeploymentController extends Controller
         $project = Project::findOrFail($request->projectId);
         $server = Server::findOrFail($request->serverId);
 
+        //----- Refactor this
         $configuration = new DeploymentConfiguration($project, $server);
+
+        $deployments = $project->deployments();
+        $count = $deployments->count();
+
+        $skip = 4;
+
+        $outdatedDeployments = $deployments->skip($skip)->take($count - $skip);
+        $outdatedDeployments->delete();
+        //----- Refactor this
 
         StartDeployment::dispatch($project)->chain([
             new CloneRepository($configuration),
             new ComposerInstall($configuration),
             new CleanOldReleases($configuration),
-            new FinishDeployment()
+            new FinishDeployment($project)
         ]);
 
         return 'Starting deployment';

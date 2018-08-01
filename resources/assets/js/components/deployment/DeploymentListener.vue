@@ -48,6 +48,7 @@
                 window.Echo.private('deployment')
                     .listen('DeploymentStarted', (response) => {
                         this.deployments.unshift(response.deployment);
+                        this.deployments.pop();
                     });
 
                 window.Echo.private('deployment')
