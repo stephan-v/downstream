@@ -4,6 +4,7 @@
             <tr>
                 <th>Started</th>
                 <th>Commit</th>
+                <th></th>
             </tr>
         </thead>
 
@@ -11,9 +12,15 @@
             <tr v-for="deployment in deployments" :key="deployment.id">
                 <td>{{ deployment.created_at | diffForHumans }}</td>
 
-                <td>
+                <td class="wrap-content">
                     <a :href="commitUrl(deployment.commit)" target="_blank">
                         {{ deployment.commit | short }}
+                    </a>
+                </td>
+
+                <td class="wrap-content">
+                    <a :href="deploymentUrl(deployment.id)" class="btn btn-primary btn-sm ml-3" role="button">
+                        View deployment
                     </a>
                 </td>
             </tr>
@@ -50,6 +57,11 @@
             repository: {
                 required: true,
                 type: String
+            },
+
+            route: {
+                required: true,
+                type: String
             }
         },
 
@@ -60,6 +72,10 @@
         methods: {
             commitUrl(hash) {
                 return `${this.repository}/commit/${hash}`;
+            },
+
+            deploymentUrl(deploymentId) {
+                return `${this.route}/deployments/${deploymentId}`;
             },
 
             setDeploymentListeners() {

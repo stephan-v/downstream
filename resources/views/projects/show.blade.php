@@ -32,7 +32,8 @@
                 <tabs>
                     <tab name="Deployments">
                         <deployment-listener :initial-deployments="{{ $project->deployments->toJson() }}"
-                                             repository="https://github.com/{{ $project->repository }}">
+                                             repository="https://github.com/{{ $project->repository }}"
+                                             route="{{ url()->current() }}">
                         </deployment-listener>
                     </tab>
 
