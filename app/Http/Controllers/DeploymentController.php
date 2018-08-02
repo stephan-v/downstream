@@ -18,6 +18,7 @@ class DeploymentController extends Controller
     /**
      * Create a deployment release.
      *
+     * @param Request $request
      * @return string
      */
     public function deploy(Request $request)
@@ -25,19 +26,10 @@ class DeploymentController extends Controller
         $project = Project::findOrFail($request->projectId);
         $server = Server::findOrFail($request->serverId);
 
-        //----- Refactor this
         $configuration = new DeploymentConfiguration($project, $server);
+        $this->cleanOldDeployments($project->deployments());
 
-        $deployments = $project->deployments();
-        $count = $deployments->count();
-
-        $skip = 4;
-
-        $outdatedDeployments = $deployments->skip($skip)->take($count - $skip);
-        $outdatedDeployments->delete();
-        //----- Refactor this
-
-        StartDeployment::dispatch($project)->chain([
+        StartDeployment::dispatch($configuration, $project)->chain([
             new CloneRepository($configuration),
             new ComposerInstall($configuration),
             new CleanOldReleases($configuration),
@@ -45,6 +37,22 @@ class DeploymentController extends Controller
         ]);
 
         return 'Starting deployment';
+    }
+
+    /**
+     * Clean up old deployments in the local database.
+     *
+     * @param $deployments
+     * @param int $skip
+     */
+    private function cleanOldDeployments($deployments, $skip = 4)
+    {
+        $count = $deployments->count();
+
+        $deployments
+            ->skip($skip)
+            ->take($count - $skip)
+            ->delete();
     }
 
     /**

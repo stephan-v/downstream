@@ -5,6 +5,7 @@ namespace App\Ssh;
 use App\Events\BroadcastSSHOutput;
 use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
 use SensioLabs\AnsiConverter\Theme\SolarizedTheme;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -121,9 +122,9 @@ class SSH {
     }
 
     /**
-     * Run the Symfony real-time process.
+     * Run the remote Symfony real-time process.
      */
-    public function fire()
+    public function fireRealTime()
     {
         $process = $this->getRemoteProcess();
         $converter = $this->getThemeConverter();
@@ -136,7 +137,22 @@ class SSH {
         });
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new ProcessFailedException($process);
         }
+    }
+
+    /**
+     * Run the Symfony process.
+     */
+    public function fire(): string
+    {
+        $process = $this->getRemoteProcess();
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        return $process->getOutput();
     }
 }

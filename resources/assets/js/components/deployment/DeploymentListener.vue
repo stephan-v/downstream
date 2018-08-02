@@ -7,10 +7,15 @@
             </tr>
         </thead>
 
-        <tbody>
-            <tr v-for="deployment in deployments">
+        <tbody is="transition-group" name="list">
+            <tr v-for="deployment in deployments" :key="deployment.id">
                 <td>{{ deployment.created_at | diffForHumans }}</td>
-                <td>{{ deployment.commit }}</td>
+
+                <td>
+                    <a :href="commitUrl(deployment.commit)" target="_blank">
+                        {{ deployment.commit | short }}
+                    </a>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -29,6 +34,10 @@
         filters: {
             diffForHumans(time) {
                 return moment(time, 'YYYY-MM-DD HH:mm:ss').fromNow();
+            },
+
+            short(hash) {
+                return hash.substring(0, 7);
             }
         },
 
@@ -36,6 +45,11 @@
             initialDeployments: {
                 required: true,
                 type: Array
+            },
+
+            repository: {
+                required: true,
+                type: String
             }
         },
 
@@ -44,6 +58,10 @@
         },
 
         methods: {
+            commitUrl(hash) {
+                return `${this.repository}/commit/${hash}`;
+            },
+
             setDeploymentListeners() {
                 window.Echo.private('deployment')
                     .listen('DeploymentStarted', (response) => {

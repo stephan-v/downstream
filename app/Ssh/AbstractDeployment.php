@@ -2,6 +2,8 @@
 
 namespace App\Ssh;
 
+use App\Project;
+
 abstract class AbstractDeployment {
     /**
      * The deployment configuration.
@@ -11,13 +13,24 @@ abstract class AbstractDeployment {
     protected $configuration;
 
     /**
+     * The project coupled to this deployment.
+     *
+     * @var Project $project
+     */
+    protected $project;
+
+    /**
      * Deployment constructor.
      *
      * @param DeploymentConfiguration $configuration
+     * @param Project $project
      */
-    public function __construct(DeploymentConfiguration $configuration)
-    {
+    public function __construct(
+        DeploymentConfiguration $configuration,
+        Project $project = null
+    ) {
         $this->configuration = $configuration;
+        $this->project = $project;
     }
 
     /**

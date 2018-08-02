@@ -31,7 +31,9 @@
 
                 <tabs>
                     <tab name="Deployments">
-                        <deployment-listener :initial-deployments="{{ $project->deployments->toJson() }}"></deployment-listener>
+                        <deployment-listener :initial-deployments="{{ $project->deployments->toJson() }}"
+                                             repository="https://github.com/{{ $project->repository }}">
+                        </deployment-listener>
                     </tab>
 
                     <tab name="Servers">

@@ -40,6 +40,6 @@ class ComposerInstall extends AbstractDeployment implements ShouldQueue
         $ssh->setTarget($this->getServerName());
         $ssh->setJobName($this->getShortName());
 
-        $ssh->fire();
+        $ssh->fireRealTime();
     }
 }
