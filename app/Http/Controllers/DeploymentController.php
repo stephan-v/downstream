@@ -49,10 +49,13 @@ class DeploymentController extends Controller
     {
         $count = $deployments->count();
 
-        $deployments
-            ->skip($skip)
-            ->take($count - $skip)
-            ->delete();
+        // If we count more rows
+        if ($count > $skip) {
+            $deployments
+                ->skip($skip)
+                ->take($count - $skip)
+                ->delete();
+        }
     }
 
     /**

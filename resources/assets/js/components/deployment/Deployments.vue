@@ -4,47 +4,25 @@
             <tr>
                 <th>Started</th>
                 <th>Commit</th>
+                <th>Status</th>
                 <th></th>
             </tr>
         </thead>
 
         <tbody is="transition-group" name="list">
-            <tr v-for="deployment in deployments" :key="deployment.id">
-                <td>{{ deployment.created_at | diffForHumans }}</td>
-
-                <td class="wrap-content">
-                    <a :href="commitUrl(deployment.commit)" target="_blank">
-                        {{ deployment.commit | short }}
-                    </a>
-                </td>
-
-                <td class="wrap-content">
-                    <a :href="deploymentUrl(deployment.id)" class="btn btn-primary btn-sm ml-3" role="button">
-                        View deployment
-                    </a>
-                </td>
-            </tr>
+            <deployment v-for="deployment in deployments"
+                        :deployment="deployment"
+                        :key="deployment.id">
+            </deployment>
         </tbody>
     </table>
 </template>
 
 <script>
-    import moment from 'moment';
-
     export default {
         data() {
             return {
                 deployments: this.initialDeployments
-            }
-        },
-
-        filters: {
-            diffForHumans(time) {
-                return moment(time, 'YYYY-MM-DD HH:mm:ss').fromNow();
-            },
-
-            short(hash) {
-                return hash.substring(0, 7);
             }
         },
 
@@ -70,24 +48,11 @@
         },
 
         methods: {
-            commitUrl(hash) {
-                return `${this.repository}/commit/${hash}`;
-            },
-
-            deploymentUrl(deploymentId) {
-                return `${this.route}/deployments/${deploymentId}`;
-            },
-
             setDeploymentListeners() {
                 window.Echo.private('deployment')
                     .listen('DeploymentStarted', (response) => {
                         this.deployments.unshift(response.deployment);
                         this.deployments.pop();
-                    });
-
-                window.Echo.private('deployment')
-                    .listen('DeploymentFinished', () => {
-                        console.log('Deployment finished');
                     });
             },
         }

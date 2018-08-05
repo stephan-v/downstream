@@ -26,15 +26,22 @@
             <div class="content">
                 <div class="links">
                     <connection-status></connection-status>
-                    <start-deployment :project-id="{{ $project->id }}" :server-id="{{ $project->server->id }}"></start-deployment>
+
+                    @if ($project->server)
+                        <start-deployment :project-id="{{ $project->id }}" :server-id="{{ $project->server->id }}"></start-deployment>
+                    @else
+                        <div class="alert alert-warning mt-3" role="alert">
+                            Add a server to start a new deployment.
+                        </div><!-- /.alert -->
+                    @endif
                 </div><!-- /.links -->
 
                 <tabs>
                     <tab name="Deployments">
-                        <deployment-listener :initial-deployments="{{ $project->deployments->toJson() }}"
-                                             repository="https://github.com/{{ $project->repository }}"
-                                             route="{{ url()->current() }}">
-                        </deployment-listener>
+                        <deployments :initial-deployments="{{ $project->deployments->toJson() }}"
+                                     repository="https://github.com/{{ $project->repository }}"
+                                     route="{{ url()->current() }}">
+                        </deployments>
                     </tab>
 
                     <tab name="Servers">

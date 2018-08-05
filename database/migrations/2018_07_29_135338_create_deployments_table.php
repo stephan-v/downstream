@@ -1,5 +1,6 @@
 <?php
 
+use App\Deployment;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,7 +19,15 @@ class CreateDeploymentsTable extends Migration
             $table->string('commit');
             $table->unsignedInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+
+            $table->enum('status', [
+                Deployment::FINISHED,
+                Deployment::PENDING,
+                Deployment::FAILED,
+            ])->default(Deployment::PENDING);
+
             $table->timestamps();
+            $table->timestamp('finished_at')->nullable();
         });
     }
 

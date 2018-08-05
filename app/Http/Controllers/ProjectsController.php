@@ -42,7 +42,7 @@ class ProjectsController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string'],
-            'repository' => ['required', 'string', new Repository],
+            'repository' => ['required', 'string'],
         ]);
 
         Project::create([
