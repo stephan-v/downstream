@@ -19,13 +19,7 @@ class CreateDeploymentsTable extends Migration
             $table->string('commit');
             $table->unsignedInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-
-            $table->enum('status', [
-                Deployment::FINISHED,
-                Deployment::PENDING,
-                Deployment::FAILED,
-            ])->default(Deployment::PENDING);
-
+            $table->unsignedTinyInteger('status')->default(Deployment::PENDING);
             $table->timestamps();
             $table->timestamp('finished_at')->nullable();
         });

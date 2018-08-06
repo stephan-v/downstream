@@ -2,66 +2,42 @@
 
 namespace App\Jobs;
 
+use App\Deployment;
 use App\Events\DeploymentStarted;
-use App\Ssh\AbstractDeployment;
-use App\Ssh\SSH;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class StartDeployment extends AbstractDeployment implements ShouldQueue
+class StartDeployment implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Get the bash commands that are associated with this job.
+     * The deployment instance.
      *
-     * @return array
+     * @var Deployment
      */
-    private function getCommands()
-    {
-        $gitRepository = $this->getRepository();
+    private $deployment;
 
-        return [
-            "git ls-remote $gitRepository | grep HEAD | awk '{print $1}'",
-            "exit"
-        ];
+    /**
+     * StartDeployment constructor.
+     *
+     * @param Deployment $deployment
+     */
+    public function __construct(Deployment $deployment)
+    {
+        $this->deployment = $deployment;
     }
 
     /**
      * Execute the job.
      *
-     * @param SSH $ssh
      * @return void
-     * @internal param Project $project
      */
-    public function handle(SSH $ssh)
+    public function handle()
     {
-        $ssh->setCommands($this->getCommands());
-        $ssh->setTarget($this->getServerName());
-        $ssh->setJobName($this->getShortName());
-
-        $output = $ssh->fire();
-
-        $deployment = $this->createDeployment($output);
-
-        event(new DeploymentStarted($deployment));
-    }
-
-    /**
-     * Create a new deployment.
-     *
-     * @param string $commitHash The latest remote SHA1 hash.
-     * @return
-     */
-    private function createDeployment(string $commitHash)
-    {
-        $project = $this->project;
-
-        return $project->deployments()->create([
-            'commit' => $commitHash
-        ]);
+        event(new DeploymentStarted($this->deployment));
     }
 }

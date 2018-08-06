@@ -27,13 +27,18 @@ class DeploymentController extends Controller
         $server = Server::findOrFail($request->serverId);
 
         $configuration = new DeploymentConfiguration($project, $server);
-        $this->cleanOldDeployments($project->deployments());
 
-        StartDeployment::dispatch($configuration, $project)->chain([
+        $deployment = $project->deployments()->create([
+            'commit' => 'to implement'
+        ]);
+
+        $this->cleanOldDeployments($project);
+
+        StartDeployment::dispatch($deployment)->chain([
             new CloneRepository($configuration),
             new ComposerInstall($configuration),
             new CleanOldReleases($configuration),
-            new FinishDeployment($project)
+            new FinishDeployment($deployment)
         ]);
 
         return 'Starting deployment';
@@ -42,12 +47,15 @@ class DeploymentController extends Controller
     /**
      * Clean up old deployments in the local database.
      *
-     * @param $deployments
-     * @param int $skip
+     * @param Project $project
      */
-    private function cleanOldDeployments($deployments, $skip = 4)
+    private function cleanOldDeployments(Project $project)
     {
+        $deployments = $project->deployments();
         $count = $deployments->count();
+
+        // Skip the first x max number of deployments and delete the rest.
+        $skip = $project->maxDeployments;
 
         // If we count more rows
         if ($count > $skip) {

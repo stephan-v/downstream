@@ -9,7 +9,7 @@
             </tr>
         </thead>
 
-        <tbody is="transition-group" name="list">
+        <tbody>
             <deployment v-for="deployment in deployments"
                         :deployment="deployment"
                         :key="deployment.id">
@@ -52,7 +52,9 @@
                 window.Echo.private('deployment')
                     .listen('DeploymentStarted', (response) => {
                         this.deployments.unshift(response.deployment);
-                        this.deployments.pop();
+
+                        // Remove the last deployment if we have more than 5
+                        if (this.deployments.length > 5) this.deployments.pop();
                     });
             },
         }

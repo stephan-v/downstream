@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     /**
+     * The maximum number of deployments that being stored for re-deploy purposes.
+     *
+     * @var int $maxDeployments
+     */
+    public $maxDeployments = 5;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

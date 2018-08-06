@@ -48,7 +48,6 @@
                     projectId: this.projectId,
                     serverId: this.serverId
                 }).then(() => {
-                    console.log('changing status');
                     this.status = 1;
                 });
             },
