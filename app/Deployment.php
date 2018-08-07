@@ -36,4 +36,12 @@ class Deployment extends Model
     protected $casts = [
         'status' => 'integer'
     ];
+
+    /**
+     * Get the project that owns the deployment.
+     */
+    public function project()
+    {
+        return $this->belongsTo('App\Project');
+    }
 }

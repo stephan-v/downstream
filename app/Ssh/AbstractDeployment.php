@@ -2,80 +2,56 @@
 
 namespace App\Ssh;
 
+use App\Deployment;
 use App\Project;
+use Illuminate\Database\Eloquent\Collection;
 
 abstract class AbstractDeployment {
     /**
-     * The deployment configuration.
+     * The freshly started deployment.
      *
-     * @var DeploymentConfiguration
+     * @var Deployment $deployment
      */
-    protected $configuration;
-
-    /**
-     * The project coupled to this deployment.
-     *
-     * @var Project $project
-     */
-    protected $project;
+    protected $deployment;
 
     /**
      * Deployment constructor.
      *
-     * @param DeploymentConfiguration $configuration
-     * @param Project $project
+     * @param Deployment $deployment;
      */
-    public function __construct(
-        DeploymentConfiguration $configuration,
-        Project $project = null
-    ) {
-        $this->configuration = $configuration;
-        $this->project = $project;
+    public function __construct(Deployment $deployment)
+    {
+        $this->deployment = $deployment;
     }
 
     /**
-     * Return the absolute project path set by the user.
+     * Return the project which own this deployment.
      *
-     * We append our own application name to this so that our deploy related code is encapsulated.
-     *
-     * @return string
+     * @return Project
      */
-    protected function getProjectPath(): string
+    protected function project(): Project
     {
-        return $this->configuration->getProjectPath();
+        return $this->deployment->project;
     }
 
     /**
-     * Return the deployment path.
+     * Return the deployment created_at timestamp.
      *
-     * We want each deployment to be in a unique directory so put each release in a timestamped
-     * directory under a 'releases' directory.
-     *
-     * @return string
+     * @return int The unix timestamp.
      */
-    protected function getDeploymentPath(): string
+    protected function timestamp(): int
     {
-        return $this->configuration->getDeploymentPath();
+        return $this->deployment->created_at->timestamp;
     }
 
     /**
-     * Return the Git repository associated with this project.
+     * Return all servers belong to this deployment's project.
      *
-     * @return string
+     * @return Collection An Eloquent collection of hydrated server instances.
      */
-    protected function getRepository(): string
+    protected function servers(): Collection
     {
-        return $this->configuration->getRepository();
-    }
-
-    /**
-     * Return the server name.
-     *
-     * @return string
-     */
-    protected function getServerName(): string
-    {
-        return $this->configuration->getServerName();
+        return $this->project()->servers;
     }
 
     /**

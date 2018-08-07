@@ -17,11 +17,6 @@
             projectId: {
                 required: true,
                 type: Number
-            },
-
-            serverId: {
-                required: true,
-                type: Number
             }
         },
 
@@ -45,8 +40,7 @@
         methods: {
             deploy() {
                 axios.post('/deploy', {
-                    projectId: this.projectId,
-                    serverId: this.serverId
+                    projectId: this.projectId
                 }).then(() => {
                     this.status = 1;
                 });

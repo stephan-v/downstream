@@ -21,13 +21,6 @@ class DeploymentConfiguration {
     private $server;
 
     /**
-     * The timestamp for this deployment.
-     *
-     * @var int $timestamp
-     */
-    private $timestamp;
-
-    /**
      * DeploymentConfiguration constructor.
      *
      * @param Project $project
@@ -37,7 +30,6 @@ class DeploymentConfiguration {
     {
         $this->project = $project;
         $this->server = $server;
-        $this->timestamp = time();
     }
 
     /**
@@ -57,14 +49,11 @@ class DeploymentConfiguration {
     /**
      * Return the deployment path.
      *
-     * We want each deployment to be in a unique directory so put each release in a timestamped
-     * directory under a 'releases' directory.
-     *
      * @return string
      */
     public function getDeploymentPath(): string
     {
-        return $this->getProjectPath() . '/releases/' . $this->timestamp;
+        return $this->getProjectPath() . '/releases/';
     }
 
     /**

@@ -21,6 +21,16 @@ class Project extends Model
     protected $fillable = ['user_id', 'name', 'repository'];
 
     /**
+     * Get the repository with Github prefixed for clone purposes.
+     *
+     * @return string
+     */
+    public function getCloneUrlAttribute(): string
+    {
+        return "git@github.com:{$this->repository}.git";
+    }
+
+    /**
      * Get the servers belonging to this project.
      */
     public function servers()
@@ -34,13 +44,5 @@ class Project extends Model
     public function deployments()
     {
         return $this->hasMany('App\Deployment')->orderByDesc('created_at');
-    }
-
-    /**
-     * Get the main server belonging to this project.
-     */
-    public function getServerAttribute()
-    {
-        return $this->servers()->first();
     }
 }

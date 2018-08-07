@@ -9,8 +9,6 @@ use App\Jobs\ComposerInstall;
 use App\Jobs\FinishDeployment;
 use App\Jobs\StartDeployment;
 use App\Project;
-use App\Server;
-use App\Ssh\DeploymentConfiguration;
 use Illuminate\Http\Request;
 
 class DeploymentController extends Controller
@@ -24,22 +22,21 @@ class DeploymentController extends Controller
     public function deploy(Request $request)
     {
         $project = Project::findOrFail($request->projectId);
-        $server = Server::findOrFail($request->serverId);
 
-        $configuration = new DeploymentConfiguration($project, $server);
-
+        // Create a new deployment for this project.
         $deployment = $project->deployments()->create([
             'commit' => 'to implement'
         ]);
 
-        $this->cleanOldDeployments($project);
-
         StartDeployment::dispatch($deployment)->chain([
-            new CloneRepository($configuration),
-            new ComposerInstall($configuration),
-            new CleanOldReleases($configuration),
+            new CloneRepository($deployment),
+            new ComposerInstall($deployment),
+            new CleanOldReleases($deployment),
             new FinishDeployment($deployment)
         ]);
+
+        // Remove old deployments from our local database.
+        $this->cleanOldDeployments($project);
 
         return 'Starting deployment';
     }

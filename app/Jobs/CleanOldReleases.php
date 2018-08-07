@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Server;
 use App\Ssh\AbstractDeployment;
 use App\Ssh\SSH;
 use Illuminate\Bus\Queueable;
@@ -17,16 +18,19 @@ class CleanOldReleases extends AbstractDeployment implements ShouldQueue
     /**
      * Get the bash commands that are associated with this job.
      *
+     * @param Server $server
      * @return array
      */
-    private function getCommands()
+    private function getCommands(Server $server)
     {
-        $deploymentPath = $this->getDeploymentPath();
-        $projectPath = $this->getProjectPath();
+        // Create a path with a timestamped directory to clone to.
+        $deploymentPath = $server->releases . $this->timestamp();
+        $releasesPath = $server->releases;
+        $symlinkPath = $server->current;
 
         return [
-            "ln -snf $deploymentPath $projectPath/current",
-            "cd $projectPath/releases && ls -t | tail -n +6 | xargs rm -rf"
+            "ln -snf $deploymentPath $symlinkPath",
+            "cd $releasesPath && ls -t | tail -n +6 | xargs rm -rf"
         ];
     }
 
@@ -37,10 +41,12 @@ class CleanOldReleases extends AbstractDeployment implements ShouldQueue
      */
     public function handle(SSH $ssh)
     {
-        $ssh->setCommands($this->getCommands());
-        $ssh->setTarget($this->getServerName());
-        $ssh->setJobName($this->getShortName());
+        foreach ($this->servers() as $server) {
+            $ssh->setCommands($this->getCommands($server));
+            $ssh->setTarget($server->target);
+            $ssh->setJobName($this->getShortName());
 
-        $ssh->fireRealTime();
+            $ssh->fireRealTime();
+        }
     }
 }

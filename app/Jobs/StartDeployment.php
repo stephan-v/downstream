@@ -2,34 +2,17 @@
 
 namespace App\Jobs;
 
-use App\Deployment;
 use App\Events\DeploymentStarted;
+use App\Ssh\AbstractDeployment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class StartDeployment implements ShouldQueue
+class StartDeployment extends AbstractDeployment implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The deployment instance.
-     *
-     * @var Deployment
-     */
-    private $deployment;
-
-    /**
-     * StartDeployment constructor.
-     *
-     * @param Deployment $deployment
-     */
-    public function __construct(Deployment $deployment)
-    {
-        $this->deployment = $deployment;
-    }
 
     /**
      * Execute the job.

@@ -27,8 +27,8 @@
                 <div class="links">
                     <connection-status></connection-status>
 
-                    @if ($project->server)
-                        <start-deployment :project-id="{{ $project->id }}" :server-id="{{ $project->server->id }}"></start-deployment>
+                    @if ($project->servers)
+                        <start-deployment :project-id="{{ $project->id }}"></start-deployment>
                     @else
                         <div class="alert alert-warning mt-3" role="alert">
                             Add a server to start a new deployment.
