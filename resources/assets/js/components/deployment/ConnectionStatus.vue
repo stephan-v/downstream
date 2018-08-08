@@ -1,5 +1,6 @@
 <template>
     <button type="button" class="btn btn-info" @click="getConnectionStatus">
+        <i class="fas fa-spinner fa-spin" v-if="pending"></i>
         Test server connection
     </button>
 </template>
@@ -8,11 +9,25 @@
     import swal from 'sweetalert';
 
     export default {
+        data() {
+            return {
+                pending: false
+            }
+        },
+
         methods: {
             getConnectionStatus() {
+                this.pending = true;
+
                 axios.post('/connection')
-                    .then(this.success)
-                    .catch(this.error);
+                    .then(() => {
+                        this.pending = false;
+                        this.success();
+                    })
+                    .catch(() => {
+                        this.pending = false;
+                        this.error();
+                    });
             },
 
             success() {

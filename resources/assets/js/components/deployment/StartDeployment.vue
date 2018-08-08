@@ -6,10 +6,12 @@
 </template>
 
 <script>
+    import { FINISHED, PENDING, WAITING } from '../../deployments/status-types';
+
     export default {
         data() {
             return {
-                status: 0
+                status: FINISHED
             }
         },
 
@@ -27,9 +29,9 @@
         computed: {
             text() {
                 switch(this.status) {
-                    case 1:
+                    case WAITING:
                         return 'Awaiting workers';
-                    case 2:
+                    case PENDING:
                         return 'Deploying';
                     default:
                         return 'Start deployment';
@@ -39,22 +41,22 @@
 
         methods: {
             deploy() {
+                this.status = WAITING;
+
                 axios.post('/deploy', {
                     projectId: this.projectId
-                }).then(() => {
-                    this.status = 1;
                 });
             },
 
             setDeploymentListeners() {
                 window.Echo.private('deployment')
                     .listen('DeploymentStarted', () => {
-                        this.status = 2;
+                        this.status = PENDING;
                     });
 
                 window.Echo.private('deployment')
                     .listen('DeploymentFinished', () => {
-                        this.status = 0;
+                        this.status = FINISHED;
                     });
             },
         }

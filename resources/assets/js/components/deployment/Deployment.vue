@@ -30,6 +30,7 @@
 
 <script>
     import moment from 'moment';
+    import { FINISHED, PENDING, FAILED } from '../../deployments/status-types';
 
     export default {
         props: {
@@ -63,15 +64,15 @@
             },
 
             finished() {
-                return this.deployment.status === 0;
+                return this.deployment.status === FINISHED;
             },
 
             pending() {
-                return this.deployment.status === 1;
+                return this.deployment.status === PENDING;
             },
 
             failed() {
-                return this.deployment.status === 2;
+                return this.deployment.status === FAILED;
             },
         },
 
@@ -79,7 +80,7 @@
             setDeploymentListeners() {
                 window.Echo.private('deployment')
                     .listen('DeploymentFinished', () => {
-                        this.deployment.status = 0;
+                        this.deployment.status = FINISHED;
                     });
             }
         }
