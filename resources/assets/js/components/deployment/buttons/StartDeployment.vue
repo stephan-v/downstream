@@ -49,12 +49,16 @@
             },
 
             setDeploymentListeners() {
-                window.Echo.private('deployment')
+                const channel = `project.${this.projectId}`;
+
+                window.Echo.private(channel)
                     .listen('DeploymentStarted', () => {
+                        console.log('deployment started');
+
                         this.status = PENDING;
                     });
 
-                window.Echo.private('deployment')
+                window.Echo.private(channel)
                     .listen('DeploymentFinished', () => {
                         this.status = FINISHED;
                     });

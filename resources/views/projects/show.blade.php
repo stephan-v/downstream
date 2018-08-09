@@ -25,8 +25,6 @@
         <div class="row justify-content-center mt-3">
             <div class="content">
                 <div class="links">
-                    <connection-status></connection-status>
-
                     @if ($project->servers)
                         <start-deployment :project-id="{{ $project->id }}"></start-deployment>
                     @else
@@ -39,8 +37,7 @@
                 <tabs>
                     <tab name="Deployments">
                         <deployments :initial-deployments="{{ $project->deployments->toJson() }}"
-                                     repository="https://github.com/{{ $project->repository }}"
-                                     route="{{ url()->current() }}">
+                                     :project-id="{{ $project->id }}">
                         </deployments>
                     </tab>
 
@@ -56,6 +53,7 @@
                                 <th>Name</th>
                                 <th>Connect as</th>
                                 <th>IP Address </th>
+                                <th>Connection status</th>
                             </tr>
                             </thead>
 
@@ -65,6 +63,10 @@
                                         <td>{{ $server->name }}</td>
                                         <td>{{ $server->user }}</td>
                                         <td>{{ $server->ip_address }}</td>
+
+                                        <td>
+                                            <connection-status :server="{{ $server }}"></connection-status>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

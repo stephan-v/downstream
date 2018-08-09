@@ -13,6 +13,11 @@
         },
 
         props: {
+            projectId: {
+                required: true,
+                type: Number
+            },
+
             initialDeployments: {
                 required: true,
                 type: Array
@@ -25,7 +30,9 @@
 
         methods: {
             setDeploymentListeners() {
-                window.Echo.private('deployment')
+                const channel = `project.${this.projectId}`;
+
+                window.Echo.private(channel)
                     .listen('DeploymentStarted', (response) => {
                         this.deployments.unshift(response.deployment);
 

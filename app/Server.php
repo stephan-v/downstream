@@ -7,11 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 class Server extends Model
 {
     /**
+     * The server connection has not been tested.
+     */
+    const UNTESTED = 0;
+
+    /**
+     * The server connection test was successful.
+     */
+    const SUCCESSFUL = 1;
+
+    /**
+     * The server connection test failed.
+     */
+    const FAILED = 2;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'user', 'path', 'ip_address', 'project_id'];
+    protected $fillable = ['name', 'user', 'path', 'ip_address', 'project_id', 'status'];
 
     /**
      * Get the server target which is a full SSH bind_address.

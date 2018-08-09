@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\CheckSSHConnection;
 use App\Jobs\CleanOldReleases;
 use App\Jobs\CloneRepository;
 use App\Jobs\ComposerInstall;
 use App\Jobs\FinishDeployment;
 use App\Jobs\StartDeployment;
 use App\Project;
+use App\Server;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class DeploymentController extends Controller
 {
@@ -22,10 +24,9 @@ class DeploymentController extends Controller
     {
         $project = Project::findOrFail($request->projectId);
 
-        // @TODO implement the actual commit hash.
-
         // Create a new deployment for this project.
         $deployment = $project->deployments()->create([
+            'user_id' => auth()->id(),
             'commit' => '8a37b62'
         ]);
 
@@ -65,13 +66,24 @@ class DeploymentController extends Controller
     /**
      * Check the SSH connection status.
      *
-     * @return string
+     * @param int $serverId The server id we want retrieve a model for.
      */
-    public function connection()
+    public function connection(int $serverId)
     {
-        CheckSSHConnection::dispatch();
+        $server = Server::findOrFail($serverId);
 
-        return 'Checking SSH connection';
+        $process = new Process("ssh -q $server->target exit");
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            $server->status = Server::FAILED;
+            $server->save();
+
+            throw new ProcessFailedException($process);
+        }
+
+        $server->status = Server::SUCCESSFUL;
+        $server->save();
     }
 
     /**

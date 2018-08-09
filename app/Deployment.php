@@ -26,7 +26,7 @@ class Deployment extends Model
      *
      * @var array
      */
-    protected $fillable = ['commit', 'status', 'finished_at'];
+    protected $fillable = ['commit', 'status', 'finished_at', 'user_id'];
 
     /**
      * Typecast these properties during serialization.
@@ -43,5 +43,13 @@ class Deployment extends Model
     public function project()
     {
         return $this->belongsTo('App\Project');
+    }
+
+    /**
+     * Get the user that owns the deployment.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

@@ -64,12 +64,12 @@
         },
 
         methods: {
-            setRemoteOutputListener() {
-                window.Echo.private('deployment')
-                    .listen(`.${this.name}`, (message) => {
-                        this.messages.push(message.html);
-                    });
-            },
+//            setRemoteOutputListener() {
+//                window.Echo.private('deployment')
+//                    .listen(`.${this.name}`, (message) => {
+//                        this.messages.push(message.html);
+//                    });
+//            },
 
             setTaskStartedListener() {
                 window.Echo.private('task-status')

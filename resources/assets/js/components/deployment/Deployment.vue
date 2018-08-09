@@ -114,7 +114,9 @@
 
         methods: {
             setDeploymentListeners() {
-                window.Echo.private('deployment')
+                const channel = `project.${this.deployment.project_id}`;
+
+                window.Echo.private(channel)
                     .listen('DeploymentFinished', () => {
                         this.deployment.status = FINISHED;
                     });

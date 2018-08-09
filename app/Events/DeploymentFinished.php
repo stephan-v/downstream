@@ -37,6 +37,6 @@ class DeploymentFinished implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('deployment');
+        return new PrivateChannel('project.' . $this->deployment->project_id);
     }
 }

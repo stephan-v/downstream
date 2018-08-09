@@ -1,5 +1,6 @@
 <?php
 
+use App\Server;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -19,8 +20,12 @@ class CreateServersTable extends Migration
             $table->string('user');
             $table->string('path');
             $table->ipAddress('ip_address');
+
+            $table->unsignedTinyInteger('status')->default(Server::UNTESTED);
+
             $table->unsignedInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

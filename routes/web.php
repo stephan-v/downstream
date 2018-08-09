@@ -15,7 +15,7 @@
 Route::post('/deploy', 'DeploymentController@deploy')->name('deploy');
 
 // Check SSH connection.
-Route::post('/connection', 'DeploymentController@connection');
+Route::post('/connection/{serverId}', 'DeploymentController@connection');
 
 Auth::routes();
 

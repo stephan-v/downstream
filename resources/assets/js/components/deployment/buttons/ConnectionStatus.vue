@@ -1,17 +1,54 @@
 <template>
-    <button type="button" class="btn btn-info" @click="getConnectionStatus">
-        <i class="fas fa-spinner fa-spin" v-if="pending"></i>
-        Test server connection
-    </button>
+    <div class="connection-status">
+        <span class="status-color" :class="statusClass"></span>
+        <span>Test server connection</span>
+        <i class="fas fa-sync-alt" :class="{ 'fa-spin': pending }" @click="getConnectionStatus"></i>
+    </div><!-- /.connection-status -->
 </template>
 
 <script>
-    import swal from 'sweetalert';
+    const UNTESTED = 0;
+    const SUCCESSFUL = 1;
+    const FAILED = 2;
 
     export default {
         data() {
             return {
-                pending: false
+                pending: false,
+                status: UNTESTED
+            }
+        },
+
+        props: {
+            server: {
+                required: true,
+                type: Object
+            }
+        },
+
+        created() {
+            this.status = this.server.status;
+        },
+
+        computed: {
+            statusClass() {
+                return {
+                    untested: this.untested,
+                    successful: this.successful,
+                    failed: this.failed
+                }
+            },
+
+            untested() {
+                return this.status === UNTESTED;
+            },
+
+            successful() {
+                return this.status === SUCCESSFUL;
+            },
+
+            failed() {
+                return this.status === FAILED;
             }
         },
 
@@ -19,36 +56,43 @@
             getConnectionStatus() {
                 this.pending = true;
 
-                axios.post('/connection')
+                axios.post(`/connection/${this.server.id}`)
                     .then(() => {
                         this.pending = false;
-                        this.success();
+                        this.status = SUCCESSFUL;
                     })
                     .catch(() => {
                         this.pending = false;
-                        this.error();
+                        this.status = FAILED;
                     });
-            },
-
-            success() {
-                swal({
-                    title: 'Success!',
-                    text: 'Connection established',
-                    icon: 'success',
-                    buttons: false,
-                    timer: 1500
-                })
-            },
-
-            error() {
-                swal({
-                    title: 'Oops',
-                    text: 'Connection could not be established',
-                    icon: 'error',
-                    buttons: false,
-                    timer: 1500
-                })
             }
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .status-color {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin: 0 0.2rem 0;
+
+        &.untested {
+            background: #f3a202;
+        }
+
+        &.successful {
+            background: #00a745;
+        }
+
+        &.failed {
+            background: #e82f2f;
+        }
+    }
+
+    i {
+        cursor: pointer;
+        margin: 0 0 0 0.2rem;
+    }
+</style>
