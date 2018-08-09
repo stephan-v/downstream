@@ -22,6 +22,7 @@ class FinishDeployment extends AbstractDeployment implements ShouldQueue
     public function handle()
     {
         $deployment = $this->deployment;
+        $deployment->finished_at = now();
         $deployment->status = 0;
         $deployment->save();
 

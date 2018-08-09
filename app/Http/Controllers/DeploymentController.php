@@ -17,15 +17,16 @@ class DeploymentController extends Controller
      * Create a deployment release.
      *
      * @param Request $request
-     * @return string
      */
     public function deploy(Request $request)
     {
         $project = Project::findOrFail($request->projectId);
 
+        // @TODO implement the actual commit hash.
+
         // Create a new deployment for this project.
         $deployment = $project->deployments()->create([
-            'commit' => 'to implement'
+            'commit' => '8a37b62'
         ]);
 
         StartDeployment::dispatch($deployment)->chain([
@@ -37,8 +38,6 @@ class DeploymentController extends Controller
 
         // Remove old deployments from our local database.
         $this->cleanOldDeployments($project);
-
-        return 'Starting deployment';
     }
 
     /**

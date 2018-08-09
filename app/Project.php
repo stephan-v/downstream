@@ -43,6 +43,6 @@ class Project extends Model
      */
     public function deployments()
     {
-        return $this->hasMany('App\Deployment')->orderByDesc('created_at');
+        return $this->hasMany('App\Deployment')->latest();
     }
 }

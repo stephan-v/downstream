@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="container deployment">
+        <h1>Deployment steps</h1>
+
         <table class="table position-relative mt-3">
             <thead>
             <tr>
