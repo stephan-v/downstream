@@ -1,7 +1,7 @@
 <template>
     <div class="connection-status">
         <span class="status-color" :class="statusClass"></span>
-        <span>Test server connection</span>
+        <span>{{ statusText }}</span>
         <i class="fas fa-sync-alt" :class="{ 'fa-spin': pending }" @click="getConnectionStatus"></i>
     </div><!-- /.connection-status -->
 </template>
@@ -31,6 +31,16 @@
         },
 
         computed: {
+            statusText() {
+                const status = {};
+
+                status[UNTESTED] = 'unknown';
+                status[SUCCESSFUL] = 'successful';
+                status[FAILED] = 'failed';
+
+                return status[this.status];
+            },
+
             statusClass() {
                 return {
                     untested: this.untested,
