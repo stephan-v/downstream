@@ -131,7 +131,7 @@
     }
 
     .deployment {
-        font-size: 1.1rem;
+        font-size: 1rem;
         background: white;
         border: 1px solid #E4E3E3;
         border-left: 10px solid $green;
