@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Deployment;
 use App\Jobs\CleanOldReleases;
 use App\Jobs\CloneRepository;
 use App\Jobs\ComposerInstall;
@@ -89,11 +90,14 @@ class DeploymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $projectId
+     * @param int $deploymentId
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $projectId, int $deploymentId)
     {
-        return view('deployments/show');
+        $deployment = Deployment::findOrFail($deploymentId);
+
+        return view('deployments/show', compact('deployment'));
     }
 }

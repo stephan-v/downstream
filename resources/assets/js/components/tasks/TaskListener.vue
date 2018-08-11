@@ -32,6 +32,11 @@
         },
 
         props: {
+            deploymentId: {
+                required: true,
+                type: Number
+            },
+
             name: {
                 required: true,
                 type: String
@@ -39,56 +44,20 @@
         },
 
         created() {
-            this.setRemoteOutputListener();
-            this.setTaskStartedListener();
-            this.setTaskFinishedListener();
-            this.setTaskFailedListener();
+            this.setTaskListener();
         },
 
         computed: {
-            running() {
-                return this.status === 'running';
-            },
-
-            startedTask() {
-                return `.started-task-${this.name}`;
-            },
-
-            finishedTask() {
-                return `.finished-task-${this.name}`;
-            },
-
-            failedTask() {
-                return `.failed-task-${this.name}`;
+            channel() {
+                return `deployment.${this.deploymentId}`;
             }
         },
 
         methods: {
-//            setRemoteOutputListener() {
-//                window.Echo.private('deployment')
-//                    .listen(`.${this.name}`, (message) => {
-//                        this.messages.push(message.html);
-//                    });
-//            },
-
-            setTaskStartedListener() {
-                window.Echo.private('task-status')
-                    .listen(this.startedTask, () => {
+            setTaskListener() {
+                window.Echo.private(this.channel)
+                    .listen('test', () => {
                         this.status = 'running';
-                    });
-            },
-
-            setTaskFinishedListener() {
-                window.Echo.private('task-status')
-                    .listen(this.finishedTask, () => {
-                        this.status = 'completed';
-                    });
-            },
-
-            setTaskFailedListener() {
-                window.Echo.private('task-status')
-                    .listen(this.failedTask, () => {
-                        this.status = 'failed';
                     });
             }
         }

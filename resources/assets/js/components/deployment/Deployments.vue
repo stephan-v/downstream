@@ -1,7 +1,10 @@
 <template>
     <ul class="deployments">
-        <deployment v-for="deployment in deployments" :deployment="deployment" :key="deployment.id"></deployment>
-    </ul><!-- /.deployments -->
+        <deployment v-for="deployment in deployments"
+                    :deployment="deployment"
+                    :key="deployment.id">
+        </deployment>
+    </ul>
 </template>
 
 <script>
@@ -13,14 +16,14 @@
         },
 
         props: {
-            projectId: {
-                required: true,
-                type: Number
-            },
-
             initialDeployments: {
                 required: true,
                 type: Array
+            },
+
+            projectId: {
+                required: true,
+                type: Number
             }
         },
 
@@ -28,18 +31,28 @@
             this.setDeploymentListeners();
         },
 
+        computed: {
+            channel() {
+                return `project.${this.projectId}`;
+            }
+        },
+
         methods: {
-            setDeploymentListeners() {
-                const channel = `project.${this.projectId}`;
-
-                window.Echo.private(channel)
-                    .listen('DeploymentStarted', (response) => {
-                        this.deployments.unshift(response.deployment);
-
-                        // Remove the last deployment if we have more than 5
-                        if (this.deployments.length > 5) this.deployments.pop();
-                    });
+            addDeployment(deployment) {
+                this.deployments.unshift(deployment);
             },
+
+            cleanOldDeployments() {
+                if (this.deployments.length > 5) this.deployments.pop();
+            },
+
+            setDeploymentListeners() {
+                window.Echo.private(this.channel)
+                    .listen('DeploymentStarted', (response) => {
+                        this.addDeployment(response.deployment);
+                        this.cleanOldDeployments();
+                    });
+            }
         }
     }
 </script>
@@ -49,5 +62,9 @@
         margin: 0;
         padding: 0;
         list-style: none;
+
+        li:last-child {
+            margin: 0;
+        }
     }
 </style>

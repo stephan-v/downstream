@@ -47,7 +47,7 @@
                     <i class="fas fa-redo-alt"></i>
                 </redeploy>
 
-                <a :href="deploymentUrl">
+                <a :href="deploymentUrl" target="_blank">
                     <i class="far fa-eye"></i>
                 </a>
             </div><!-- /.actions -->

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Deployment;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -13,20 +14,20 @@ class TaskFinished implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The event name.
+     * The freshly create deployment instance.
      *
-     * @var string $name
+     * @var Deployment $deployment
      */
-    private $name;
+    public $deployment;
 
     /**
      * Create a new event instance.
      *
-     * @param string $name
+     * @param Deployment $deployment
      */
-    public function __construct(string $name)
+    public function __construct($deployment)
     {
-        $this->name = $name;
+        $this->deployment = $deployment;
     }
 
     /**
@@ -37,15 +38,5 @@ class TaskFinished implements ShouldBroadcast
     public function broadcastOn()
     {
         return new PrivateChannel('task-status');
-    }
-
-    /**
-     * The event's broadcast name.
-     *
-     * @return string
-     */
-    public function broadcastAs()
-    {
-        return 'finished-task-'.class_basename($this->name);
     }
 }
