@@ -1,13 +1,13 @@
 <template>
     <tr :class="{ running }">
-        <td>{{ name }}</td>
+        <td>{{ task.name }}</td>
+
+        <!--<td class="wrap-content">-->
+            <!--<task-status :status="status"></task-status>-->
+        <!--</td>-->
 
         <td class="wrap-content">
-            <task-status :status="status"></task-status>
-        </td>
-
-        <td class="wrap-content">
-            <console-output :messages="messages"></console-output>
+            <console-output :output="output"></console-output>
         </td>
 
         <div class="progress">
@@ -23,23 +23,20 @@
 </template>
 
 <script>
+    const PENDING = 1;
+
     export default {
         data() {
             return {
-                messages: [],
-                status: 'enqueued'
+                output: this.task.output || [],
+                status: this.task.status
             };
         },
 
         props: {
-            deploymentId: {
+            task: {
                 required: true,
-                type: Number
-            },
-
-            name: {
-                required: true,
-                type: String
+                type: Object
             }
         },
 
@@ -49,15 +46,22 @@
 
         computed: {
             channel() {
-                return `deployment.${this.deploymentId}`;
+                return `task.${this.task.id}`;
+            },
+
+            running() {
+                return this.status === PENDING;
             }
         },
 
         methods: {
             setTaskListener() {
                 window.Echo.private(this.channel)
-                    .listen('test', () => {
-                        this.status = 'running';
+                    .listen('CommandExecuted', (response) => {
+                        this.output.push(response.html);
+                    })
+                    .listen('TaskUpdated', (response) => {
+                        this.status = response.status;
                     });
             }
         }

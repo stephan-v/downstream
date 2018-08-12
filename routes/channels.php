@@ -23,8 +23,8 @@ Broadcast::channel('project.{projectId}', function ($user, $projectId) {
 /**
  * * Verify that the user is allowed to listen to this private deployment.
  *
- * The deployment channel is used to announce task changes.
+ * The task channel is used to announce task changes.
  */
-Broadcast::channel('deployment.{deploymentId}', function ($user, $deploymentId) {
-    return $user->id === \App\Deployment::findOrNew($deploymentId)->user_id;
+Broadcast::channel('task.{taskId}', function ($user, $taskId) {
+    return $user->id === \App\Task::findOrNew($taskId)->deployment->user_id;
 });

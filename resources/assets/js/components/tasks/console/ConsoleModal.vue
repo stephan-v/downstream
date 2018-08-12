@@ -4,7 +4,7 @@
 
         <div class="body">
             <!-- do not use whitespace or new lines within the pre tag (verbatim markup) -->
-            <pre><span v-for="message in messages" v-html="message"></span></pre>
+            <pre><span v-for="message in output" v-html="message"></span></pre>
         </div><!-- /.body -->
     </div><!-- /.console-modal -->
 </template>
@@ -14,7 +14,7 @@
 
     export default {
         props: {
-            messages: {
+            output: {
                 required: true,
                 type: Array
             }

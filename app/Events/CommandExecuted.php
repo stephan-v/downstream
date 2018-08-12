@@ -2,41 +2,51 @@
 
 namespace App\Events;
 
-use App\Deployment;
+use App\Task;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class TaskFinished implements ShouldBroadcast
+class CommandExecuted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The freshly create deployment instance.
+     * The HTML string.
      *
-     * @var Deployment $deployment
+     * @var string $html
      */
-    public $deployment;
+    public $html = '';
+
+    /**
+     * The task that we want to process.
+     *
+     * @var Task $task
+     */
+    private $task;
 
     /**
      * Create a new event instance.
      *
-     * @param Deployment $deployment
+     * @param string $html
+     * @param Task $task
      */
-    public function __construct($deployment)
+    public function __construct(string $html, Task $task)
     {
-        $this->deployment = $deployment;
+        $this->html = $html;
+        $this->task = $task;
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('task-status');
+        return new PrivateChannel('task.' . $this->task->id);
     }
 }

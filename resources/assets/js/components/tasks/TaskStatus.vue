@@ -35,7 +35,7 @@
         props: {
             status: {
                 required: true,
-                type: String
+                type: Number
             }
         },
 

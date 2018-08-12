@@ -4,9 +4,10 @@ namespace App\Ssh;
 
 use App\Deployment;
 use App\Project;
+use App\Task;
 use Illuminate\Database\Eloquent\Collection;
 
-abstract class AbstractDeployment {
+abstract class AbstractTask {
     /**
      * The freshly started deployment.
      *
@@ -15,14 +16,11 @@ abstract class AbstractDeployment {
     protected $deployment;
 
     /**
-     * Deployment constructor.
+     * The created tasks.
      *
-     * @param Deployment $deployment;
+     * @var Task[] $tasks
      */
-    public function __construct(Deployment $deployment)
-    {
-        $this->deployment = $deployment;
-    }
+    protected $tasks;
 
     /**
      * Return the project which own this deployment.
@@ -52,15 +50,5 @@ abstract class AbstractDeployment {
     protected function servers(): Collection
     {
         return $this->project()->servers;
-    }
-
-    /**
-     * Get the short name of the current Job.
-     *
-     * @return string
-     */
-    protected function getShortName(): string
-    {
-        return (new \ReflectionClass($this))->getShortName();
     }
 }

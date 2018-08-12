@@ -18,9 +18,9 @@
                 </tr>
             </thead>
 
-            <tbody is="task-listener" name="CloneRepository" :deployment-id="{{ $deployment->id }}"></tbody>
-            <tbody is="task-listener" name="ComposerInstall" :deployment-id="{{ $deployment->id }}"></tbody>
-            <tbody is="task-listener" name="CleanOldReleases" :deployment-id="{{ $deployment->id }}"></tbody>
+            @foreach ($deployment->tasks as $task)
+                <tbody is="task-listener" :task="{{ $task }}"></tbody>
+            @endforeach
         </table>
     </div><!-- /.container -->
 @endsection

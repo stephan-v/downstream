@@ -2,45 +2,31 @@
 
 namespace App\Ssh;
 
-use App\Events\BroadcastSSHOutput;
-use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
-use SensioLabs\AnsiConverter\Theme\SolarizedTheme;
+use App\Events\CommandExecuted;
+use App\Events\TaskUpdated;
+use App\Task;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 /**
- * Run SSH command(s) on the remote server with a here-doc statement.
+ * Run SSH command(s) on the remote server within a here-doc statement.
  */
 class SSH {
     /**
-     * The commands to run on the target server.
+     * The task that we want to process.
      *
-     * @var array $commands
+     * @var Task $task
      */
-    private $commands;
+    private $task;
 
     /**
-     * The server we want to target for our SSH commands.
+     * Set the task.
      *
-     * @var int $target our complete server name including our prefixed user.
+     * @param Task $task
      */
-    private $target;
-
-    /**
-     * The job name.
-     *
-     * @var string $jobName
-     */
-    private $jobName;
-
-    /**
-     * Set the commands to run on the target server.
-     *
-     * @var string[] $commands The server commands.
-     */
-    public function setCommands(array $commands)
+    public function setTask(Task $task)
     {
-        $this->commands = $commands;
+        $this->task = $task;
     }
 
     /**
@@ -50,45 +36,9 @@ class SSH {
      */
     private function getCommands(): string
     {
-        return implode(PHP_EOL, $this->commands);
-    }
+        $array = unserialize($this->task->commands);
 
-    /**
-     * Set the name of the job which called this class.
-     *
-     * @param string $jobName
-     */
-    public function setJobName(string $jobName)
-    {
-        $this->jobName = $jobName;
-    }
-
-    /**
-     * Get the name of the job which called this class.
-     *
-     * @return string
-     */
-    private function getJobName(): string
-    {
-        return $this->jobName;
-    }
-
-    /**
-     * Set the server target to run remote SSH commands on.
-     *
-     * @param string $target
-     */
-    public function setTarget(string $target)
-    {
-        $this->target = $target;
-    }
-
-    /**
-     * Get the server target to run remote SSH commands on.
-     */
-    private function getTarget(): string
-    {
-        return $this->target;
+        return implode(PHP_EOL, $array);
     }
 
     /**
@@ -99,60 +49,43 @@ class SSH {
     private function getRemoteProcess(): Process
     {
         $delimiter = 'EOF-DOWNSTREAM-APP';
-        $target = $this->getTarget();
+
+        $task = $this->task;
+        $target = $task->server->target;
+        $commands = $this->getCommands();
 
         return new Process(
             "ssh $target 'bash -se' << \\$delimiter".PHP_EOL
-            .$this->getCommands().PHP_EOL
+            .$commands.PHP_EOL
             .$delimiter
         );
     }
 
     /**
-     * Convert Ansi to HTML while applying the solarized theme to the SSH console output.
-     *
-     * @return AnsiToHtmlConverter
-     */
-    private function getThemeConverter(): AnsiToHtmlConverter
-    {
-        $theme = new SolarizedTheme();
-        $converter = new AnsiToHtmlConverter($theme);
-
-        return $converter;
-    }
-
-    /**
      * Run the remote Symfony real-time process.
      */
-    public function fireRealTime()
+    public function fire()
     {
-        $process = $this->getRemoteProcess();
-        $converter = $this->getThemeConverter();
+        // Notify the frontend that the task started.
+        event(new TaskUpdated(Task::PENDING, $this->task));
 
-        $process->run(function ($type, $output) use ($converter) {
-            event(new BroadcastSSHOutput(
-                $converter->convert($output),
-                $this->getJobName()
+        $process = $this->getRemoteProcess();
+
+        $process->run(function ($type, $output) {
+            event(new CommandExecuted(
+                $output,
+                $this->task
             ));
         });
 
         if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-    }
+            // Notify the frontend that the task failed.
+            event(new TaskUpdated(Task::FAILED, $this->task));
 
-    /**
-     * Run the Symfony process.
-     */
-    public function fire(): string
-    {
-        $process = $this->getRemoteProcess();
-        $process->run();
-
-        if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
 
-        return $process->getOutput();
+        // Notify the frontend that the task finished.
+        event(new TaskUpdated(Task::FINISHED, $this->task));
     }
 }

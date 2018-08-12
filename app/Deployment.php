@@ -46,6 +46,14 @@ class Deployment extends Model
     }
 
     /**
+     * Get the tasks that that belong to the deployment.
+     */
+    public function tasks()
+    {
+        return $this->hasMany('App\Task');
+    }
+
+    /**
      * Get the user that owns the deployment.
      */
     public function user()

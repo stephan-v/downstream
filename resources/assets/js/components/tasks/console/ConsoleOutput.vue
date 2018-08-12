@@ -2,7 +2,7 @@
     <div class="console-output">
         <a href="#" @click.prevent="toggle">get output</a>
 
-        <console-modal :messages="output" v-if="visible" @close="toggle"></console-modal>
+        <console-modal :output="placeholder" v-if="visible" @close="toggle"></console-modal>
     </div><!-- /.console-output -->
 </template>
 
@@ -17,19 +17,19 @@
         },
 
         props: {
-            messages: {
+            output: {
                 required: true,
                 type: Array
             }
         },
 
         computed: {
-            hasMessages() {
-                return this.messages.length;
+            hasOutput() {
+                return this.output.length;
             },
 
-            output() {
-                return this.hasMessages ? this.messages : ['Awaiting task output...'];
+            placeholder() {
+                return this.hasOutput ? this.output : ['Awaiting task output...'];
             }
         },
 
