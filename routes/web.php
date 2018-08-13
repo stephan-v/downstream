@@ -26,4 +26,6 @@ Route::resource('/projects', 'ProjectsController');
 // Single deployment view.
 Route::get('/projects/{projectId}/deployments/{deploymentId}', 'DeploymentController@show');
 
+// Server routes.
 Route::post('/servers', 'ServerController@store');
+Route::patch('/servers/{server}', 'ServerController@update');

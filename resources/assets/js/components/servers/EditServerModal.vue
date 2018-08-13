@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="onSubmit">
-        <h1>Add a server</h1>
+        <h1>Edit server</h1>
 
         <div class="form-group row">
             <label for="name" class="col-sm-3 col-form-label">Name</label>
@@ -54,7 +54,7 @@
             </div><!-- /.col-sm-* -->
         </div><!-- /.form-group -->
 
-        <button type="submit" class="btn btn-primary">Save project</button>
+        <button type="submit" class="btn btn-primary">Edit server</button>
     </form>
 </template>
 
@@ -72,10 +72,17 @@
         },
 
         props: {
-            projectId: {
+            server: {
                 required: true,
-                type: Number
+                type: Object
             }
+        },
+
+        created() {
+            this.name = this.server.name;
+            this.ip_address = this.server.ip_address;
+            this.user = this.server.user;
+            this.path = this.server.path;
         },
 
         mounted() {
@@ -87,20 +94,20 @@
                 swal({
                     content: this.$el,
                     buttons: false,
-                    className: 'add-server-modal'
+                    className: 'edit-server-modal'
                 }).then(() => {
                     this.$emit('close');
                 });
             },
 
             onSubmit() {
-                axios.post('/servers', {
+                axios.patch(`/servers/${this.server.id}`, {
                     ...this.$data,
-                    project_id: this.projectId
+                    project_id: this.server.project_id
                 }).then(() => {
                     swal({
                         title: 'Success!',
-                        text: 'Server created',
+                        text: 'Server settings updated',
                         icon: 'success',
                         buttons: false,
                         timer: 1500
@@ -108,7 +115,7 @@
                 }).catch(() => {
                     swal({
                         title: 'Oops',
-                        text: 'Server could not be created',
+                        text: 'Server settings could not be updated',
                         icon: 'error',
                         buttons: false,
                         timer: 1500

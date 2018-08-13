@@ -54,6 +54,7 @@
                                 <th>Connect as</th>
                                 <th>IP Address </th>
                                 <th>Connection status</th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -66,6 +67,10 @@
 
                                         <td>
                                             <connection-status :server="{{ $server }}"></connection-status>
+                                        </td>
+
+                                        <td>
+                                            <edit-server :server="{{ $server }}"></edit-server>
                                         </td>
                                     </tr>
                                 @endforeach

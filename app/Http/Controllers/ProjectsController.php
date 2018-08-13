@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
-use App\Rules\Repository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Queue;
 
 class ProjectsController extends Controller
 {

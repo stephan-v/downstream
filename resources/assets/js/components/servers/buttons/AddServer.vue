@@ -5,7 +5,7 @@
             Add server
         </button>
 
-        <server-modal @close="toggle" v-if="visible" :project-id="projectId"></server-modal>
+        <create-server-modal @close="toggle" v-if="visible" :project-id="projectId"></create-server-modal>
     </div><!-- /.add-server -->
 </template>
 
