@@ -2,9 +2,9 @@
     <tr :class="{ running }">
         <td>{{ task.name }}</td>
 
-        <!--<td class="wrap-content">-->
-            <!--<task-status :status="status"></task-status>-->
-        <!--</td>-->
+        <td class="wrap-content">
+            <task-status :status="status"></task-status>
+        </td>
 
         <td class="wrap-content">
             <console-output :output="output"></console-output>
@@ -23,12 +23,12 @@
 </template>
 
 <script>
-    const PENDING = 1;
+    const RUNNING = 0;
 
     export default {
         data() {
             return {
-                output: this.task.output || [],
+                output: this.task.output || '',
                 status: this.task.status
             };
         },
@@ -50,7 +50,7 @@
             },
 
             running() {
-                return this.status === PENDING;
+                return this.status === RUNNING;
             }
         },
 

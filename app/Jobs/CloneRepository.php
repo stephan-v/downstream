@@ -42,7 +42,7 @@ class CloneRepository extends AbstractTask implements ShouldQueue
             $task->commands = $this->commands($server, $this->project());
             $task->deployment()->associate($this->deployment);
             $task->server()->associate($server);
-            $task->status = Task::FINISHED;
+            $task->status = Task::PENDING;
 
             // Tap returns the model instead of the true or false boolean for the saved state.
             $this->tasks[] = tap($task)->save();

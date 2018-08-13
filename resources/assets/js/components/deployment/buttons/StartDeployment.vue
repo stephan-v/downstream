@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import { FINISHED, PENDING, WAITING } from '../../../deployments/status-types';
+    import { FINISHED, PENDING, WAITING } from '../deployment-status-types';
 
     export default {
         data() {

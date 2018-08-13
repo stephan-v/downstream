@@ -16,7 +16,7 @@
         props: {
             output: {
                 required: true,
-                type: Array
+                type: String
             }
         },
 

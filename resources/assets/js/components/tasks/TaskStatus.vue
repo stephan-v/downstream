@@ -5,28 +5,30 @@
 </template>
 
 <script>
+    import { RUNNING, PENDING, FAILED, FINISHED } from './task-status-types';
+
     export default {
         data() {
             return {
                 options: {
-                    enqueued: {
-                        css: 'badge-secondary',
-                        text: 'enqueued'
-                    },
-
-                    running: {
+                    [RUNNING]: {
                         css: 'badge-warning',
                         text: 'in progress'
                     },
 
-                    completed: {
-                        css: 'badge-success',
-                        text: 'completed'
+                    [PENDING]: {
+                        css: 'badge-secondary',
+                        text: 'enqueued'
                     },
 
-                    failed: {
+                    [FAILED]: {
                         css: 'badge-danger',
                         text: 'failed'
+                    },
+
+                    [FINISHED]: {
+                        css: 'badge-success',
+                        text: 'completed'
                     }
                 }
             };

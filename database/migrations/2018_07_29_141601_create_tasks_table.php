@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->text('output')->nullable();
             $table->text('commands');
 
-            $table->unsignedTinyInteger('status')->default(Task::FINISHED);
+            $table->unsignedTinyInteger('status')->default(Task::PENDING);
 
             $table->unsignedInteger('server_id');
             $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');

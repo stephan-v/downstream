@@ -38,6 +38,9 @@ class CommandExecuted implements ShouldBroadcast
     {
         $this->html = $html;
         $this->task = $task;
+
+        $this->task->output .= $html;
+        $this->task->save();
     }
 
     /**

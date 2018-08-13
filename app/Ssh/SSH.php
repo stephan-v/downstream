@@ -67,7 +67,7 @@ class SSH {
     public function fire()
     {
         // Notify the frontend that the task started.
-        event(new TaskUpdated(Task::PENDING, $this->task));
+        event(new TaskUpdated(Task::RUNNING, $this->task));
 
         $process = $this->getRemoteProcess();
 

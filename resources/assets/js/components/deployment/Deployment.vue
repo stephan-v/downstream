@@ -57,7 +57,7 @@
 
 <script>
     import moment from 'moment';
-    import { FINISHED, PENDING, FAILED } from '../../deployments/status-types';
+    import { FINISHED, PENDING, FAILED } from './deployment-status-types';
 
     export default {
         props: {

@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     /**
-     * The task has finished without any errors.
+     * The task is currently executing.
      */
-    const FINISHED = 0;
+    const RUNNING = 0;
 
     /**
-     * The task is currently in progress.
+     * The task is waiting to be executed.
      */
     const PENDING = 1;
 
@@ -20,6 +20,11 @@ class Task extends Model
      * The task failed to execute.
      */
     const FAILED = 2;
+
+    /**
+     * The task has executed without any errors.
+     */
+    const FINISHED = 3;
 
     /**
      * The attributes that should be hidden in JSON representations.
