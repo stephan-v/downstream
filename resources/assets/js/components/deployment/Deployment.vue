@@ -25,7 +25,8 @@
 
                     <div class="col-7">
                         <i class="far fa-clock"></i>
-                        <span>{{ duration }}</span>
+                        <span v-if="deployment.finished_at">{{ totalRuntime }}</span>
+                        <span v-else>Unknown</span>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
 
@@ -37,7 +38,7 @@
 
                     <div class="col-7">
                         <i class="far fa-calendar-alt"></i>
-                        <span class="text-nowrap">{{ deployment.created_at | diffForHumans }}</span>
+                        <span class="text-nowrap">{{ timePassedSinceCreation }}</span>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.metadata -->
@@ -60,6 +61,13 @@
     import { FINISHED, PENDING, FAILED } from './deployment-status-types';
 
     export default {
+        data() {
+            return {
+                now: moment(),
+                interval: null
+            };
+        },
+
         props: {
             deployment: {
                 required: true,
@@ -67,25 +75,29 @@
             }
         },
 
-        filters: {
-            diffForHumans(time) {
-                return moment(time, 'YYYY-MM-DD HH:mm:ss').fromNow();
-            }
-        },
-
         created() {
             this.setDeploymentListeners();
+            this.updateCurrentTime();
+        },
+
+        beforeDestroy() {
+            clearInterval(this.interval);
         },
 
         computed: {
-            duration() {
+            timePassedSinceCreation() {
+                const created = this.deployment.created_at;
+
+                return moment(created, 'YYYY-MM-DD HH:mm:ss').from(this.now);
+            },
+
+            totalRuntime() {
                 const deployment = this.deployment;
 
                 const finished = moment(deployment.finished_at, 'YYYY-MM-DD HH:mm:ss');
                 const started = moment(deployment.created_at, 'YYYY-MM-DD HH:mm:ss');
-                const duration = moment.duration(finished.diff(started)).humanize();
 
-                return duration;
+                return moment.duration(finished.diff(started)).humanize();
             },
 
             commitUrl() {
@@ -113,12 +125,19 @@
         },
 
         methods: {
+            updateCurrentTime() {
+              this.interval = setInterval(() => {
+                  this.now = moment();
+              }, 1000)
+            },
+
             setDeploymentListeners() {
                 const channel = `project.${this.deployment.project_id}`;
 
                 window.Echo.private(channel)
-                    .listen('DeploymentFinished', () => {
+                    .listen('DeploymentFinished', (response) => {
                         this.deployment.status = FINISHED;
+                        this.deployment.finished_at = response.deployment.finished_at;
                     });
             }
         }
