@@ -47,6 +47,9 @@ class ServerController extends Controller
 
         $input = $request->all();
 
+        // After an edit to the server properties we set it to untested again.
+        $server->status = Server::UNTESTED;
+
         // Populate the server with the request input and update it.
         $server->fill($input)->save();
     }
