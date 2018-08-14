@@ -9,10 +9,7 @@ use App\Jobs\ComposerInstall;
 use App\Jobs\FinishDeployment;
 use App\Jobs\StartDeployment;
 use App\Project;
-use App\Server;
 use Illuminate\Http\Request;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
 class DeploymentController extends Controller
 {
@@ -62,29 +59,6 @@ class DeploymentController extends Controller
                 ->take($count - $skip)
                 ->delete();
         }
-    }
-
-    /**
-     * Check the SSH connection status.
-     *
-     * @param int $serverId The server id we want retrieve a model for.
-     */
-    public function connection(int $serverId)
-    {
-        $server = Server::findOrFail($serverId);
-
-        $process = new Process("ssh -q $server->target exit");
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            $server->status = Server::FAILED;
-            $server->save();
-
-            throw new ProcessFailedException($process);
-        }
-
-        $server->status = Server::SUCCESSFUL;
-        $server->save();
     }
 
     /**

@@ -14,18 +14,16 @@
 // Deploy code.
 Route::post('/deploy', 'DeploymentController@deploy')->name('deploy');
 
-// Check SSH connection.
-Route::post('/connection/{serverId}', 'DeploymentController@connection');
-
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::resource('/projects', 'ProjectsController');
+Route::resource('/projects', 'ProjectController');
 
 // Single deployment view.
 Route::get('/projects/{projectId}/deployments/{deploymentId}', 'DeploymentController@show');
 
+// Test server connection.
+Route::post('/servers/connection/{serverId}', 'ServerController@connection');
 // Server routes.
-Route::post('/servers', 'ServerController@store');
-Route::patch('/servers/{server}', 'ServerController@update');
+Route::resource('/servers', 'ServerController');

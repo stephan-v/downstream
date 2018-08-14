@@ -67,7 +67,8 @@
                 name: '',
                 ip_address: '',
                 user: '',
-                path: ''
+                path: '',
+                status: 0
             };
         },
 
@@ -104,7 +105,9 @@
                 axios.patch(`/servers/${this.server.id}`, {
                     ...this.$data,
                     project_id: this.server.project_id
-                }).then(() => {
+                }).then((response) => {
+                    this.$emit('update', response.data);
+
                     swal({
                         title: 'Success!',
                         text: 'Server settings updated',

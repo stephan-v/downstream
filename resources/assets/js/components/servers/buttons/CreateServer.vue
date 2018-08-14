@@ -1,11 +1,11 @@
 <template>
     <div class="add-server">
-        <button type="button" class="btn btn-sm btn-primary" @click="toggle">
-            <i class="fas fa-edit"></i>
-            Edit server
+        <button type="button" class="btn btn-primary" @click="toggle">
+            <i class="fas fa-plus"></i>
+            Add server
         </button>
 
-        <edit-server-modal @close="toggle" v-if="visible" :server="server"></edit-server-modal>
+        <create-server-modal @close="toggle" @create="create" v-if="visible" :project-id="projectId"></create-server-modal>
     </div><!-- /.add-server -->
 </template>
 
@@ -18,13 +18,17 @@
         },
 
         props: {
-            server: {
+            projectId: {
                 required: true,
-                type: Object
+                type: Number
             }
         },
 
         methods: {
+            create(server) {
+                this.$emit('create', server);
+            },
+
             toggle() {
                 this.visible = !this.visible;
             }

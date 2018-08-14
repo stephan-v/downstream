@@ -67,7 +67,8 @@
                 name: '',
                 ip_address: '',
                 user: '',
-                path: ''
+                path: '',
+                status: 0
             };
         },
 
@@ -97,7 +98,9 @@
                 axios.post('/servers', {
                     ...this.$data,
                     project_id: this.projectId
-                }).then(() => {
+                }).then((response) => {
+                    this.$emit('create', response.data);
+
                     swal({
                         title: 'Success!',
                         text: 'Server created',

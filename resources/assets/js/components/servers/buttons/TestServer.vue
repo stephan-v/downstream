@@ -66,7 +66,7 @@
             getConnectionStatus() {
                 this.pending = true;
 
-                axios.post(`/connection/${this.server.id}`)
+                axios.post(`/servers/connection/${this.server.id}`)
                     .then(() => {
                         this.pending = false;
                         this.status = SUCCESSFUL;

@@ -42,40 +42,7 @@
                     </tab>
 
                     <tab name="Servers">
-                        <div class="d-flex justify-content-between">
-                            <h2>Servers</h2>
-                            <add-server :project-id="{{ $project->id }}"></add-server>
-                        </div><!-- /.d-flex -->
-
-                        <table class="table position-relative mt-3">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Connect as</th>
-                                <th>IP Address </th>
-                                <th>Connection status</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach ($project->servers as $server)
-                                    <tr>
-                                        <td>{{ $server->name }}</td>
-                                        <td>{{ $server->user }}</td>
-                                        <td>{{ $server->ip_address }}</td>
-
-                                        <td>
-                                            <connection-status :server="{{ $server }}"></connection-status>
-                                        </td>
-
-                                        <td>
-                                            <edit-server :server="{{ $server }}"></edit-server>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <servers :project="{{ $project }}"></servers>
                     </tab>
                 </tabs>
             </div><!-- /.content -->
