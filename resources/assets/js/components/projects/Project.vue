@@ -12,18 +12,20 @@
             </a>
         </td>
 
-        <td>{{ created }}</td>
+        <td>N/A</td>
+
+        <td class="wrap-content">
+            <update-project :project="project" @update="update"></update-project>
+        </td><!-- /.wrap-content -->
+
+        <td class="wrap-content">
+            <delete-project :project="project" @del="del"></delete-project>
+        </td><!-- /.wrap-content -->
     </tr>
 </template>
 
 <script>
     export default {
-        data() {
-            return {
-                created: 'N/A'
-            }
-        },
-
         props: {
             project: {
                 required: true,
@@ -31,35 +33,33 @@
             }
         },
 
-        created() {
-            this.setDeploymentListeners();
-        },
-
         computed: {
-            channel() {
-                return `project.${this.project.id}`;
-            },
-
             url() {
                 return `https://github.com/${this.project.repository}`
             },
 
             route() {
                 return `/projects/${this.project.id}`;
-            },
-
-            timePassedSinceCreation() {
-                return moment(this.created, 'YYYY-MM-DD HH:mm:ss').from(this.now);
-            },
+            }
         },
 
         methods: {
-            setDeploymentListeners() {
-                window.Echo.private(this.channel)
-                    .listen('DeploymentStarted', (response) => {
-                        this.lastDeployed = response.deployment.created_at;
-                    });
+            del(project) {
+                this.$emit('del', project);
+            },
+
+            update(project) {
+                this.$emit('update', project);
             }
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    td {
+        &.wrap-content {
+            width: 1%;
+            white-space: nowrap;
+        }
+    }
+</style>

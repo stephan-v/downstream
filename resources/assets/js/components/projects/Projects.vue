@@ -10,11 +10,12 @@
                     <th>Name</th>
                     <th>Repository</th>
                     <th>Last deployed</th>
+                    <th></th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr is="project" :project="project" v-for="project in projects"></tr>
+                <tr is="project" :project="project" v-for="project in projects" @del="del" @update="update"></tr>
             </tbody>
         </table>
 
@@ -52,7 +53,18 @@
                         this.addDeployment(response.deployment);
                         this.cleanOldDeployments();
                     });
-            }
+            },
+
+            del(project) {
+                this.projects.splice(this.projects.indexOf(project), 1);
+            },
+
+            update(project) {
+                const index = this.projects.findIndex(oldProject => oldProject.id === project.id);
+
+                // Copy properties from the updated server object to the outdated server object.
+                this.projects[index] = Object.assign(this.projects[index], project);
+            },
         }
     }
 </script>

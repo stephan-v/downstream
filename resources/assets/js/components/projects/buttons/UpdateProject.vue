@@ -1,12 +1,12 @@
 <template>
-    <div class="add-server">
+    <div class="add-project">
         <button type="button" class="btn btn-sm btn-primary" @click="toggle">
             <i class="fas fa-edit"></i>
-            Edit server
+            Edit project
         </button>
 
-        <update-server-modal @close="toggle" @update="update" v-if="visible" :server="server"></update-server-modal>
-    </div><!-- /.add-server -->
+        <update-project-modal @close="toggle" @update="update" v-if="visible" :project="project"></update-project-modal>
+    </div><!-- /.add-project -->
 </template>
 
 <script>
@@ -18,15 +18,15 @@
         },
 
         props: {
-            server: {
+            project: {
                 required: true,
                 type: Object
             }
         },
 
         methods: {
-            update(server) {
-                this.$emit('update', server);
+            update(project) {
+                this.$emit('update', project);
             },
 
             toggle() {

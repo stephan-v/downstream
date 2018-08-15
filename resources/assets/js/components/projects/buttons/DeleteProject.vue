@@ -1,7 +1,7 @@
 <template>
     <button type="button" class="btn btn-sm btn-primary" @click="openModal">
         <i class="fas fa-trash"></i>
-        Delete server
+        Delete project
     </button>
 </template>
 
@@ -10,7 +10,7 @@
 
     export default {
         props: {
-            server: {
+            project: {
                 required: true,
                 type: Object
             }
@@ -20,7 +20,7 @@
             openModal() {
                 swal({
                     title: "Are you sure?",
-                    text: `This will permanently delete server: ${this.server.name}`,
+                    text: `This will permanently delete project: ${this.project.name}`,
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -30,9 +30,9 @@
             },
 
             del() {
-                axios.delete(`/servers/${this.server.id}`)
+                axios.delete(`/projects/${this.project.id}`)
                     .then(() => {
-                        this.$emit('del', this.server);
+                        this.$emit('del', this.project);
 
                         swal({
                             title: 'Success!',
@@ -42,14 +42,14 @@
                             timer: 1500
                         })
                     }).catch(() => {
-                        swal({
-                            title: 'Oops',
-                            text: 'Something went wrong while trying to delete the server',
-                            icon: 'error',
-                            buttons: false,
-                            timer: 1500
-                        })
-                    });
+                    swal({
+                        title: 'Oops',
+                        text: 'Something went wrong while trying to delete the project',
+                        icon: 'error',
+                        buttons: false,
+                        timer: 1500
+                    })
+                });
             }
         }
     }

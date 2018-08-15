@@ -87,7 +87,19 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /** @var Model $project */
+        $project = Project::findOrFail($id);
+
+        $request->validate([
+            'name' => ['required', 'string'],
+            'repository' => ['required', 'string'],
+        ]);
+
+        $input = $request->all();
+        $project->fill($input);
+        $project->save();
+
+        return response($project->jsonSerialize(), Response::HTTP_OK);
     }
 
     /**
@@ -98,6 +110,9 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $project->delete();
+
+        return response(null, Response::HTTP_OK);
     }
 }
