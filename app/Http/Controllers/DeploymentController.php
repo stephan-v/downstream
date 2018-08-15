@@ -28,15 +28,15 @@ class DeploymentController extends Controller
             'commit' => '8a37b62'
         ]);
 
+        // Remove old deployments from our local database.
+        $this->cleanOldDeployments($project);
+
         StartDeployment::dispatch($deployment)->chain([
             new CloneRepository($deployment),
             new ComposerInstall($deployment),
             new CleanOldReleases($deployment),
             new FinishDeployment($deployment)
         ]);
-
-        // Remove old deployments from our local database.
-        $this->cleanOldDeployments($project);
     }
 
     /**
@@ -47,17 +47,14 @@ class DeploymentController extends Controller
     private function cleanOldDeployments(Project $project)
     {
         $deployments = $project->deployments();
+
         $count = $deployments->count();
 
         // Skip the first x max number of deployments and delete the rest.
         $skip = $project->maxDeployments;
 
-        // If we count more rows
         if ($count > $skip) {
-            $deployments
-                ->skip($skip)
-                ->take($count - $skip)
-                ->delete();
+            $deployments->skip($skip)->take($count - $skip)->delete();
         }
     }
 

@@ -10,7 +10,7 @@
     export default {
         data() {
             return {
-                deployments: this.project.deployments
+                deployments: this.project.deployments.reverse()
             }
         },
 
@@ -21,6 +21,10 @@
             }
         },
 
+        created() {
+            this.setDeploymentListener();
+        },
+
         methods: {
             addDeployment(deployment) {
                 this.deployments.unshift(deployment);
@@ -28,6 +32,16 @@
 
             cleanOldDeployments() {
                 if (this.deployments.length > 5) this.deployments.pop();
+            },
+
+            setDeploymentListener() {
+                const channel = `project.${this.project.id}`;
+
+                window.Echo.private(channel)
+                    .listen('DeploymentStarted', (response) => {
+                        this.addDeployment(response.deployment);
+                        this.cleanOldDeployments();
+                    });
             }
         }
     }

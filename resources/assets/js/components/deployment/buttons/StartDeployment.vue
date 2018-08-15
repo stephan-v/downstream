@@ -53,8 +53,6 @@
 
                 window.Echo.private(channel)
                     .listen('DeploymentStarted', () => {
-                        console.log('deployment started');
-
                         this.status = PENDING;
                     });
 
