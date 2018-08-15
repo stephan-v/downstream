@@ -36,9 +36,13 @@
 
                 <tabs>
                     <tab name="Deployments">
-                        <deployments :initial-deployments="{{ $project->deployments->toJson() }}"
-                                     :project-id="{{ $project->id }}">
-                        </deployments>
+                        <h2>Recent deployments</h2>
+
+                        @if (count($project->deployments))
+                            <deployments :project="{{ $project }}"></deployments>
+                        @else
+                            <p>No recent deployments</p>
+                        @endif
                     </tab>
 
                     <tab name="Servers">

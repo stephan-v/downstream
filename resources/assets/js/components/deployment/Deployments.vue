@@ -1,39 +1,23 @@
 <template>
-    <ul class="deployments">
-        <deployment v-for="deployment in deployments"
-                    :deployment="deployment"
-                    :key="deployment.id">
-        </deployment>
-    </ul>
+    <div class="deployments">
+        <ul class="deployments">
+            <deployment v-for="deployment in deployments" :deployment="deployment" :key="deployment.id"></deployment>
+        </ul>
+    </div><!-- /.deployments -->
 </template>
 
 <script>
     export default {
         data() {
             return {
-                deployments: this.initialDeployments
+                deployments: this.project.deployments
             }
         },
 
         props: {
-            initialDeployments: {
+            project: {
                 required: true,
-                type: Array
-            },
-
-            projectId: {
-                required: true,
-                type: Number
-            }
-        },
-
-        created() {
-            this.setDeploymentListeners();
-        },
-
-        computed: {
-            channel() {
-                return `project.${this.projectId}`;
+                type: Object
             }
         },
 
@@ -44,14 +28,6 @@
 
             cleanOldDeployments() {
                 if (this.deployments.length > 5) this.deployments.pop();
-            },
-
-            setDeploymentListeners() {
-                window.Echo.private(this.channel)
-                    .listen('DeploymentStarted', (response) => {
-                        this.addDeployment(response.deployment);
-                        this.cleanOldDeployments();
-                    });
             }
         }
     }

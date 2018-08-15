@@ -6,7 +6,7 @@
             <create-server :project-id="project.id" @create="create"></create-server>
         </div><!-- /.d-flex -->
 
-        <table class="table position-relative mt-3">
+        <table class="table position-relative mt-3" v-if="servers.length">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -19,7 +19,7 @@
             </thead>
 
             <tbody>
-                <tr v-for="server in servers">
+                <tr v-for="server in servers" :key="server.id">
                     <td>{{ server.name }}</td>
                     <td>{{ server.user }}</td>
                     <td>{{ server.ip_address }}</td>
@@ -38,6 +38,8 @@
                 </tr>
             </tbody>
         </table>
+
+        <p v-else>No servers have been assigned to this project.</p>
     </div><!-- /.servers -->
 </template>
 

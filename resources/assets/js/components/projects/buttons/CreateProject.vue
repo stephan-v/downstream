@@ -4,7 +4,7 @@
             Add project
         </button>
 
-        <project-modal @close="toggle" v-if="visible"></project-modal>
+        <create-project-modal @close="toggle" v-if="visible" @create="create"></create-project-modal>
     </div>
 </template>
 
@@ -19,6 +19,10 @@
         methods: {
             toggle() {
                 this.visible = !this.visible;
+            },
+
+            create(project) {
+                this.$emit('create', project);
             }
         }
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProjectController extends Controller
 {
@@ -43,11 +44,14 @@ class ProjectController extends Controller
             'repository' => ['required', 'string'],
         ]);
 
-        Project::create([
+        /** @var Model $project */
+        $project = Project::create([
             'user_id' => $request->user()->id,
             'name' => $request->name,
             'repository' => $request->repository
         ]);
+
+        return response($project->jsonSerialize(), Response::HTTP_CREATED);
     }
 
     /**

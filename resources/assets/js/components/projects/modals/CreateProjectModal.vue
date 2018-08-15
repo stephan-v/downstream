@@ -59,7 +59,9 @@
             },
 
             onSubmit() {
-                axios.post('/projects', this.$data).then(() => {
+                axios.post('/projects', this.$data).then((response) => {
+                    this.$emit('create', response.data);
+
                     swal({
                         title: 'Success!',
                         text: 'Project created',
