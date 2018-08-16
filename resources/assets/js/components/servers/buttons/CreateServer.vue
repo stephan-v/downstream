@@ -1,12 +1,12 @@
 <template>
-    <div class="add-server">
+    <div class="create-server">
         <button type="button" class="btn btn-primary" @click="toggle">
             <i class="fas fa-plus"></i>
             Add server
         </button>
 
         <create-server-modal @close="toggle" @create="create" v-if="visible" :project-id="projectId"></create-server-modal>
-    </div><!-- /.add-server -->
+    </div><!-- /.create-server -->
 </template>
 
 <script>

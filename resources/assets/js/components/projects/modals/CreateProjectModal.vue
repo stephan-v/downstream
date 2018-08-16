@@ -1,9 +1,9 @@
 <template>
-    <div class="create-project">
+    <div class="create-project-modal">
         <h1>Create a project</h1>
 
         <project-form @onSubmit="onSubmit"></project-form>
-    </div><!-- /.create-project -->
+    </div><!-- /.create-project-modal -->
 </template>
 
 <script>

@@ -1,9 +1,9 @@
 <template>
-    <div class="update-project">
+    <div class="update-project-modal">
         <h1>Update project</h1>
 
         <project-form :project="project" @onSubmit="onSubmit"></project-form>
-    </div>
+    </div><!-- /.update-project-modal -->
 </template>
 
 <script>

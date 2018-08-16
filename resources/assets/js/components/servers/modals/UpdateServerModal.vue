@@ -1,9 +1,9 @@
 <template>
-    <div class="edit-server">
+    <div class="update-server-modal">
         <h1>Edit server</h1>
 
         <server-form :server="server" @onSubmit="onSubmit"></server-form>
-    </div><!-- /.edit-server -->
+    </div><!-- /.update-server-modal -->
 </template>
 
 <script>

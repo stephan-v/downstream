@@ -1,11 +1,11 @@
 <template>
-    <div class="add-project">
+    <div class="create-project">
         <button type="button" class="btn btn-primary" @click="toggle">
             Add project
         </button>
 
         <create-project-modal @close="toggle" v-if="visible" @create="create"></create-project-modal>
-    </div>
+    </div><!-- /.create-project -->
 </template>
 
 <script>

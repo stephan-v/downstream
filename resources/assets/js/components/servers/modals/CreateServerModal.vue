@@ -1,9 +1,9 @@
 <template>
-    <div class="add-server">
+    <div class="create-server-modal">
         <h1>Add a server</h1>
 
         <server-form @onSubmit="onSubmit"></server-form>
-    </div><!-- /.add-server -->
+    </div><!-- /.create-server-modal -->
 </template>
 
 <script>
