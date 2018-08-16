@@ -27,6 +27,7 @@
         methods: {
             update(project) {
                 this.$emit('update', project);
+                this.toggle();
             },
 
             toggle() {

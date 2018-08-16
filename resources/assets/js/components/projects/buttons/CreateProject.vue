@@ -17,12 +17,13 @@
         },
 
         methods: {
-            toggle() {
-                this.visible = !this.visible;
-            },
-
             create(project) {
                 this.$emit('create', project);
+                this.toggle();
+            },
+
+            toggle() {
+                this.visible = !this.visible;
             }
         }
     }

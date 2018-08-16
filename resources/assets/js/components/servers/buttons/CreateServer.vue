@@ -27,6 +27,7 @@
         methods: {
             create(server) {
                 this.$emit('create', server);
+                this.toggle();
             },
 
             toggle() {

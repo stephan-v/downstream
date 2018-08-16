@@ -27,6 +27,7 @@
         methods: {
             update(server) {
                 this.$emit('update', server);
+                this.toggle();
             },
 
             toggle() {
