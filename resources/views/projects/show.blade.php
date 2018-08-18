@@ -34,7 +34,7 @@
                     @endif
                 </div><!-- /.links -->
 
-                <tabs>
+                <tabs class="mt-3">
                     <tab name="Deployments">
                         <h2>Recent deployments</h2>
 

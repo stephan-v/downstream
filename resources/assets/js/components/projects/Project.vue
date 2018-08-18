@@ -12,7 +12,7 @@
             </a>
         </td>
 
-        <td>N/A</td>
+        <td>{{ lastDeployment }}</td>
 
         <td class="wrap-content">
             <update-project :project="project" @update="update"></update-project>
@@ -34,6 +34,13 @@
         },
 
         computed: {
+            lastDeployment() {
+                const deployments = this.project.deployments;
+                const lastDeployment = deployments[deployments.length - 1];
+
+                return lastDeployment ? lastDeployment.created_at : 'N/A';
+            },
+
             url() {
                 return `https://github.com/${this.project.repository}`
             },

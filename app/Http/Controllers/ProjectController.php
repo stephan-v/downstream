@@ -17,6 +17,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $projects = $request->user()->projects;
+        $projects->load('deployments');
 
         return view('projects/index', compact('projects'));
     }
