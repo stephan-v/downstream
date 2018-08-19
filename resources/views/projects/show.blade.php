@@ -48,6 +48,17 @@
                     <tab name="Servers">
                         <servers :project="{{ $project }}"></servers>
                     </tab>
+
+                    <tab name="Pipeline">
+                        <div class="alert alert-warning" role="alert">
+                            The pipeline contains all actions that are executed step-by-step when your deployment runs.
+                        </div><!-- /.alert -->
+
+                        <a href="{{ route('pipeline', ['id' => $project->id]) }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add your first action
+                        </a>
+                    </tab>
                 </tabs>
             </div><!-- /.content -->
         </div><!-- /.row -->
