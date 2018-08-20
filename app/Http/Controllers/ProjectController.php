@@ -64,6 +64,8 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::findOrFail($id);
+        // @TODO this should be properly serialized in an API controller.
+        $project->load('deployments');
 
         return view('projects/show', compact('project'));
     }
@@ -119,6 +121,6 @@ class ProjectController extends Controller
 
     public function pipeline($id)
     {
-        dd('test');
+        return view('pipelines/show');
     }
 }
