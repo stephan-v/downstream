@@ -37,13 +37,26 @@
 
         methods: {
             add(action) {
-                // 0. Compose the actions out of
+                axios.post('/actions', { fqcn: 'test' })
+                    .then(() => {
+                        this.pipeline.push(action);
 
-                // 1. Open a sweetalert modal with action details.
-
-                // 2. Persist to the database.
-
-                this.pipeline.push(action);
+                        swal({
+                            title: 'Success!',
+                            text: 'Action added',
+                            icon: 'success',
+                            buttons: false,
+                            timer: 1500
+                        })
+                    }).catch(() => {
+                        swal({
+                            title: 'Oops',
+                            text: 'Action could not be added',
+                            icon: 'error',
+                            buttons: false,
+                            timer: 1500
+                        })
+                    });
             }
         }
     }

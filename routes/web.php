@@ -20,6 +20,9 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('/projects', 'ProjectController');
 
+// Actions(pipeline).
+Route::resource('/actions', 'ActionController');
+
 // Single deployment view.
 Route::get('/projects/{projectId}/deployments/{deploymentId}', 'DeploymentController@show');
 

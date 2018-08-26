@@ -22,7 +22,7 @@
             </ul><!-- /.list-group -->
         </div><!-- /.row -->
 
-        <div class="row justify-content-center mt-3">
+        <div class="row justify-content-center mt-3" v-cloak>
             <div class="content">
                 <div class="links">
                     @if ($project->servers)

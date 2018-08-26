@@ -15,7 +15,7 @@ class CreateActionsTable extends Migration
     {
         Schema::create('actions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('fqcn');
             $table->text('script')->nullable();
             $table->unsignedInteger('order')->default(0);
 
