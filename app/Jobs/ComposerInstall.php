@@ -28,7 +28,7 @@ class ComposerInstall extends AbstractTask implements ShouldQueue
      * @var array $commands Array of commands to run one by one on a specified server.
      */
     private $commands = [
-        'cd {{ release }}',
+        'cd {{ $release }}',
         'composer install -o --no-interaction --prefer-dist'
     ];
 

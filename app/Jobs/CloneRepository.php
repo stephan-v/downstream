@@ -28,8 +28,8 @@ class CloneRepository extends AbstractTask implements ShouldQueue
      * @var array $commands Array of commands to run one by one on a specified server.
      */
     private $commands = [
-        'mkdir -p {{ release }}',
-        'git clone --depth 1 {{ repository }} {{ release }}',
+        'mkdir -p {{ $release }}',
+        'git clone --depth 1 {{ $repository }} {{ $release }}',
         'exit'
     ];
 

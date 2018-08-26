@@ -28,8 +28,8 @@ class CleanOldReleases extends AbstractTask implements ShouldQueue
      * @var array $commands Array of commands to run one by one on a specified server.
      */
     private $commands = [
-        'ln -snf {{ release }} {{ symlink }}',
-        'cd {{ releases }} && ls -t | tail -n +6 | xargs rm -rf'
+        'ln -snf {{ $release }} {{ $symlink }}',
+        'cd {{ $releases }} && ls -t | tail -n +6 | xargs rm -rf'
     ];
 
     /**
