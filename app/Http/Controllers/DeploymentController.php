@@ -28,6 +28,8 @@ class DeploymentController extends Controller
             'commit' => '8a37b62'
         ]);
 
+        // @TODO create the deployment within the chain?
+
         // Remove old deployments from our local database.
         $this->cleanOldDeployments($project);
 
