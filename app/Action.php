@@ -11,7 +11,7 @@ class Action extends Model
      *
      * @var array
      */
-    protected $fillable = ['fqcn', 'script', 'order', 'server_id'];
+    protected $fillable = ['name', 'fqcn', 'script', 'order', 'server_id'];
 
     /**
      * Set the action's fully qualified class name(fqcn).

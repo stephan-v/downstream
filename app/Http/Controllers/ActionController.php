@@ -40,10 +40,9 @@ class ActionController extends Controller
         /** @var Model $action */
         $action = Action::create([
             'fqcn' => $request->fqcn,
+            'name' => $request->name,
             'server_id' => 1
         ]);
-
-        dd($action);
 
         return response($action->jsonSerialize(), Response::HTTP_CREATED);
     }

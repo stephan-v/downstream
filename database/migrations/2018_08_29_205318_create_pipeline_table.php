@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActionsTable extends Migration
+class CreatePipelineTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('actions', function (Blueprint $table) {
+        Schema::create('pipeline', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->text('script')->nullable();
+
+            $table->unsignedInteger('server_id');
+            $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
+
+            $table->unsignedInteger('order')->default(0);
+
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateActionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actions');
+        Schema::dropIfExists('pipeline');
     }
 }

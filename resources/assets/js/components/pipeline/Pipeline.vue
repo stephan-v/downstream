@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-6" v-for="action in actions">
                 <div class="card" @click="add(action)">
-                    <h5>{{ action }}</h5>
+                    <h5>{{ action.name }}</h5>
                 </div><!-- /.card -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
@@ -12,7 +12,7 @@
             <div class="col-lg-12">
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center" v-for="action in pipeline">
-                        {{ action }}
+                        {{ action.name }}
                     </li><!-- /.list-group-item -->
                 </ul><!-- /.list-group -->
             </div><!-- /.col-lg-12 -->
@@ -25,11 +25,22 @@
         data() {
             return {
                 actions: [
-                    'Git clone',
-                    'Composer install',
-                    'Activate new release',
-                    'Purge old releases',
-                    'Custom SSH action'
+                    {
+                        fqcn: 'CloneRepository',
+                        name: 'Git clone',
+                    },
+                    {
+                        fqcn: 'ComposerInstall',
+                        name: 'Composer install'
+                    },
+                    {
+                        fqcn: 'CleanOldReleases',
+                        name: 'Clean old releases'
+                    },
+                    {
+                        fqcn: 'CustomSSH',
+                        name: 'Custom SSH action'
+                    }
                 ],
                 pipeline: []
             }
@@ -37,7 +48,10 @@
 
         methods: {
             add(action) {
-                axios.post('/actions', { fqcn: 'test' })
+                axios.post('/actions', {
+                    name: action.name,
+                    fqcn: action.fqcn
+                })
                     .then(() => {
                         this.pipeline.push(action);
 
