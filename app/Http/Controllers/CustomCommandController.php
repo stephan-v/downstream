@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Action;
+use App\CustomCommand;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class ActionController extends Controller
+class CustomCommandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,7 +38,7 @@ class ActionController extends Controller
     public function store(Request $request)
     {
         /** @var Model $action */
-        $action = Action::create([
+        $action = CustomCommand::create([
             'fqcn' => $request->fqcn,
             'name' => $request->name,
             'server_id' => 1

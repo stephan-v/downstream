@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class ActionTableSeeder extends Seeder
+class FixedCommandsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -24,7 +24,7 @@ class ActionTableSeeder extends Seeder
     private function insertCloneRepositoryScript()
     {
         // Clone repository script.
-        DB::table('actions')->insert([
+        DB::table('fixed_commands')->insert([
             'name' => 'Clone repository',
             'script' => serialize([
                 'mkdir -p {{ $release }}',
@@ -42,7 +42,7 @@ class ActionTableSeeder extends Seeder
     private function insertComposerInstallScript()
     {
         // Composer install script.
-        DB::table('actions')->insert([
+        DB::table('fixed_commands')->insert([
             'name' => 'Composer install',
             'script' => serialize([
                 'cd {{ $release }}',
@@ -59,7 +59,7 @@ class ActionTableSeeder extends Seeder
     private function insertCleanOldReleasesScript()
     {
         // Clean old releases script.
-        DB::table('actions')->insert([
+        DB::table('fixed_commands')->insert([
             'name' => 'Clean old releases',
             'script' => serialize([
                 'ln -snf {{ $release }} {{ $symlink }}',

@@ -45,7 +45,7 @@ class Task extends Model
      */
     public function server()
     {
-        return $this->belongsTo('App\Server');
+        return $this->belongsTo(Server::class);
     }
 
     /**
@@ -53,6 +53,6 @@ class Task extends Model
      */
     public function deployment()
     {
-        return $this->belongsTo('App\Deployment');
+        return $this->belongsTo(Deployment::class);
     }
 }

@@ -35,7 +35,7 @@ class Project extends Model
      */
     public function servers()
     {
-        return $this->hasMany('App\Server');
+        return $this->hasMany(Server::class);
     }
 
     /**
@@ -43,6 +43,6 @@ class Project extends Model
      */
     public function deployments()
     {
-        return $this->hasMany('App\Deployment');
+        return $this->hasMany(Deployment::class);
     }
 }

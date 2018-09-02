@@ -42,7 +42,7 @@ class Deployment extends Model
      */
     public function project()
     {
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo(Project::class);
     }
 
     /**
@@ -50,7 +50,7 @@ class Deployment extends Model
      */
     public function tasks()
     {
-        return $this->hasMany('App\Task');
+        return $this->hasMany(Task::class);
     }
 
     /**
@@ -58,6 +58,6 @@ class Deployment extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 }
