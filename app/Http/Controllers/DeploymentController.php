@@ -20,6 +20,7 @@ class DeploymentController extends Controller
      */
     public function deploy(Request $request)
     {
+        // Fetch our owning project model.
         $project = Project::findOrFail($request->projectId);
 
         // Create a new deployment for this project.
@@ -27,8 +28,6 @@ class DeploymentController extends Controller
             'user_id' => auth()->id(),
             'commit' => '8a37b62'
         ]);
-
-        // @TODO create the deployment within the chain?
 
         // Remove old deployments from our local database.
         $this->cleanOldDeployments($project);
