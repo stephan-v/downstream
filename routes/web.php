@@ -20,9 +20,6 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('/projects', 'ProjectController');
 
-// Actions(pipeline).
-Route::resource('/actions', 'ActionController');
-
 // Single deployment view.
 Route::get('/projects/{projectId}/deployments/{deploymentId}', 'DeploymentController@show');
 
@@ -30,5 +27,3 @@ Route::get('/projects/{projectId}/deployments/{deploymentId}', 'DeploymentContro
 Route::post('/servers/connection/{serverId}', 'ServerController@connection');
 // Server routes.
 Route::resource('/servers', 'ServerController');
-
-Route::get('/projects/{projectId}/pipeline', 'ProjectController@pipeline')->name('pipeline');
