@@ -27,3 +27,9 @@ Route::get('/projects/{projectId}/deployments/{deploymentId}', 'DeploymentContro
 Route::post('/servers/connection/{serverId}', 'ServerController@connection');
 // Server routes.
 Route::resource('/servers', 'ServerController');
+
+// Actions.
+Route::post('/actions/clean', 'CleanOldReleasesController@store');
+Route::post('/actions/clone', 'CloneRepositoryController@store');
+Route::post('/actions/composer', 'ComposerController@store');
+Route::post('/actions/ssh', 'SSHController@store');
