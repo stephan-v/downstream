@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Task;
+use App\Job;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,12 +10,12 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class TaskUpdated implements ShouldBroadcast
+class JobUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The status of the task.
+     * The status of the job.
      *
      * This is set to public so that this data is being passed on to the frontend.
      *
@@ -24,38 +24,38 @@ class TaskUpdated implements ShouldBroadcast
     public $status;
 
     /**
-     * The task that we want to process.
+     * The job that we want to process.
      *
-     * @var Task $task
+     * @var Job $job
      */
-    private $task;
+    private $job;
 
     /**
      * Create a new event instance.
      *
-     * @param int $status The updated status of the task.
-     * @param Task $task
+     * @param int $status The updated status of the job.
+     * @param Job $job
      */
-    public function __construct(int $status, Task $task)
+    public function __construct(int $status, Job $job)
     {
         $this->status = $status;
-        $this->task = $task;
+        $this->job = $job;
 
-        $this->updateTask($this->status, $this->task);
+        $this->updateTask($this->status, $this->job);
     }
 
     /**
-     * Update the task
+     * Update the job
      *
-     * Besides broadcasting to the frontend we also want to update our database task record.
+     * Besides broadcasting to the frontend we also want to update our database job record.
      *
      * @param int $status
-     * @param Model $task
+     * @param Model $job
      */
-    private function updateTask(int $status, Model $task)
+    private function updateTask(int $status, Model $job)
     {
-        $task->status = $status;
-        $task->save();
+        $job->status = $status;
+        $job->save();
     }
 
     /**
@@ -65,6 +65,6 @@ class TaskUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('task.' . $this->task->id);
+        return new PrivateChannel('job.' . $this->job->id);
     }
 }

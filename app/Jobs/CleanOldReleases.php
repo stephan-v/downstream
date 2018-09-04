@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Deployment;
-use App\Ssh\AbstractTask;
+use App\Ssh\AbstractJob;
 use App\Ssh\SSH;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -11,19 +11,19 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class CleanOldReleases extends AbstractTask implements ShouldQueue
+class CleanOldReleases extends AbstractJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The name of the current task.
+     * The name of the current job.
      *
      * @var string $name
      */
     private $name = 'Clean old releases';
 
     /**
-     * The bash commands that are associated with this task.
+     * The bash commands that are associated with this job.
      *
      * @var array $commands Array of commands to run one by one on a specified server.
      */
@@ -50,8 +50,8 @@ class CleanOldReleases extends AbstractTask implements ShouldQueue
      */
     public function handle(SSH $ssh)
     {
-        foreach ($this->tasks as $task) {
-            $ssh->setTask($task);
+        foreach ($this->jobs as $job) {
+            $ssh->setJob($job);
             $ssh->fire();
         }
     }

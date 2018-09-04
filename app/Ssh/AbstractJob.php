@@ -4,13 +4,13 @@ namespace App\Ssh;
 
 use App\Deployment;
 use App\Server;
-use App\Task;
+use App\Job;
 
-abstract class AbstractTask {
+abstract class AbstractJob {
     use CompilesCommandsTrait;
 
     /**
-     * The bash commands that are associated with this task.
+     * The bash commands that are associated with this job.
      *
      * @var array $commands Array of commands to run one by one on a specified server.
      */
@@ -24,18 +24,18 @@ abstract class AbstractTask {
     protected $deployment;
 
     /**
-     * The name of the current task.
+     * The name of the current job.
      *
      * @var string $name
      */
     private $name;
 
     /**
-     * The created tasks.
+     * The created jobs.
      *
-     * @var Task[] $tasks
+     * @var Job[] $jobs
      */
-    protected $tasks;
+    protected $jobs;
 
     /**
      * Deployment constructor.
@@ -50,36 +50,36 @@ abstract class AbstractTask {
         $this->name = $name;
         $this->commands = $commands;
 
-        $this->saveTasksToDatabase();
+        $this->saveJobsToDatabase();
     }
 
     /**
-     * Save the tasks to the database.
+     * Save the jobs to the database.
      */
-    protected function saveTasksToDatabase()
+    protected function saveJobsToDatabase()
     {
         $servers = $this->deployment->project->servers;
 
         foreach ($servers as $server) {
-            $this->createTask($server);
+            $this->createJob($server);
         }
     }
 
     /**
-     * Persist task to the database.
+     * Persist job to the database.
      *
      * @param Server $server
      */
-    private function createTask(Server $server)
+    private function createJob(Server $server)
     {
-        $task = new Task();
+        $job = new Job();
 
-        $task->name = $this->name;
-        $task->commands = $this->compileCommands($server);
-        $task->deployment()->associate($this->deployment);
-        $task->server()->associate($server);
-        $task->status = Task::PENDING;
+        $job->name = $this->name;
+        $job->commands = $this->compileCommands($server);
+        $job->deployment()->associate($this->deployment);
+        $job->server()->associate($server);
+        $job->status = Job::PENDING;
 
-        $this->tasks[] = tap($task)->save();
+        $this->jobs[] = tap($job)->save();
     }
 }

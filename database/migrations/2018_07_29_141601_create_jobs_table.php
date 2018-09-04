@@ -1,11 +1,11 @@
 <?php
 
-use App\Task;
+use App\Job;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTasksTable extends Migration
+class CreateJobsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,13 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->text('output')->nullable();
             $table->text('commands');
 
-            $table->unsignedTinyInteger('status')->default(Task::PENDING);
+            $table->unsignedTinyInteger('status')->default(Job::PENDING);
 
             $table->unsignedInteger('server_id');
             $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
@@ -39,6 +39,6 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('jobs');
     }
 }

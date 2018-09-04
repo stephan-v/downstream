@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Deployment;
-use App\Ssh\AbstractTask;
+use App\Ssh\AbstractJob;
 use App\Ssh\SSH;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class CloneRepository extends AbstractTask implements ShouldQueue
+class CloneRepository extends AbstractJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -50,8 +50,8 @@ class CloneRepository extends AbstractTask implements ShouldQueue
      */
     public function handle(SSH $ssh)
     {
-        foreach ($this->tasks as $task) {
-            $ssh->setTask($task);
+        foreach ($this->jobs as $job) {
+            $ssh->setJob($job);
             $ssh->fire();
         }
     }

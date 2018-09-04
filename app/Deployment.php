@@ -17,7 +17,7 @@ class Deployment extends Model
     const PENDING = 1;
 
     /**
-     * The deployment failed to execute one of the tasks.
+     * The deployment failed to execute one of the jobs.
      */
     const FAILED = 2;
 
@@ -46,11 +46,11 @@ class Deployment extends Model
     }
 
     /**
-     * Get the tasks that that belong to the deployment.
+     * Get the jobs that belong to the deployment.
      */
-    public function tasks()
+    public function jobs()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Job::class);
     }
 
     /**
