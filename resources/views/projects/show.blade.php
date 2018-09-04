@@ -22,7 +22,7 @@
             </ul><!-- /.list-group -->
         </div><!-- /.row -->
 
-        <div class="row justify-content-center mt-3">
+        <div class="row justify-content-center mt-3" v-cloak>
             <div class="content">
                 <div class="links">
                     @if ($project->servers)
@@ -37,12 +37,8 @@
                 <tabs class="mt-3">
                     <tab name="Deployments">
                         <h2>Recent deployments</h2>
-
-                        @if (count($project->deployments))
-                            <deployments :project="{{ $project }}"></deployments>
-                        @else
-                            <p>No recent deployments</p>
-                        @endif
+                        
+                        <deployments :project="{{ $project }}"></deployments>
                     </tab>
 
                     <tab name="Servers">

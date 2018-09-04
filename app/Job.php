@@ -4,25 +4,25 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Job extends Model
 {
     /**
-     * The task is currently executing.
+     * The job is currently executing.
      */
     const RUNNING = 0;
 
     /**
-     * The task is waiting to be executed.
+     * The job is waiting to be executed.
      */
     const PENDING = 1;
 
     /**
-     * The task failed to execute.
+     * The job failed to execute.
      */
     const FAILED = 2;
 
     /**
-     * The task has executed without any errors.
+     * The job has executed without any errors.
      */
     const FINISHED = 3;
 
@@ -41,18 +41,18 @@ class Task extends Model
     protected $fillable = ['name', 'output', 'deployment_id', 'server_id', 'status'];
 
     /**
-     * Get the server that owns the task.
+     * Get the server that owns the job.
      */
     public function server()
     {
-        return $this->belongsTo('App\Server');
+        return $this->belongsTo(Server::class);
     }
 
     /**
-     * Get the deployment that owns the task.
+     * Get the deployment that owns the job.
      */
     public function deployment()
     {
-        return $this->belongsTo('App\Deployment');
+        return $this->belongsTo(Deployment::class);
     }
 }

@@ -26,5 +26,5 @@ Broadcast::channel('project.{projectId}', function ($user, $projectId) {
  * The task channel is used to announce task changes.
  */
 Broadcast::channel('task.{taskId}', function ($user, $taskId) {
-    return $user->id === \App\Task::findOrNew($taskId)->deployment->user_id;
+    return $user->id === \App\Job::findOrNew($taskId)->deployment->user_id;
 });

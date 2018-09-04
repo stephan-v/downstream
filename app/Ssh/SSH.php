@@ -3,8 +3,8 @@
 namespace App\Ssh;
 
 use App\Events\CommandExecuted;
-use App\Events\TaskUpdated;
-use App\Task;
+use App\Events\JobUpdated;
+use App\Job;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -13,20 +13,20 @@ use Symfony\Component\Process\Process;
  */
 class SSH {
     /**
-     * The task that we want to process.
+     * The job that we want to process.
      *
-     * @var Task $task
+     * @var Job $job
      */
-    private $task;
+    private $job;
 
     /**
-     * Set the task.
+     * Set the job.
      *
-     * @param Task $task
+     * @param Job $job
      */
-    public function setTask(Task $task)
+    public function setJob(Job $job)
     {
-        $this->task = $task;
+        $this->job = $job;
     }
 
     /**
@@ -36,7 +36,7 @@ class SSH {
      */
     private function getCommands(): string
     {
-        $array = unserialize($this->task->commands);
+        $array = unserialize($this->job->commands);
 
         return implode(PHP_EOL, $array);
     }
@@ -50,8 +50,8 @@ class SSH {
     {
         $delimiter = 'EOF-DOWNSTREAM-APP';
 
-        $task = $this->task;
-        $target = $task->server->target;
+        $job = $this->job;
+        $target = $job->server->target;
         $commands = $this->getCommands();
 
         return new Process(
@@ -66,26 +66,26 @@ class SSH {
      */
     public function fire()
     {
-        // Notify the frontend that the task started.
-        event(new TaskUpdated(Task::RUNNING, $this->task));
+        // Notify the frontend that the job started.
+        event(new JobUpdated(Job::RUNNING, $this->job));
 
         $process = $this->getRemoteProcess();
 
         $process->run(function ($type, $output) {
             event(new CommandExecuted(
                 $output,
-                $this->task
+                $this->job
             ));
         });
 
         if (!$process->isSuccessful()) {
-            // Notify the frontend that the task failed.
-            event(new TaskUpdated(Task::FAILED, $this->task));
+            // Notify the frontend that the job failed.
+            event(new JobUpdated(Job::FAILED, $this->job));
 
             throw new ProcessFailedException($process);
         }
 
-        // Notify the frontend that the task finished.
-        event(new TaskUpdated(Task::FINISHED, $this->task));
+        // Notify the frontend that the job finished.
+        event(new JobUpdated(Job::FINISHED, $this->job));
     }
 }

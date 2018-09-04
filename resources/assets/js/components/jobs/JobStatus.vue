@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import { RUNNING, PENDING, FAILED, FINISHED } from './task-status-types';
+    import { RUNNING, PENDING, FAILED, FINISHED } from './job-status-types';
 
     export default {
         data() {

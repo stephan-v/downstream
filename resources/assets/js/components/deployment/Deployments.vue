@@ -1,8 +1,10 @@
 <template>
     <div class="deployments">
-        <ul class="deployments">
+        <ul class="deployments" v-if="deployments.length">
             <deployment v-for="deployment in deployments" :deployment="deployment" :key="deployment.id"></deployment>
         </ul>
+
+        <p v-else>No recent deployments</p>
     </div><!-- /.deployments -->
 </template>
 

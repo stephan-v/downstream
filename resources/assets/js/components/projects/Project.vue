@@ -35,7 +35,8 @@
 
         computed: {
             lastDeployment() {
-                const deployments = this.project.deployments;
+                const deployments = this.project.deployments || [];
+
                 const lastDeployment = deployments[deployments.length - 1];
 
                 return lastDeployment ? lastDeployment.created_at : 'N/A';

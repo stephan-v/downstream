@@ -1,9 +1,9 @@
 <template>
     <tr :class="{ running }">
-        <td>{{ task.name }}</td>
+        <td>{{ job.name }}</td>
 
         <td class="wrap-content">
-            <task-status :status="status"></task-status>
+            <job-status :status="status"></job-status>
         </td>
 
         <td class="wrap-content">
@@ -19,7 +19,7 @@
                  style="width: 100%">
             </div><!-- /.progress-bar -->
         </div><!-- /.progress -->
-    </tr><!-- /.deployment-task -->
+    </tr>
 </template>
 
 <script>
@@ -28,25 +28,25 @@
     export default {
         data() {
             return {
-                output: this.task.output || '',
-                status: this.task.status
+                output: this.job.output || '',
+                status: this.job.status
             };
         },
 
         props: {
-            task: {
+            job: {
                 required: true,
                 type: Object
             }
         },
 
         created() {
-            this.setTaskListener();
+            this.setJobListener();
         },
 
         computed: {
             channel() {
-                return `task.${this.task.id}`;
+                return `job.${this.job.id}`;
             },
 
             running() {
@@ -55,12 +55,12 @@
         },
 
         methods: {
-            setTaskListener() {
+            setJobListener() {
                 window.Echo.private(this.channel)
                     .listen('CommandExecuted', (response) => {
                         this.output.push(response.html);
                     })
-                    .listen('TaskUpdated', (response) => {
+                    .listen('JobUpdated', (response) => {
                         this.status = response.status;
                     });
             }

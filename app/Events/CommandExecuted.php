@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Task;
+use App\Job;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -24,7 +24,7 @@ class CommandExecuted implements ShouldBroadcast
     /**
      * The task that we want to process.
      *
-     * @var Task $task
+     * @var Job $task
      */
     private $task;
 
@@ -32,9 +32,9 @@ class CommandExecuted implements ShouldBroadcast
      * Create a new event instance.
      *
      * @param string $html
-     * @param Task $task
+     * @param Job $task
      */
-    public function __construct(string $html, Task $task)
+    public function __construct(string $html, Job $task)
     {
         $this->html = $html;
         $this->task = $task;

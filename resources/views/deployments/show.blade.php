@@ -18,8 +18,8 @@
                 </tr>
             </thead>
 
-            @foreach ($deployment->tasks as $task)
-                <tbody is="task-listener" :task="{{ $task }}"></tbody>
+            @foreach ($deployment->jobs as $job)
+                <tbody is="job-listener" :job="{{ $job }}"></tbody>
             @endforeach
         </table>
     </div><!-- /.container -->
