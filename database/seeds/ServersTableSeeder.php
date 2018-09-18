@@ -21,5 +21,15 @@ class ServersTableSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+
+        DB::table('servers')->insert([
+            'name' => 'Another Server',
+            'path' => '/home/forge/downstream-test.nl',
+            'ip_address' => '1270.0.0.1',
+            'user' => 'localhost',
+            'project_id' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }

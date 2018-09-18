@@ -31,6 +31,14 @@ class Project extends Model
     }
 
     /**
+     * Get the actions belonging to this project.
+     */
+    public function actions()
+    {
+        return $this->belongsToMany(Action::class)->withPivot('id');
+    }
+
+    /**
      * Get the servers belonging to this project.
      */
     public function servers()

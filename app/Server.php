@@ -29,6 +29,14 @@ class Server extends Model
     protected $fillable = ['name', 'user', 'path', 'ip_address', 'project_id', 'status'];
 
     /**
+     * The actions that belong to the server.
+     */
+    public function actions()
+    {
+        return $this->belongsToMany(Action::class);
+    }
+
+    /**
      * Get the server target which is a full SSH bind_address.
      *
      * @return string

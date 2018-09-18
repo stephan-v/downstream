@@ -27,3 +27,7 @@ Route::get('/projects/{projectId}/deployments/{deploymentId}', 'DeploymentContro
 Route::post('/servers/connection/{serverId}', 'ServerController@connection');
 // Server routes.
 Route::resource('/servers', 'ServerController');
+
+Route::get('/projects/{projectId}/pipeline', 'PipelineController@show');
+Route::post('/projects/{projectId}/pipeline', 'PipelineController@store');
+Route::delete('/projects/{projectId}/pipeline/{pipelineId}/{serverId}', 'PipelineController@destroy');

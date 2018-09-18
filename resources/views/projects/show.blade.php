@@ -44,6 +44,17 @@
                     <tab name="Servers">
                         <servers :project="{{ $project }}"></servers>
                     </tab>
+
+                    <tab name="Pipeline">
+                        <div class="alert alert-warning mt-3" role="alert">
+                            The pipeline contains all your actions that are performed during a deployment.
+                        </div><!-- /.alert -->
+
+                        <button type="button" class="btn btn-primary" @click="toggle">
+                            <i class="fas fa-edit"></i>
+                            Edit pipeline
+                        </button>
+                    </tab>
                 </tabs>
             </div><!-- /.content -->
         </div><!-- /.row -->

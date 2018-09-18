@@ -118,9 +118,4 @@ class ProjectController extends Controller
 
         return response(null, Response::HTTP_OK);
     }
-
-    public function pipeline($id)
-    {
-        return view('pipelines/show');
-    }
 }
