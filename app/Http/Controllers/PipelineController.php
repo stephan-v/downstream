@@ -17,9 +17,13 @@ class PipelineController extends Controller
      */
     public function show($id)
     {
+        // The project connected to this pipeline.
         $project = Project::findOrFail($id);
 
-        return view('pipeline/show', compact('project'));
+        // Available actions to choose from.
+        $actions = Action::all();
+
+        return view('pipeline/show', compact('actions', 'project'));
     }
 
     /**

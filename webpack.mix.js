@@ -1,4 +1,6 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
+const svgo = require('./resources/assets/config/svgo.plugins.json');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -18,6 +20,25 @@ mix.js('resources/assets/js/app.js', 'public/js')
 
 
 mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.svg$/,
+                use: [
+                    {
+                        loader: 'raw-loader',
+                        query: {
+                            name: 'resources/assets/svg/[name].[ext]'
+                        }
+                    },
+                    {
+                        loader: 'svgo-loader',
+                        options: svgo
+                    }
+                ]
+            }
+        ]
+    },
     resolve: {
         modules: [
             path.resolve('./'),

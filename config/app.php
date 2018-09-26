@@ -162,6 +162,9 @@ return [
 
         // Other Service Providers
         App\Providers\SSHServiceProvider::class,
+
+        // Adam Wathan SVG Blade directive.
+        BladeSvg\BladeSvgServiceProvider::class
     ],
 
     /*

@@ -1,0 +1,30 @@
+// Custom SVG icons - used for setting width/heights with differ from the relative font-size.
+.svg-icon {
+    vertical-align: middle;
+    display: inline-block;
+
+    svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    &.inline {
+        vertical-align: inherit;
+        display: inline-flex;
+        align-self: center;
+        position: relative;
+        height: 1em;
+        width: 1em;
+
+        svg {
+            bottom: -0.125em;
+            position: absolute;
+        }
+    }
+
+    &.large {
+        height: 3em;
+        width: 3em;
+    }
+}

@@ -2,12 +2,15 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules",
+        "prewatch": "npm run clean && npm run svg",
+        "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules",
         "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot",
+        "preproduction": "npm run clean && npm run svg",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules",
+        "svg": "svgo -f ./resources/assets/svg -o ./public/images/svg --config=./resources/assets/config/svgo.plugins.json",
+        "clean": "rm -rf ./public/css/* && rm -rf ./public/js/* && rm -rf ./storage/app/public/images/svg/*"
     },
     "devDependencies": {
         "axios": "^0.18",
@@ -23,6 +26,9 @@
         "laravel-echo": "^1.4.0",
         "moment": "^2.22.2",
         "pusher-js": "^4.2.2",
+        "raw-loader": "^0.5.1",
+        "svgo": "^1.0.5",
+        "svgo-loader": "^2.1.0",
         "sweetalert": "^2.1.0",
         "vue-autoloader": "^1.0.5",
         "vue-tabs-component": "^1.4.0"

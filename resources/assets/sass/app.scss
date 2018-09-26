@@ -1,12 +1,15 @@
 // Variables
-@import "variables";
-@import "deployment";
-@import "projects/index";
-@import "projects/show";
-@import "projects/tabs";
+@import 'variables';
+@import 'deployment';
+@import 'projects/index';
+@import 'projects/show';
+@import 'projects/tabs';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// SVG helper classes.
+@import 'svg';
 
 .navbar-laravel {
     background-color: #fff;

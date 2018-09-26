@@ -27,7 +27,7 @@ class ActionsSeeder extends Seeder
         DB::table('actions')->insert([
             'name' => 'Clone repository',
             'description' => 'Clone a Github repository',
-            'icon' => 'clone',
+            'icon' => 'github',
             'script' => serialize([
                 'mkdir -p {{ $release }}',
                 'git clone --depth 1 {{ $repository }} {{ $release }}',
@@ -48,7 +48,7 @@ class ActionsSeeder extends Seeder
         DB::table('actions')->insert([
             'name' => 'Composer install',
             'description' => 'Run the composer installer',
-            'icon' => 'composer',
+            'icon' => 'php',
             'script' => serialize([
                 'cd {{ $release }}',
                 'composer install -o --no-interaction --prefer-dist'
