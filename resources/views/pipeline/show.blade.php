@@ -14,7 +14,8 @@
 
                         <h5 class="card-title">{{ $action->name }}</h5>
                         <p class="card-text">{{ $action->description }}</p>
-                        <a href="#" class="btn btn-primary mt-auto">Add to pipeline</a>
+
+                        <add-to-pipeline :action-id="{{ $action->id }}"></add-to-pipeline>
                     </div><!-- /.card-body -->
                 </div><!-- /.card -->
             @endforeach

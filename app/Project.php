@@ -35,7 +35,7 @@ class Project extends Model
      */
     public function actions()
     {
-        return $this->belongsToMany(Action::class)->withPivot('id');
+        return $this->belongsToMany(Action::class)->withPivot('id')->withTimestamps();
     }
 
     /**

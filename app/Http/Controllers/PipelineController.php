@@ -29,16 +29,16 @@ class PipelineController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param  int  $id
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id, Request $request)
     {
-        /** @var Action $action */
-        $action = Action::findOrFail($request->action_id);
+        // The project connected to this pipeline.
+        $project = Project::findOrFail($id);
 
-        // Sync to the pivot table with 'project_id' as extra value.
-        $action->servers()->attach($request->server_id);
+        $project->actions()->attach($request->action_id);
 
         return response(null, Response::HTTP_CREATED);
     }
