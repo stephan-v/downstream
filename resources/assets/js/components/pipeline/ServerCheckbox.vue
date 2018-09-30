@@ -23,11 +23,6 @@
                 type: Number
             },
 
-            pipelineId: {
-                required: true,
-                type: Number
-            },
-
             projectId: {
                 required: true,
                 type: Number
@@ -50,12 +45,17 @@
             }
         },
 
+        computed: {
+            route() {
+                return `/projects/${this.projectId}/pipeline/servers`;
+            }
+        },
+
         methods: {
             // Sync to the pivot table and create a record.
             attach() {
-                axios.post(window.location.href, {
+                axios.post(this.route, {
                     'action_id': this.actionId,
-                    'project_id': this.projectId,
                     'server_id': this.server.id
                 }).then(() => {
                     console.log('Attach record to the pivot table')
@@ -64,7 +64,7 @@
 
             // Sync to the pivot table and destroy a record.
             detach() {
-                axios.delete(`${window.location.href}/${this.actionId}/${this.server.id}`)
+                axios.delete(`${this.route}/${this.server.id}`)
                     .then(() => {
                         console.log('Detached record from the pivot table')
                     });

@@ -18,7 +18,7 @@ class PipelineController extends Controller
     public function show($id)
     {
         // The project connected to this pipeline.
-        $project = Project::findOrFail($id);
+        $project = Project::findOrFail($id)->with(['actions.servers', 'servers'])->first();
 
         // Available actions to choose from.
         $actions = Action::all();
@@ -41,24 +41,5 @@ class PipelineController extends Controller
         $project->actions()->attach($request->action_id);
 
         return response(null, Response::HTTP_CREATED);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $actionId
-     * @return Response
-     * @internal param $actionId
-     * @internal param Request $request
-     */
-    public function destroy(int $projectId, int $actionId, int $serverId)
-    {
-        /** @var Action $action */
-        $action = Action::findOrFail($actionId);
-
-        // Sync to the pivot table with 'project_id' as extra value.
-        $action->servers()->detach($serverId);
-
-        return response(null, Response::HTTP_OK);
     }
 }

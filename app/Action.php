@@ -18,6 +18,6 @@ class Action extends Model
      */
     public function servers()
     {
-        return $this->belongsToMany(Server::class);
+        return $this->belongsToMany(Server::class)->withTimestamps();
     }
 }

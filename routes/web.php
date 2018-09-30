@@ -29,5 +29,7 @@ Route::post('/servers/connection/{serverId}', 'ServerController@connection');
 Route::resource('/servers', 'ServerController');
 
 Route::get('/projects/{projectId}/pipeline', 'PipelineController@show');
-Route::post('/projects/{projectId}/pipeline', 'PipelineController@store');
-Route::delete('/projects/{projectId}/pipeline/{pipelineId}/{serverId}', 'PipelineController@destroy');
+
+Route::resource('/projects/{projectId}/pipeline/servers', 'ActionServerController')->only(['store', 'destroy']);
+
+Route::resource('/projects/{projectId}/pipeline', 'PipelineController')->only(['store']);
