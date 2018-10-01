@@ -6,6 +6,10 @@
             <div class="card mb-3" v-for="action in pipeline">
                 <div class="card-header d-flex align-content-center">
                     {{ action.name }}
+
+                    <button type="button" class="btn btn-danger btn-sm ml-auto" @click="destroy(action.id)">
+                        delete action
+                    </button>
                 </div><!-- /.card-header -->
 
                 <div class="card-body">
@@ -49,6 +53,10 @@
 
                 // Cast the the outcome to a boolean.
                 return !!checked;
+            },
+
+            destroy(id) {
+                axios.delete(`${window.location.href}/${id}`);
             }
         }
     };

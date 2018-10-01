@@ -41,4 +41,18 @@ class PipelineController extends Controller
 
         return response(null, Response::HTTP_CREATED);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Project $project
+     * @param Action $action
+     * @return Response
+     */
+    public function destroy(Project $project, Action $action)
+    {
+        $project->actions()->detach($action->id);
+
+        return response(null, Response::HTTP_OK);
+    }
 }

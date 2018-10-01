@@ -24,7 +24,8 @@
 
                     <h5 class="card-title">Custom action</h5>
                     <p class="card-text">Create your own defined action</p>
-                    <a href="#" class="btn btn-primary mt-auto">Add to pipeline</a>
+
+                    <button type="button" class="btn btn-primary mt-auto">Add to pipeline</button>
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
         </div><!-- /.row -->

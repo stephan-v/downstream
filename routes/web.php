@@ -33,3 +33,5 @@ Route::get('/projects/{project}/pipeline', 'PipelineController@show');
 Route::resource('/projects/{project}/pipeline/servers', 'ActionServerController')->only(['store', 'destroy']);
 
 Route::resource('/projects/{project}/pipeline', 'PipelineController')->only(['store']);
+
+Route::delete('/projects/{project}/pipeline/{action}', 'PipelineController@destroy');
