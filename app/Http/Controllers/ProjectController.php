@@ -58,13 +58,11 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Project $project
+     * @return Response
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        $project = Project::findOrFail($id);
-        // @TODO this should be properly serialized in an API controller.
         $project->load('deployments');
 
         return view('projects/show', compact('project'));
@@ -84,15 +82,12 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param Project $project
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        /** @var Model $project */
-        $project = Project::findOrFail($id);
-
         $request->validate([
             'name' => ['required', 'string'],
             'repository' => ['required', 'string'],
@@ -108,12 +103,11 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Project $project
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        $project = Project::findOrFail($id);
         $project->delete();
 
         return response(null, Response::HTTP_OK);

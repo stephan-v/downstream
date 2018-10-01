@@ -1,8 +1,8 @@
 <template>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" v-model="checked" :id="server.id">
+        <input class="form-check-input" type="checkbox" v-model="checked" :id="identifier">
 
-        <label class="form-check-label" :for="server.id">
+        <label class="form-check-label" :for="identifier">
             {{ server.ip_address }}
             <small class="text-muted">({{ server.name }})</small>
         </label>
@@ -46,6 +46,10 @@
         },
 
         computed: {
+            identifier() {
+                return `${this.actionId}-${this.server.id}`;
+            },
+
             route() {
                 return `/projects/${this.projectId}/pipeline/servers`;
             }
@@ -64,7 +68,11 @@
 
             // Sync to the pivot table and destroy a record.
             detach() {
-                axios.delete(`${this.route}/${this.server.id}`)
+                axios.delete(`${this.route}/${this.server.id}`, {
+                    data: {
+                        'action_id': this.actionId
+                    }
+                })
                     .then(() => {
                         console.log('Detached record from the pivot table')
                     });

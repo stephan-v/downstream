@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Action;
+use App\Project;
+use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -27,18 +29,18 @@ class ActionServerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $actionId
+     * @param Project $project
+     * @param Server $server
+     * @param Request $request
      * @return Response
-     * @internal param $actionId
-     * @internal param Request $request
      */
-    public function destroy(int $actionId, int $serverId)
+    public function destroy(Project $project, Server $server, Request $request)
     {
         /** @var Action $action */
-        $action = Action::findOrFail($actionId);
+        $action = Action::findOrFail($request->action_id);
 
         // Detach record from the pivot table.
-        $action->servers()->detach($serverId);
+        $action->servers()->detach($server->id);
 
         return response(null, Response::HTTP_OK);
     }

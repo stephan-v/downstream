@@ -12,15 +12,14 @@ class PipelineController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Project $project
+     * @return Response
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        // The project connected to this pipeline.
-        $project = Project::findOrFail($id)->with(['actions.servers', 'servers'])->first();
+        $project = $project->with(['actions.servers', 'servers'])->first();
 
-        // Available actions to choose from.
+        // Available default pipeline actions to choose from.
         $actions = Action::all();
 
         return view('pipeline/show', compact('actions', 'project'));
