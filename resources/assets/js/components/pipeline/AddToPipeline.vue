@@ -18,7 +18,9 @@
         methods: {
             add() {
                 axios.post(window.location.href, { 'action_id': this.actionId })
-                    .then(() => {
+                    .then((response) => {
+                        this.$emit('create', response.data);
+
                         swal({
                             title: 'Success!',
                             text: 'Added action to pipeline',

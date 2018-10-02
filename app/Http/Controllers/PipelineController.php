@@ -28,18 +28,19 @@ class PipelineController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Project $project
+     * @param  \Illuminate\Http\Request $request
+     * @return Response
      */
-    public function store($id, Request $request)
+    public function store(Project $project, Request $request)
     {
-        // The project connected to this pipeline.
-        $project = Project::findOrFail($id);
+        /** @var Action $action */
+        $action = Action::findOrFail($request->action_id);
+        $action = $action->load('servers');
 
-        $project->actions()->attach($request->action_id);
+        $project->actions()->attach($action->id);
 
-        return response(null, Response::HTTP_CREATED);
+        return response($action->jsonSerialize(), Response::HTTP_CREATED);
     }
 
     /**

@@ -7,7 +7,7 @@
                 <div class="card-header d-flex align-content-center">
                     {{ action.name }}
 
-                    <button type="button" class="btn btn-danger btn-sm ml-auto" @click="destroy(action.id)">
+                    <button type="button" class="btn btn-danger btn-sm ml-auto" @click="destroy(action)">
                         delete action
                     </button>
                 </div><!-- /.card-header -->
@@ -28,20 +28,21 @@
 
 <script>
     export default {
-        props: {
-            project: {
-                required: true,
-                type: Object
+        data() {
+            return {
+                servers: this.project.servers
             }
         },
 
-        computed: {
-            pipeline() {
-                return this.project.actions;
+        props: {
+            pipeline: {
+                required: true,
+                type: Array
             },
 
-            servers() {
-                return this.project.servers;
+            project: {
+                required: true,
+                type: Object
             }
         },
 
@@ -55,8 +56,11 @@
                 return !!checked;
             },
 
-            destroy(id) {
-                axios.delete(`${window.location.href}/${id}`);
+            destroy(action) {
+                axios.delete(`${window.location.href}/${action.id}`)
+                    .then(() => {
+                        this.$emit('destroy', action);
+                    });
             }
         }
     };

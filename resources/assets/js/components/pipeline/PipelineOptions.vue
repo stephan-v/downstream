@@ -12,7 +12,7 @@
                     <h5 class="card-title">{{ action.name }}</h5>
                     <p class="card-text">{{ action.description }}</p>
 
-                    <add-to-pipeline :action-id="action.id"></add-to-pipeline>
+                    <add-to-pipeline :action-id="action.id" @create="create"></add-to-pipeline>
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
 
@@ -38,6 +38,12 @@
             actions: {
                 required: true,
                 type: Array
+            }
+        },
+
+        methods: {
+            create(action) {
+                this.$emit('create', action);
             }
         }
     }
