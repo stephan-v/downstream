@@ -35,7 +35,26 @@ class Project extends Model
      */
     public function actions()
     {
-        return $this->belongsToMany(Action::class)->withPivot('id')->withTimestamps();
+        return $this->belongsToMany(Action::class)
+                    ->withPivot('id', 'order')
+                    ->withTimestamps()
+                    ->orderBy('order');
+    }
+
+    /**
+     * Get the order of the last action within the pipeline.
+     *
+     * @return int The order for the next action that will be inserted.
+     */
+    public function actionOrder(): int
+    {
+        $action = $this->belongsToMany(Action::class)
+            ->withPivot('id', 'order')
+            ->withTimestamps()
+            ->latest('order')
+            ->first();
+
+        return $action ? ++$action->pivot->order : 0;
     }
 
     /**

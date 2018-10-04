@@ -38,7 +38,11 @@ class PipelineController extends Controller
         $action = Action::findOrFail($request->action_id);
         $action = $action->load('servers');
 
-        $project->actions()->attach($action->id);
+        $project->actions()->attach(
+            $action->id, [
+                'order' => $project->actionOrder()
+            ]
+        );
 
         return response($action->jsonSerialize(), Response::HTTP_CREATED);
     }
