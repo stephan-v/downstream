@@ -48,6 +48,25 @@ class PipelineController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param Project $project
+     * @return Response
+     */
+    public function update(Request $request, Project $project)
+    {
+        $actions = $request->actions;
+
+        // Update the 'order' column of the pivot(pipeline) table.
+        for ($i = 0; $i < count($actions); ++$i) {
+            $project->actions()->updateExistingPivot($actions[$i]['id'], ['order' => $i]);
+        }
+
+        return response(null, Response::HTTP_OK);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param Project $project

@@ -28,10 +28,11 @@ Route::post('/servers/connection/{serverId}', 'ServerController@connection');
 // Server routes.
 Route::resource('/servers', 'ServerController');
 
-Route::get('/projects/{project}/pipeline', 'PipelineController@show');
-
 Route::resource('/projects/{project}/pipeline/servers', 'ActionServerController')->only(['store', 'destroy']);
 
+// Pipeline.
+Route::get('/projects/{project}/pipeline', 'PipelineController@show');
+Route::patch('/projects/{project}/pipeline', 'PipelineController@update');
 Route::resource('/projects/{project}/pipeline', 'PipelineController')->only(['store']);
 
 Route::delete('/projects/{project}/pipeline/{action}', 'PipelineController@destroy');

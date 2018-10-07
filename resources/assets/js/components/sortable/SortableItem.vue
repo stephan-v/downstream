@@ -1,7 +1,5 @@
 <script>
     export default {
-        props: [],
-
         render() {
             return this.$slots.default[0];
         },

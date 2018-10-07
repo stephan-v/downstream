@@ -3,12 +3,14 @@
         <h3 class="mb-3">Current pipeline</h3>
 
         <div class="pipeline">
-            <sortable-list v-model="pipeline">
+            <sortable-list v-model="actions" @input="updateOrder">
                 <ul slot-scope="{ items }">
-                    <sortable-item v-for="action in pipeline" :key="action.id">
+                    <sortable-item v-for="action in actions" :key="action.id">
                         <li class="card mb-3">
-                            <div class="card-header d-flex align-content-center">
-                                {{ action.name }}
+                            <div class="card-header d-flex align-items-center">
+                                <svg-inline name="drag"></svg-inline>
+
+                                <span>{{ action.name }}</span>
 
                                 <button type="button" class="btn btn-danger btn-sm ml-auto" @click="destroy(action)">
                                     delete action
@@ -36,6 +38,7 @@
     export default {
         data() {
             return {
+                actions: this.pipeline,
                 servers: this.project.servers
             }
         },
@@ -67,6 +70,14 @@
                     .then(() => {
                         this.$emit('destroy', action);
                     });
+            },
+
+            updateOrder(actions) {
+                axios.patch(`${window.location.href}`, {
+                    actions: actions
+                }).then(() => {
+                    console.log('updated order')
+                })
             }
         }
     };
@@ -75,5 +86,14 @@
 <style lang="scss" scoped>
     ul {
         padding: 0;
+    }
+
+    .svg-drag {
+        margin: 0 10px 0 0;
+
+        /deep/ svg {
+            fill: #737373;
+            bottom: -0.07em;
+        }
     }
 </style>

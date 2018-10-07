@@ -15,7 +15,11 @@
     }
 
     export default {
-        props: ['value'],
+        props: {
+            value: {
+                required: true
+            }
+        },
 
         render() {
             return this.$scopedSlots.default({
