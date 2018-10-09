@@ -30,6 +30,9 @@ Route::resource('/servers', 'ServerController');
 
 Route::resource('/projects/{project}/pipeline/servers', 'ActionServerController')->only(['store', 'destroy']);
 
+// Custom action.
+Route::resource('/projects/{project}/pipeline/actions', 'ActionController')->only(['store', 'update', 'destroy']);
+
 // Pipeline.
 Route::get('/projects/{project}/pipeline', 'PipelineController@show');
 Route::patch('/projects/{project}/pipeline', 'PipelineController@update');

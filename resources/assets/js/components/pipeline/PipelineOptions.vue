@@ -12,7 +12,7 @@
                     <h5 class="card-title">{{ action.name }}</h5>
                     <p class="card-text">{{ action.description }}</p>
 
-                    <add-to-pipeline :action-id="action.id" @create="create"></add-to-pipeline>
+                    <add-action :action-id="action.id" @create="create"></add-action>
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
 
@@ -25,7 +25,8 @@
                     <h5 class="card-title">Custom action</h5>
                     <p class="card-text">Create your own defined action</p>
 
-                    <button type="button" class="btn btn-primary mt-auto">Add to pipeline</button>
+
+                    <add-custom-action></add-custom-action>
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
         </div><!-- /.row -->
