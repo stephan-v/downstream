@@ -20,7 +20,7 @@ class PipelineController extends Controller
         $project = $project->with(['actions.servers', 'servers'])->first();
 
         // Available default pipeline actions to choose from.
-        $actions = Action::all();
+        $actions = Action::where('custom', false)->get();
 
         return view('pipeline/show', compact('actions', 'project'));
     }
