@@ -63,12 +63,13 @@ class DeploymentController extends Controller
      * Display the specified resource.
      *
      * @param int $projectId
-     * @param int $deploymentId
+     * @param Deployment $deployment
      * @return \Illuminate\Http\Response
      */
-    public function show(int $projectId, int $deploymentId)
+    public function show(int $projectId, Deployment $deployment)
     {
-        $deployment = Deployment::findOrFail($deploymentId);
+        // Lazy eager load the server that the job runs on as well.
+        $deployment->jobs->load('server');
 
         return view('deployments/show', compact('deployment'));
     }

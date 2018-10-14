@@ -9,18 +9,18 @@
             Deployment name: {{ $deployment->commit }}
         </div><!-- /.alert -->
 
-        <table class="table position-relative mt-3">
-            <thead>
-                <tr>
-                    <th>Executed action</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-            </thead>
+        @foreach ($deployment->jobs->groupBy('name') as $groupedJobs)
+            <div class="card mt-3">
+                <div class="card-header">
+                    {{ $groupedJobs->first()->name }}
+                </div><!-- /.card-header -->
 
-            @foreach ($deployment->jobs as $job)
-                <tbody is="job-listener" :job="{{ $job }}"></tbody>
-            @endforeach
-        </table>
+                <ul class="list-group list-group-flush">
+                    @foreach ($groupedJobs as $job)
+                        <job-listener :job="{{ $job }}"></job-listener>
+                    @endforeach
+                </ul>
+            </div><!-- /.card -->
+        @endforeach
     </div><!-- /.container -->
 @endsection

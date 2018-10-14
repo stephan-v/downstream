@@ -1,5 +1,7 @@
 <template>
     <form method="POST" @submit.prevent="onSubmit" class="text-left">
+        <h3>Create custom action</h3>
+
         <div class="form-group">
             <label for="name">Action name</label>
             <input type="text" class="form-control" id="name" placeholder="Name" v-model="name">

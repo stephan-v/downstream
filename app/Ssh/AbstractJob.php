@@ -82,4 +82,16 @@ abstract class AbstractJob {
 
         $this->jobs[] = tap($job)->save();
     }
+
+    /**
+     * The job failed to process.
+     *
+     * If a job failed in the chain we make sure to set the entire deployment to 'failed'.
+     */
+    public function failed()
+    {
+        $deployment = $this->deployment;
+        $deployment->status = Deployment::FAILED;
+        $deployment->save();
+    }
 }

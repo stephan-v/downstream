@@ -21,7 +21,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('/projects', 'ProjectController');
 
 // Single deployment view.
-Route::get('/projects/{projectId}/deployments/{deploymentId}', 'DeploymentController@show');
+Route::get('/projects/{projectId}/deployments/{deployment}', 'DeploymentController@show');
 
 // Test server connection.
 Route::post('/servers/connection/{serverId}', 'ServerController@connection');

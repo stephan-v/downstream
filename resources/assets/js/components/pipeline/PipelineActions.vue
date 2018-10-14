@@ -12,9 +12,17 @@
 
                                 <span>{{ action.name }}</span>
 
-                                <button type="button" class="btn btn-danger btn-sm ml-auto" @click="destroy(action)">
-                                    delete action
-                                </button>
+                                <div class="ml-auto">
+                                    <button type="button"
+                                            class="btn btn-dark btn-sm"
+                                            v-if="action.custom">
+                                        edit action
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger btn-sm" @click="destroy(action)">
+                                        delete action
+                                    </button>
+                                </div><!-- /.ml-auto -->
                             </div><!-- /.card-header -->
 
                             <div class="card-body">

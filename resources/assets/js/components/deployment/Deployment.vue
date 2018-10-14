@@ -7,6 +7,10 @@
                 <i class="fas fa-check"></i> #{{ deployment.id }} passed
             </span>
 
+            <span class="red" v-if="failed">
+                <i class="fas fa-times"></i> #{{ deployment.id }} failed
+            </span>
+
             <span v-if="pending">
                 <i class="fas fa-spinner fa-spin"></i> Deploying
             </span>
@@ -149,6 +153,10 @@
 
     .green {
         color: $green;
+    }
+
+    .red {
+        color: #ff2929;
     }
 
     .deployment {
