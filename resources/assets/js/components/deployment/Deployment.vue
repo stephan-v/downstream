@@ -140,7 +140,7 @@
 
                 window.Echo.private(channel)
                     .listen('DeploymentFinished', (response) => {
-                        this.deployment.status = FINISHED;
+                        this.deployment.status = response.deployment.status;
                         this.deployment.finished_at = response.deployment.finished_at;
                     });
             }

@@ -21,12 +21,23 @@ class DeploymentFinished implements ShouldBroadcast
     public $deployment;
 
     /**
+     * The status of the deployment.
+     *
+     * This is set to public so that this data is being passed on to the frontend.
+     *
+     * @var int $status
+     */
+    public $status;
+
+    /**
      * Create a new event instance.
      *
      * @param Deployment $deployment
+     * @param int $status The deployment status, either having 'failed' or 'finished'.
      */
-    public function __construct($deployment)
+    public function __construct(Deployment $deployment, int $status)
     {
+        $this->status = $status;
         $this->deployment = $deployment;
     }
 

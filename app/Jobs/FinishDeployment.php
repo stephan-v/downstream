@@ -43,6 +43,6 @@ class FinishDeployment implements ShouldQueue
         $deployment->status = 0;
         $deployment->save();
 
-        event(new DeploymentFinished($deployment));
+        event(new DeploymentFinished($deployment, Deployment::FINISHED));
     }
 }

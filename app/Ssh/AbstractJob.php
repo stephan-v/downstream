@@ -3,6 +3,7 @@
 namespace App\Ssh;
 
 use App\Deployment;
+use App\Events\DeploymentFinished;
 use App\Server;
 use App\Job;
 
@@ -93,5 +94,7 @@ abstract class AbstractJob {
         $deployment = $this->deployment;
         $deployment->status = Deployment::FAILED;
         $deployment->save();
+
+        event(new DeploymentFinished($deployment, Deployment::FAILED));
     }
 }

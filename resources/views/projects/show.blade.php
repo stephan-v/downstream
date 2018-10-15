@@ -50,7 +50,7 @@
                             The pipeline contains all your actions that are performed during a deployment.
                         </div><!-- /.alert -->
 
-                        <button type="button" class="btn btn-primary" @click="toggle">
+                        <button type="button" class="btn btn-primary">
                             <i class="fas fa-edit"></i>
                             Edit pipeline
                         </button>
