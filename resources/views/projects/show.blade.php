@@ -50,10 +50,10 @@
                             The pipeline contains all your actions that are performed during a deployment.
                         </div><!-- /.alert -->
 
-                        <button type="button" class="btn btn-primary">
+                        <a href="{{ route('pipeline', ['project' => $project->id]) }}" class="btn btn-primary">
                             <i class="fas fa-edit"></i>
                             Edit pipeline
-                        </button>
+                        </a>
                     </tab>
                 </tabs>
             </div><!-- /.content -->
