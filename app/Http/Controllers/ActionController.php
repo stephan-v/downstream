@@ -27,7 +27,7 @@ class ActionController extends Controller
         $action = new Action();
         $action->name = $request->name;
         $action->description = $request->description;
-        $action->script = $request->script;
+        $action->script = serialize([$request->script]);
         $action->save();
 
         $project->actions()->attach(

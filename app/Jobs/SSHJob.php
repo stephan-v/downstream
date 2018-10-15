@@ -11,36 +11,22 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class ComposerInstall extends AbstractJob implements ShouldQueue
+class SSHJob extends AbstractJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The name of the current task.
-     *
-     * @var string $name
-     */
-    private $name = 'Composer install';
-
-    /**
-     * The bash commands that are associated with this task.
-     *
-     * @var array $commands Array of commands to run one by one on a specified server.
-     */
-    private $commands = [
-        'cd {{ $release }}',
-        'composer install -o --no-interaction --prefer-dist'
-    ];
 
     /**
      * CloneRepository constructor.
      *
      * @param Deployment $deployment
+     * @param string $name The name of the current job.
+     * @param array $commands The commands we want to run over SSH.
      */
-    public function __construct(Deployment $deployment)
+    public function __construct(Deployment $deployment, string $name, array $commands)
     {
-        parent::__construct($deployment, $this->name, $this->commands);
+        parent::__construct($deployment, $name, $commands);
     }
+
 
     /**
      * Execute the job.

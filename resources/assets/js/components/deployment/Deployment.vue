@@ -140,8 +140,13 @@
 
                 window.Echo.private(channel)
                     .listen('DeploymentFinished', (response) => {
-                        this.deployment.status = response.deployment.status;
-                        this.deployment.finished_at = response.deployment.finished_at;
+                        const deployment = response.deployment;
+
+                        // Only update this specific deployment instance.
+                        if (this.deployment.id === deployment.id) {
+                            this.deployment.status = deployment.status;
+                            this.deployment.finished_at = deployment.finished_at;
+                        }
                     });
             }
         }

@@ -35,10 +35,11 @@ class Project extends Model
      */
     public function actions()
     {
-        return $this->belongsToMany(Action::class)
-                    ->withPivot('id', 'order')
-                    ->withTimestamps()
-                    ->orderBy('order');
+        return $this
+            ->belongsToMany(Action::class)
+            ->withPivot('id', 'order')
+            ->withTimestamps()
+            ->orderBy('order');
     }
 
     /**
@@ -48,7 +49,8 @@ class Project extends Model
      */
     public function actionOrder(): int
     {
-        $action = $this->belongsToMany(Action::class)
+        $action = $this
+            ->belongsToMany(Action::class)
             ->withPivot('id', 'order')
             ->withTimestamps()
             ->latest('order')

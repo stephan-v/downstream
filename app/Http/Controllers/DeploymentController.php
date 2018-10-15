@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Action;
 use App\Deployment;
-use App\Jobs\CleanOldReleases;
-use App\Jobs\CloneRepository;
-use App\Jobs\ComposerInstall;
+use App\Jobs\SSHJob;
 use App\Jobs\FinishDeployment;
 use App\Jobs\StartDeployment;
 use App\Project;
@@ -32,12 +31,19 @@ class DeploymentController extends Controller
         // Remove old deployments from our local database.
         $this->cleanOldDeployments($project);
 
-        StartDeployment::dispatch($deployment)->chain([
-            new CloneRepository($deployment),
-            new ComposerInstall($deployment),
-            new CleanOldReleases($deployment),
-            new FinishDeployment($deployment)
-        ]);
+        // Prepare the chain of jobs.
+        $chain = [];
+
+        foreach ($project->actions as $action) {
+            $name = $action->name;
+            $script = unserialize($action->script);
+
+            $chain[] = new SSHJob($deployment, $name, $script);
+        }
+
+        $chain[] = new FinishDeployment($deployment);
+
+        StartDeployment::dispatch($deployment)->chain($chain);
     }
 
     /**

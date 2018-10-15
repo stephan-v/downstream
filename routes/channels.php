@@ -12,7 +12,7 @@
 */
 
 /**
- * Verify that the user is allowed to listen to this private deployment.
+ * Verify that the user is allowed to listen to private deployments.
  *
  * The project channel is used to announce new deployments.
  */

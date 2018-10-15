@@ -40,19 +40,9 @@
             }
         },
 
-
-
         methods: {
             create(project) {
                 this.projects.push(project);
-            },
-
-            setDeploymentListeners() {
-                window.Echo.private(this.channel)
-                    .listen('DeploymentStarted', (response) => {
-                        this.addDeployment(response.deployment);
-                        this.cleanOldDeployments();
-                    });
             },
 
             del(project) {
