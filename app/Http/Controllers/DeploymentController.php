@@ -23,14 +23,11 @@ class DeploymentController extends Controller
             'commit' => '8a37b62'
         ]);
 
-        // Prepare the chain of jobs.
+        // Prepare the chain of deployment jobs.
         $chain = [];
 
         foreach ($project->actions as $action) {
-            $name = $action->name;
-            $script = unserialize($action->script);
-
-            $chain[] = new SSHJob($deployment, $name, $script);
+            $chain[] = new SSHJob($deployment, $action);
         }
 
         $chain[] = new FinishDeployment($deployment);

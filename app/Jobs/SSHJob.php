@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Action;
 use App\Deployment;
 use App\Ssh\AbstractJob;
 use App\Ssh\SSH;
@@ -19,11 +20,13 @@ class SSHJob extends AbstractJob implements ShouldQueue
      * CloneRepository constructor.
      *
      * @param Deployment $deployment
-     * @param string $name The name of the current job.
-     * @param array $commands The commands we want to run over SSH.
+     * @param Action $action
      */
-    public function __construct(Deployment $deployment, string $name, array $commands)
+    public function __construct(Deployment $deployment, Action $action)
     {
+        $name = $action->name;
+        $commands = unserialize($action->script);
+
         parent::__construct($deployment, $name, $commands);
     }
 
