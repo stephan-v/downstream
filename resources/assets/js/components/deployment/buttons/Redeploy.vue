@@ -15,9 +15,7 @@
 
         methods: {
             deploy() {
-                axios.post('/deploy', {
-                    projectId: this.projectId
-                });
+                axios.post(`/deploy/${this.projectId}`);
             }
         }
     }

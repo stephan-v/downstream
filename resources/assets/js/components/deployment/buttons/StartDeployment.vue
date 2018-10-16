@@ -43,9 +43,7 @@
             deploy() {
                 this.status = WAITING;
 
-                axios.post('/deploy', {
-                    projectId: this.projectId
-                });
+                axios.post(`/deploy/${this.projectId}`);
             },
 
             setDeploymentListeners() {

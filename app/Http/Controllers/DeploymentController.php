@@ -2,34 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Action;
 use App\Deployment;
 use App\Jobs\SSHJob;
 use App\Jobs\FinishDeployment;
 use App\Jobs\StartDeployment;
 use App\Project;
-use Illuminate\Http\Request;
 
 class DeploymentController extends Controller
 {
     /**
      * Create a deployment release.
      *
-     * @param Request $request
+     * @param Project $project The project we are creating a deployment for.
      */
-    public function deploy(Request $request)
+    public function deploy(Project $project)
     {
-        // Fetch our owning project model.
-        $project = Project::findOrFail($request->projectId);
-
         // Create a new deployment for this project.
         $deployment = $project->deployments()->create([
             'user_id' => auth()->id(),
             'commit' => '8a37b62'
         ]);
-
-        // Remove old deployments from our local database.
-        $this->cleanOldDeployments($project);
 
         // Prepare the chain of jobs.
         $chain = [];
@@ -44,25 +36,6 @@ class DeploymentController extends Controller
         $chain[] = new FinishDeployment($deployment);
 
         StartDeployment::dispatch($deployment)->chain($chain);
-    }
-
-    /**
-     * Clean up old deployments in the local database.
-     *
-     * @param Project $project
-     */
-    private function cleanOldDeployments(Project $project)
-    {
-        $deployments = $project->deployments();
-
-        $count = $deployments->count();
-
-        // Skip the first x max number of deployments and delete the rest.
-        $skip = $project->maxDeployments;
-
-        if ($count > $skip) {
-            $deployments->skip($skip)->take($count - $skip)->delete();
-        }
     }
 
     /**

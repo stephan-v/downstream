@@ -12,7 +12,7 @@
 */
 
 // Deploy code.
-Route::post('/deploy', 'DeploymentController@deploy')->name('deploy');
+Route::post('/deploy/{project}', 'DeploymentController@deploy')->name('deploy');
 
 Auth::routes();
 
