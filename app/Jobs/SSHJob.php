@@ -6,7 +6,6 @@ use App\Action;
 use App\Deployment;
 use App\Events\DeploymentFinished;
 use App\Job;
-use App\Server;
 use App\Ssh\CompilesCommandsTrait;
 use App\Ssh\SSH;
 use Illuminate\Bus\Queueable;
@@ -20,32 +19,18 @@ class SSHJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, CompilesCommandsTrait;
 
     /**
-     * The bash commands that are associated with this job.
-     *
-     * @var array $commands Array of commands to run one by one on a specified server.
-     */
-    private $commands;
-
-    /**
      * The freshly started deployment.
      *
      * @var Deployment $deployment
      */
-    private $deployment;
-
-    /**
-     * The name of the current job.
-     *
-     * @var string $name
-     */
-    private $name;
+    protected $deployment;
 
     /**
      * The created jobs.
      *
      * @var Job[] $jobs
      */
-    private $jobs;
+    protected $jobs = [];
 
     /**
      * CloneRepository constructor.
@@ -56,40 +41,29 @@ class SSHJob implements ShouldQueue
     public function __construct(Deployment $deployment, Action $action)
     {
         $this->deployment = $deployment;
-        $this->name = $action->name;
-        $this->commands = unserialize($action->script);
-
-        $this->saveJobsToDatabase();
+        $this->persistJobs($action);
     }
 
     /**
      * Save the jobs to the database.
-     */
-    protected function saveJobsToDatabase()
-    {
-        $servers = $this->deployment->project->servers;
-
-        foreach ($servers as $server) {
-            $this->createJob($server);
-        }
-    }
-
-    /**
-     * Persist job to the database.
      *
-     * @param Server $server
+     * @param Action $action The action that we want to persist before execution.
      */
-    private function createJob(Server $server)
+    private function persistJobs(Action $action)
     {
-        $job = new Job();
+        $script = unserialize($action->script);
 
-        $job->name = $this->name;
-        $job->commands = $this->compileCommands($server);
-        $job->deployment()->associate($this->deployment);
-        $job->server()->associate($server);
-        $job->status = Job::PENDING;
+        foreach ($action->servers as $server) {
+            $job = new Job();
 
-        $this->jobs[] = tap($job)->save();
+            $job->name = $action->name;
+            $job->commands = $this->compileWithBlade($server, $script);
+            $job->deployment()->associate($this->deployment);
+            $job->server()->associate($server);
+            $job->status = Job::PENDING;
+
+            $this->jobs[] = tap($job)->save();
+        }
     }
 
     /**
