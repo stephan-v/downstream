@@ -27,7 +27,11 @@ class ActionController extends Controller
         $action = new Action();
         $action->name = $request->name;
         $action->description = $request->description;
-        $action->script = serialize([$request->script]);
+
+        // Create an array from the text input with line breaks.
+        $script = preg_split("/\r\n|\n|\r/", $request->script);
+        $action->script = serialize($script);
+
         $action->save();
 
         $project->actions()->attach(

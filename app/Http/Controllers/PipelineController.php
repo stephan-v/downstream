@@ -75,7 +75,11 @@ class PipelineController extends Controller
      */
     public function destroy(Project $project, Action $action)
     {
+        // Detach from the pivot.
         $project->actions()->detach($action->id);
+
+        // Delete the action.
+        $action->delete();
 
         return response(null, Response::HTTP_OK);
     }

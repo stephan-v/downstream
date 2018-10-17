@@ -13,7 +13,12 @@
         </div><!-- /.form-group -->
 
         <div class="form-group">
-            <label for="script">Your custom script</label>
+            <label for="script" class="mb-0">Your custom script</label>
+
+            <small class="form-text text-muted mt-0 mb-1">
+                Each command should be on a separate line.
+            </small>
+
             <textarea class="form-control" id="script" rows="6" v-model="script"></textarea>
         </div><!-- /.form-group -->
 
