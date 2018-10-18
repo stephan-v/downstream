@@ -11,7 +11,8 @@ use Symfony\Component\Process\Process;
 /**
  * Run SSH command(s) on the remote server within a here-doc statement.
  */
-class SSH {
+class SSH 
+{
     /**
      * The job that we want to process.
      *
