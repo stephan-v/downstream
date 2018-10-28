@@ -40,6 +40,8 @@ class ActionController extends Controller
             ]
         );
 
+        $action = $action->load('servers');
+
         return response($action->jsonSerialize(), Response::HTTP_CREATED);
     }
 }

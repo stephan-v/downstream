@@ -4,7 +4,7 @@
             Add to pipeline
         </button>
 
-        <create-custom-action @close="close" v-if="visible"></create-custom-action>
+        <create-custom-action @close="close" v-if="visible" @create="create"></create-custom-action>
     </div><!-- /.add-custom-action -->
 </template>
 
@@ -19,6 +19,10 @@
         },
 
         methods: {
+            create(action) {
+                this.$emit('create', action);
+            },
+
             close() {
                 this.visible = false;
             },

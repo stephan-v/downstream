@@ -26,7 +26,7 @@
                     <p class="card-text">Create your own defined action</p>
 
 
-                    <add-custom-action></add-custom-action>
+                    <add-custom-action @create="create"></add-custom-action>
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
         </div><!-- /.row -->

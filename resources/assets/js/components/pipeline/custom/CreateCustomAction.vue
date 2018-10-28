@@ -59,7 +59,9 @@
 
             onSubmit() {
                 axios.post(`${window.location.href}/actions`, this.$data)
-                    .then(() => {
+                    .then((response) => {
+                        this.$emit('create', response.data);
+
                         swal({
                             title: 'Success',
                             text: 'Added custom pipeline action',
