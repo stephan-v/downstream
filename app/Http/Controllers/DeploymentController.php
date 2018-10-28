@@ -32,6 +32,7 @@ class DeploymentController extends Controller
 
         $chain[] = new FinishDeployment($deployment);
 
+        // Start the job chain that we have just built.
         StartDeployment::dispatch($deployment)->chain($chain);
     }
 

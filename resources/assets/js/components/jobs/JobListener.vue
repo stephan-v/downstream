@@ -71,14 +71,8 @@
 </script>
 
 <style lang="scss" scoped>
-    td {
-        z-index: 2;
-        position: relative;
-
-        &.wrap-content {
-            width: 1%;
-            white-space: nowrap;
-        }
+    .wrap-content {
+        z-index: 1;
     }
 
     .running {
@@ -86,7 +80,6 @@
         background-color: #FFB212;
 
         .progress {
-            z-index: 1;
             width: 100%;
             height: 100%;
             position: absolute;
