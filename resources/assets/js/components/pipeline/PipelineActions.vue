@@ -43,6 +43,8 @@
 </template>
 
 <script>
+    import swal from 'sweetalert';
+
     export default {
         data() {
             return {
@@ -74,10 +76,20 @@
             },
 
             destroy(action) {
-                axios.delete(`${window.location.href}/${action.id}`)
-                    .then(() => {
-                        this.$emit('destroy', action);
-                    });
+                swal({
+                    title: "Are you sure?",
+                    text: `This will permanently delete action: ${action.name}`,
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        axios.delete(`${window.location.href}/${action.id}`)
+                            .then(() => {
+                                this.$emit('destroy', action);
+                            });
+                    }
+                });
             },
 
             updateOrder(actions) {
