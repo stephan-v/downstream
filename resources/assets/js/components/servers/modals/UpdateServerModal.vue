@@ -1,6 +1,6 @@
 <template>
     <div class="update-server-modal">
-        <h1>Edit server</h1>
+        <h2>Edit server</h2>
 
         <server-form :server="server" @onSubmit="onSubmit"></server-form>
     </div><!-- /.update-server-modal -->

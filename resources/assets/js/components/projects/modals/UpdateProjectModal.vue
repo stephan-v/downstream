@@ -1,6 +1,6 @@
 <template>
     <div class="update-project-modal">
-        <h1>Update project</h1>
+        <h2>Update project</h2>
 
         <project-form :project="project" @onSubmit="onSubmit"></project-form>
     </div><!-- /.update-project-modal -->

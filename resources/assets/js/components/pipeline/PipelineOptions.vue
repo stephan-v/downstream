@@ -12,7 +12,7 @@
                     <h5 class="card-title">{{ action.name }}</h5>
                     <p class="card-text">{{ action.description }}</p>
 
-                    <add-action :action-id="action.id" @create="create"></add-action>
+                    <attach-action :action-id="action.id" @create="create"></attach-action>
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
 
@@ -26,7 +26,7 @@
                     <p class="card-text">Create your own defined action</p>
 
 
-                    <add-custom-action @create="create"></add-custom-action>
+                    <create-custom-action @create="create"></create-custom-action>
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
         </div><!-- /.row -->

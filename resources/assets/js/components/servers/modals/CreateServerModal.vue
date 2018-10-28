@@ -1,6 +1,6 @@
 <template>
     <div class="create-server-modal">
-        <h1>Add a server</h1>
+        <h2>Add a server</h2>
 
         <server-form @onSubmit="onSubmit"></server-form>
     </div><!-- /.create-server-modal -->

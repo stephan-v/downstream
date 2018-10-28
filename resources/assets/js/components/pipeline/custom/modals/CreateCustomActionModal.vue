@@ -1,9 +1,9 @@
 <template>
-    <div class="create-project-modal">
-        <h2>Create a project</h2>
+    <div class="create-custom-action-modal text-left">
+        <h2>Create a custom action</h2>
 
-        <project-form @onSubmit="onSubmit"></project-form>
-    </div><!-- /.create-project-modal -->
+        <action-form @onSubmit="onSubmit"></action-form>
+    </div><!-- /.create-custom-action-modal -->
 </template>
 
 <script>
@@ -25,23 +25,26 @@
             },
 
             onSubmit(data) {
-                axios.post('/projects', data)
+                axios.post(`${window.location.href}/actions`, data)
                     .then((response) => {
                         this.$emit('create', response.data);
 
                         swal({
-                            title: 'Success!',
-                            text: 'Project created',
-                            icon: 'success',
+                            title: 'Success',
+                            text: 'Added custom action',
                             buttons: false,
-                            timer: 1500
-                        })
-                    }).catch(() => {
+                            timer: 1000,
+                            icon: 'success'
+                        }).then(() => {
+                            this.$emit('close');
+                        });
+                    })
+                    .catch(() => {
                         this.$emit('close');
 
                         swal({
                             title: 'Oops',
-                            text: 'Project could not be created',
+                            text: 'Action could not be created',
                             icon: 'error',
                             buttons: false,
                             timer: 1500
