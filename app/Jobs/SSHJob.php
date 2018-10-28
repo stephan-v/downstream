@@ -51,13 +51,11 @@ class SSHJob implements ShouldQueue
      */
     private function persistJobs(Action $action)
     {
-        $script = unserialize($action->script);
-
         foreach ($action->servers as $server) {
             $job = new Job();
 
             $job->name = $action->name;
-            $job->commands = $this->compileWithBlade($server, $script);
+            $job->commands = $this->compileWithBlade($server, $action->script);
             $job->deployment()->associate($this->deployment);
             $job->server()->associate($server);
             $job->status = Job::PENDING;

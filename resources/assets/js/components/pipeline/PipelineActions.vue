@@ -13,11 +13,7 @@
                                 <span>{{ action.name }}</span>
 
                                 <div class="ml-auto">
-                                    <button type="button"
-                                            class="btn btn-dark btn-sm"
-                                            v-if="action.custom">
-                                        edit action
-                                    </button>
+                                    <update-custom-action :action="action" v-if="action.custom" @update="update"></update-custom-action>
 
                                     <button type="button" class="btn btn-danger btn-sm" @click="destroy(action)">
                                         delete action
@@ -98,6 +94,10 @@
                 }).then(() => {
                     console.log('updated order')
                 })
+            },
+
+            update(action) {
+                this.$emit('update', action);
             }
         }
     };

@@ -1,7 +1,7 @@
 <template>
     <div class="pipeline">
         <pipeline-options :actions="actions" @create="create"></pipeline-options>
-        <pipeline-actions :project="project" :pipeline="pipeline" @destroy="destroy"></pipeline-actions>
+        <pipeline-actions :project="project" :pipeline="pipeline" @destroy="destroy" @update="update"></pipeline-actions>
     </div><!-- /.pipeline -->
 </template>
 
@@ -32,7 +32,14 @@
 
             destroy(action) {
                 this.pipeline.splice(this.pipeline.indexOf(action), 1);
-            }
+            },
+
+            update(action) {
+                const index = this.pipeline.findIndex(oldAction => oldAction.id === action.id);
+
+                // Copy properties from the updated action object to the outdated action object.
+                this.pipeline[index] = Object.assign(this.pipeline[index], action);
+            },
         }
     };
 </script>

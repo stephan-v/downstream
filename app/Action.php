@@ -14,11 +14,26 @@ class Action extends Model
     protected $fillable = ['name', 'description', 'icon', 'script'];
 
     /**
-     * The attributes that should be hidden in JSON representations.
+     * Get the actions's un-serialized script
      *
-     * @var array
+     * @param  string  $value
+     * @return string
      */
-    protected $hidden = ['script'];
+    public function getScriptAttribute($value)
+    {
+        return unserialize($value);
+    }
+
+    /**
+     * Set the actions's serialized script
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setScriptAttribute($value)
+    {
+        $this->attributes['script'] = serialize($value);
+    }
 
     /**
      * The servers that belong to the action.

@@ -4,7 +4,10 @@
             Add to pipeline
         </button><!-- /.btn -->
 
-        <create-custom-action-modal @close="toggle" v-if="visible" @create="create"></create-custom-action-modal>
+        <create-custom-action-modal v-if="visible"
+                                    @close="toggle"
+                                    @create="create">
+        </create-custom-action-modal>
     </div><!-- /.add-custom-action -->
 </template>
 
@@ -17,8 +20,10 @@
         },
 
         methods: {
-            create(project) {
-                this.$emit('create', project);
+            create(action) {
+                console.log(action);
+
+                this.$emit('create', action);
                 this.toggle();
             },
 

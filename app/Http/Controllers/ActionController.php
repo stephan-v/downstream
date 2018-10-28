@@ -27,11 +27,7 @@ class ActionController extends Controller
         $action = new Action();
         $action->name = $request->name;
         $action->description = $request->description;
-
-        // Create an array from the text input with line breaks.
-        $script = preg_split("/\r\n|\n|\r/", $request->script);
-        $action->script = serialize($script);
-
+        $action->script = preg_split("/\r\n|\n|\r/", $request->script);
         $action->save();
 
         $project->actions()->attach(
@@ -41,6 +37,31 @@ class ActionController extends Controller
         );
 
         $action = $action->load('servers');
+
+        // Refresh to get a database instance with default column values.
+        $action->refresh();
+
+        return response($action->jsonSerialize(), Response::HTTP_CREATED);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param Project $project
+     * @param Action $action
+     * @return Response
+     */
+    public function update(Request $request, Project $project, Action $action)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'script' => 'required|string'
+        ]);
+
+        $action->fill($validated);
+        $action->save();
 
         return response($action->jsonSerialize(), Response::HTTP_CREATED);
     }
