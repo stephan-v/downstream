@@ -65,6 +65,6 @@ class JobUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('job.' . $this->job->id);
+        return new PrivateChannel('task.' . $this->job->id);
     }
 }

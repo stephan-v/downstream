@@ -48,7 +48,7 @@
 
         computed: {
             channel() {
-                return `job.${this.job.id}`;
+                return `task.${this.job.id}`;
             },
 
             running() {
