@@ -16,7 +16,7 @@ Route::post('/deploy/{project}', 'DeploymentController@deploy')->name('deploy');
 
 // Login authentication routes.
 Auth::routes();
-Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+Route::get('login/github', 'Auth\LoginController@redirectToProvider')->name('github');
 Route::get('auth/github/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/', 'HomeController@index')->name('home');
