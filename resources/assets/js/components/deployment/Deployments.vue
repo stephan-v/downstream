@@ -1,7 +1,12 @@
 <template>
     <div class="deployments">
         <ul class="deployments" v-if="deployments.length">
-            <deployment v-for="deployment in deployments" :deployment="deployment" :key="deployment.id"></deployment>
+            <transition-group name="list">
+                <deployment v-for="deployment in deployments"
+                            :deployment="deployment"
+                            :key="deployment.id">
+                </deployment>
+            </transition-group>
         </ul>
 
         <p v-else>No recent deployments</p>
@@ -58,5 +63,19 @@
         li:last-child {
             margin: 0;
         }
+    }
+
+    // Transition group animations.
+    .list-enter-active {
+        transition: all 1s;
+    }
+
+    .list-enter {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    .list-leave-to {
+        display: none;
     }
 </style>
