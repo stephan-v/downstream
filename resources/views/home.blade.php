@@ -12,6 +12,12 @@
                     <a class="nav-link" href="{{ route('home') }}">HOME</a>
                 </li><!-- /.nav-item -->
 
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('projects.index') }}">PROJECTS</a>
+                    </li><!-- /.nav-item -->
+                @endauth
+
                 <li class="nav-item">
                     @if (Auth::check())
                         <logout-button>LOG OUT</logout-button>
