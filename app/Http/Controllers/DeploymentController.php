@@ -7,6 +7,8 @@ use App\Jobs\SSHJob;
 use App\Jobs\FinishDeployment;
 use App\Jobs\StartDeployment;
 use App\Project;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 class DeploymentController extends Controller
 {
@@ -17,10 +19,24 @@ class DeploymentController extends Controller
      */
     public function deploy(Project $project)
     {
+        // @TODO refactor to a service. Purely for testing purposes.
+        $user = Auth::user();
+
+        $client = new Client([
+            'base_uri' => 'https://api.github.com',
+            'headers' => [
+                'Authorization' => 'token ' . decrypt($user->access_token)
+            ]
+        ]);
+
+        $response = $client->request('GET', '/repos/stephan-v/beerquest/commits/master');
+        $body = json_decode($response->getBody());
+
         // Create a new deployment for this project.
         $deployment = $project->deployments()->create([
             'user_id' => auth()->id(),
-            'commit' => '8a37b62'
+            'commit' => $body->sha,
+            'commit_url' => $body->html_url
         ]);
 
         // Prepare the chain of deployment jobs.

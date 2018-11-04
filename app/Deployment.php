@@ -26,7 +26,7 @@ class Deployment extends Model
      *
      * @var array
      */
-    protected $fillable = ['commit', 'status', 'finished_at', 'user_id'];
+    protected $fillable = ['commit', 'commit_url', 'status', 'finished_at', 'user_id'];
 
     /**
      * Typecast these properties during serialization.

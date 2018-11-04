@@ -17,6 +17,7 @@ class CreateDeploymentsTable extends Migration
         Schema::create('deployments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('commit');
+            $table->string('commit_url');
 
             $table->unsignedTinyInteger('status')->default(Deployment::PENDING);
 

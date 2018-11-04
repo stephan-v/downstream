@@ -31,13 +31,24 @@ class LoginController extends Controller
     protected $redirectTo = '/home';
 
     /**
+     * Github scopes.
+     *
+     * @var array $scopes
+     */
+    private $scopes = [
+        'user:email',
+        'admin:repo_hook',
+        'repo'
+    ];
+
+    /**
      * Redirect the user to the GitHub authentication page.
      *
      * @return \Illuminate\Http\Response
      */
     public function redirectToProvider()
     {
-        return Socialite::driver('github')->redirect();
+        return Socialite::driver('github')->scopes($this->scopes)->redirect();
     }
 
     /**
@@ -49,6 +60,7 @@ class LoginController extends Controller
     {
         $github = Socialite::driver('github')->user();
 
+        // @TODO update the information if this is updated. Especially necessary for the token!
         $user = User::firstOrCreate(['email' => $github->email], [
             'name' => $github->nickname,
             'email' => $github->email,

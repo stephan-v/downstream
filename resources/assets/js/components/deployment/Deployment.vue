@@ -23,7 +23,7 @@
                         <i class="fab fa-github-alt"></i>
 
                         <a :href="commitUrl" target="_blank">
-                            {{ deployment.commit }}
+                            {{ shortSha }}
                         </a>
                     </div><!-- /.col -->
 
@@ -105,7 +105,11 @@
             },
 
             commitUrl() {
-                return 'test';
+                return this.deployment.commit_url;
+            },
+
+            shortSha() {
+                return this.deployment.commit.slice(0, 7);
             },
 
             deploymentUrl() {
