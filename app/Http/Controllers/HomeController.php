@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-
 class HomeController extends Controller
 {
     /**
@@ -13,6 +11,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return Auth::check() ? redirect()->route('projects.index') : view('home');
+        return view('home');
     }
 }

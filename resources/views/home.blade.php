@@ -4,7 +4,7 @@
     <div class="main-menu container position-absolute">
         <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="#">
-                <img src="#" alt="downstream logo">
+                <img src="#" alt="downstream">
             </a><!-- /.navbar-brand -->
 
             <ul class="navbar-nav ml-auto">
@@ -13,7 +13,11 @@
                 </li><!-- /.nav-item -->
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">LOG IN</a>
+                    @if (Auth::check())
+                        <logout-button>LOG OUT</logout-button>
+                    @else
+                        <login-button>LOG IN</login-button>
+                    @endif
                 </li><!-- /.nav-item -->
             </ul><!-- /.navbar-nav -->
         </nav><!-- /.navbar -->
@@ -55,16 +59,5 @@
         </div><!-- /.col -->
     </div><!-- /.row -->
 </section><!-- /.marketing -->
-
-<div class="container">
-    <section class="text-center">
-        <a href="{{ route('github') }}" class="link-unstyled">
-            <div class="card mx-auto mt-5 p-3" style="width: 15rem;">
-                <i class="fab fa-github-alt fa-3x"></i>
-                <h5>Login with Github</h5>
-            </div><!-- /.card -->
-        </a>
-    </section>
-</div><!-- /.container -->
 
 @include('layouts/footer')
