@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -58,6 +57,6 @@ class LoginController extends Controller
 
         Auth::login($user, true);
 
-        return Redirect::to('/projects');
+        return redirect()->route('projects.index');
     }
 }
