@@ -28,6 +28,18 @@
     background: linear-gradient(135deg, #3277E8, #4683EA);
     overflow: hidden;
 
+    .main-menu {
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+
+    .navbar {
+        a {
+            color: #FFF;
+        }
+    }
+
     .container {
         z-index: 1;
     }

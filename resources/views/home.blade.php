@@ -1,6 +1,24 @@
 @include('layouts/header')
 
 <section class="hero d-flex align-items-center position-relative">
+    <div class="main-menu container position-absolute">
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="#">
+                <img src="#" alt="downstream logo">
+            </a><!-- /.navbar-brand -->
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">HOME</a>
+                </li><!-- /.nav-item -->
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">LOG IN</a>
+                </li><!-- /.nav-item -->
+            </ul><!-- /.navbar-nav -->
+        </nav><!-- /.navbar -->
+    </div><!-- /.container -->
+
     <div class="container d-flex align-items-center justify-content-between">
         <div class="intro">
             <h1>Powerful and intuitive <br> instant deployments</h1>
@@ -10,10 +28,6 @@
                 <span>Built for developers.</span>
             </p><!-- /.lead -->
         </div><!-- /.intro -->
-
-        <div class="card">
-            Example
-        </div><!-- /.card -->
     </div><!-- /.container -->
 
     <div class="polygons w-100 h-100 position-absolute">
