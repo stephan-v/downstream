@@ -58,6 +58,6 @@ class LoginController extends Controller
 
         Auth::login($user, true);
 
-        return Redirect::to('/');
+        return Redirect::to('/projects');
     }
 }
