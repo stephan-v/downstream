@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ssh;
+namespace App\Domain\Ssh;
 
 use App\Events\CommandExecuted;
 use App\Events\JobUpdated;
@@ -67,7 +67,6 @@ class SSH
      */
     public function fire()
     {
-        // Notify the frontend that the job started.
         event(new JobUpdated(Job::RUNNING, $this->job));
 
         $process = $this->getRemoteProcess();
@@ -80,13 +79,11 @@ class SSH
         });
 
         if (!$process->isSuccessful()) {
-            // Notify the frontend that the job failed.
             event(new JobUpdated(Job::FAILED, $this->job));
 
             throw new ProcessFailedException($process);
         }
 
-        // Notify the frontend that the job finished.
         event(new JobUpdated(Job::FINISHED, $this->job));
     }
 }

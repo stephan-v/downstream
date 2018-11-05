@@ -160,7 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        // Other Service Providers
+        // Custom Service Providers
         App\Providers\SSHServiceProvider::class,
 
         // Adam Wathan SVG Blade directive.

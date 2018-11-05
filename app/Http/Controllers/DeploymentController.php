@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Deployment;
+use App\Domain\HttpClients\GithubClient;
 use App\Jobs\SSHJob;
 use App\Jobs\FinishDeployment;
 use App\Jobs\StartDeployment;
 use App\Project;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Auth;
 
 class DeploymentController extends Controller
 {
@@ -16,27 +15,17 @@ class DeploymentController extends Controller
      * Create a deployment release.
      *
      * @param Project $project The project we are creating a deployment for.
+     * @param GithubClient $client The GithubClient Guzzle instance.
      */
-    public function deploy(Project $project)
+    public function deploy(Project $project, GithubClient $client)
     {
-        // @TODO refactor to a service. Purely for testing purposes.
-        $user = Auth::user();
+        $commits = $client->getCommits();
 
-        $client = new Client([
-            'base_uri' => 'https://api.github.com',
-            'headers' => [
-                'Authorization' => 'token ' . decrypt($user->access_token)
-            ]
-        ]);
-
-        $response = $client->request('GET', '/repos/stephan-v/beerquest/commits/master');
-        $body = json_decode($response->getBody());
-
-        // Create a new deployment for this project.
+        /** @var Deployment $deployment */
         $deployment = $project->deployments()->create([
             'user_id' => auth()->id(),
-            'commit' => $body->sha,
-            'commit_url' => $body->html_url
+            'commit' => $commits->sha,
+            'commit_url' => $commits->html_url
         ]);
 
         // Prepare the chain of deployment jobs.

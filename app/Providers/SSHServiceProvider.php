@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Ssh\SSH;
+use App\Domain\Ssh\SSH;
 use Illuminate\Support\ServiceProvider;
 
 class SSHServiceProvider extends ServiceProvider
