@@ -22,10 +22,13 @@ class BindGithubClient
     public function handle(Request $request, Closure $next)
     {
         if ($user = $request->user()) {
+            $name = $user->name;
+            $token = decrypt($user->access_token);
+
             $client = new Client([
-                'base_uri' => env('GITHUB_API_URL', 'https://api.github.com'),
+                'base_uri' => "https://api.github.com/repos/{$name}/",
                 'headers' => [
-                    'Authorization' => 'token ' . decrypt($user->access_token)
+                    'Authorization' => 'token ' . $token
                 ]
             ]);
 

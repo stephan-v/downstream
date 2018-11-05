@@ -33,7 +33,7 @@ class GithubClient
      */
     public function getCommits()
     {
-        $response = $this->client->get('/repos/stephan-v/beerquest/commits/master');
+        $response = $this->client->get('beerquest/commits/master');
 
         return json_decode($response->getBody());
     }
