@@ -23,7 +23,7 @@ class BindGithubClient
     {
         if ($user = $request->user()) {
             $client = new Client([
-                'base_uri' => 'https://api.github.com',
+                'base_uri' => env('GITHUB_API_URL', 'https://api.github.com'),
                 'headers' => [
                     'Authorization' => 'token ' . decrypt($user->access_token)
                 ]
