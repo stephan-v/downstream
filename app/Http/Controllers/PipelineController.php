@@ -44,7 +44,7 @@ class PipelineController extends Controller
             ]
         );
 
-        return response($action->jsonSerialize(), Response::HTTP_CREATED);
+        return response($action, Response::HTTP_CREATED);
     }
 
     /**

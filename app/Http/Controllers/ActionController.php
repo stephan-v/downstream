@@ -41,7 +41,7 @@ class ActionController extends Controller
         // Refresh to get a database instance with default column values.
         $action->refresh();
 
-        return response($action->jsonSerialize(), Response::HTTP_CREATED);
+        return response($action, Response::HTTP_CREATED);
     }
 
     /**
@@ -63,6 +63,6 @@ class ActionController extends Controller
         $action->fill($validated);
         $action->save();
 
-        return response($action->jsonSerialize(), Response::HTTP_CREATED);
+        return response($action, Response::HTTP_CREATED);
     }
 }

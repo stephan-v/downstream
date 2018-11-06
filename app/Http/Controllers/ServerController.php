@@ -31,7 +31,7 @@ class ServerController extends Controller
         /** @var Model $server */
         $server = Server::create($request->all());
 
-        return response($server->jsonSerialize(), Response::HTTP_CREATED);
+        return response($server, Response::HTTP_CREATED);
     }
 
     /**
@@ -58,7 +58,7 @@ class ServerController extends Controller
         $server->fill($input);
         $server->save();
 
-        return response($server->jsonSerialize(), Response::HTTP_OK);
+        return response($server, Response::HTTP_OK);
     }
 
     /**

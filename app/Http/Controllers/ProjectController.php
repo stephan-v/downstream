@@ -45,14 +45,14 @@ class ProjectController extends Controller
             'repository' => ['required', 'string'],
         ]);
 
-        /** @var Model $project */
+        /** @var Project $project */
         $project = Project::create([
             'user_id' => $request->user()->id,
             'name' => $request->name,
             'repository' => $request->repository
         ]);
 
-        return response($project->jsonSerialize(), Response::HTTP_CREATED);
+        return response($project, Response::HTTP_CREATED);
     }
 
     /**
@@ -97,7 +97,7 @@ class ProjectController extends Controller
         $project->fill($input);
         $project->save();
 
-        return response($project->jsonSerialize(), Response::HTTP_OK);
+        return response($project, Response::HTTP_OK);
     }
 
     /**
