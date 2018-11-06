@@ -52,6 +52,10 @@
             </div><!-- /.col-sm-* -->
         </div><!-- /.form-group -->
 
+        <div class="form-group row">
+            <toggle-webhook></toggle-webhook>
+        </div><!-- /.form-group -->
+
         <button type="submit" class="btn btn-primary">Add server</button>
     </form>
 </template>

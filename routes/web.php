@@ -42,3 +42,5 @@ Route::patch('/projects/{project}/pipeline', 'PipelineController@update');
 Route::resource('/projects/{project}/pipeline', 'PipelineController')->only(['store']);
 
 Route::delete('/projects/{project}/pipeline/{action}', 'PipelineController@destroy');
+
+Route::resource('/webhooks', 'WebhookController');
