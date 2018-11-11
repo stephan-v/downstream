@@ -2,18 +2,18 @@
     <div class="switch">
         <input v-if="active"
                @click="destroy"
-               id="toggle"
+               id="toggle-webhook"
                class="cmn-toggle cmn-toggle-round"
                type="checkbox"
                checked>
 
         <input v-else
-               id="toggle"
+               id="toggle-webhook"
                @click="create"
                class="cmn-toggle cmn-toggle-round"
                type="checkbox">
 
-        <label for="toggle"></label>
+        <label for="toggle-webhook"></label>
     </div><!-- /.switch -->
 </template>
 
@@ -46,9 +46,7 @@
 
 <style lang="scss" scoped>
     .cmn-toggle {
-        position: absolute;
-        margin-left: -9999px;
-        visibility: hidden;
+        display: none;
     }
 
     .cmn-toggle + label {
@@ -57,6 +55,7 @@
         cursor: pointer;
         outline: none;
         user-select: none;
+        margin: 0;
     }
 
     input.cmn-toggle-round + label {

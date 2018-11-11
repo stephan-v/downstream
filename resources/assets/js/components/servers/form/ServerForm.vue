@@ -53,7 +53,8 @@
         </div><!-- /.form-group -->
 
         <div class="form-group row">
-            <toggle-webhook></toggle-webhook>
+            <label for="toggle" class="col-sm-3 col-form-label">Webhook</label>
+            <toggle-webhook class="col-sm-9 d-flex align-items-center"></toggle-webhook>
         </div><!-- /.form-group -->
 
         <button type="submit" class="btn btn-primary">Add server</button>

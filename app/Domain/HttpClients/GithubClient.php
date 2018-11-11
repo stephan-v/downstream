@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Response;
 /**
  * The GithubClient configures and provide a Guzzle HTTP client for Github API requests.
  */
-class GithubClient
+class GithubClient implements VersionControlInterface
 {
     /**
      * The Github configured Guzzle HTTP client.
@@ -35,9 +35,29 @@ class GithubClient
      */
     public function getCommits()
     {
-        $response = $this->client->get('beerquest/commits/master');
+        try {
+            $response = $this->client->get('beerquest/commits/master');
+        } catch(ClientException $e) {
+            $response = $e->getResponse();
+        }
 
         return json_decode($response->getBody());
+    }
+
+    /**
+     * Get the webhook for the specific repository.
+     *
+     * @return mixed The decoded response.
+     */
+    public function getWebhook(): Response
+    {
+        try {
+            $response = $this->client->get('beerquest/hooks');
+        } catch(ClientException $e) {
+            $response = $e->getResponse();
+        }
+
+        return $response;
     }
 
     /**

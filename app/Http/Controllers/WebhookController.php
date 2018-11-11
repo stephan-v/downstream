@@ -2,84 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\HttpClients\GithubClient;
-use Illuminate\Http\Request;
+use App\Domain\HttpClients\VersionControlInterface;
+use Illuminate\Http\Response;
 
 class WebhookController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param VersionControlInterface $client The GithubClient Guzzle instance.
+     * @return Response The HTTP response message.
      */
-    public function index()
+    public function index(VersionControlInterface $client): Response
     {
-        //
-    }
+        $response = $client->getWebhook();
+        $body = $response->getBody();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response(json_decode($body), $response->getStatusCode());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param GithubClient $client The GithubClient Guzzle instance.
-     * @return \Illuminate\Http\Response
+     * @param VersionControlInterface $client The GithubClient Guzzle instance.
+     * @return Response The HTTP response message.
      */
-    public function store(GithubClient $client)
+    public function store(VersionControlInterface $client): Response
     {
         $response = $client->setWebhook();
         $body  = $response->getBody();
 
-        return response($body, $response->getStatusCode());
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return response(json_decode($body), $response->getStatusCode());
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Domain\HttpClients\GithubClient;
+use App\Domain\HttpClients\VersionControlInterface;
 use Closure;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class BindGithubClient
                 ]
             ]);
 
-            app()->instance(GithubClient::class, new GithubClient($client));
+            app()->instance(VersionControlInterface::class, new GithubClient($client));
         }
 
         return $next($request);
