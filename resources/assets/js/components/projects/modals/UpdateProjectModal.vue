@@ -25,7 +25,8 @@
             openModal() {
                 swal({
                     content: this.$el,
-                    buttons: false
+                    buttons: false,
+                    className: 'text-left'
                 }).then(() => {
                     this.$emit('close');
                 });
