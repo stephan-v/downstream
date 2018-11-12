@@ -15,10 +15,10 @@ class WebhookController extends Controller
      */
     public function index(VersionControlInterface $client): Response
     {
-        $response = $client->getWebhook();
+        $response = $client->getWebhooks();
         $body = $response->getBody();
 
-        return response(json_decode($body), $response->getStatusCode());
+        return response($body, $response->getStatusCode());
     }
 
     /**
@@ -30,9 +30,9 @@ class WebhookController extends Controller
     public function store(VersionControlInterface $client): Response
     {
         $response = $client->setWebhook();
-        $body  = $response->getBody();
+        $body = $response->getBody();;
 
-        return response(json_decode($body), $response->getStatusCode());
+        return response($body, $response->getStatusCode());
     }
 
     /**

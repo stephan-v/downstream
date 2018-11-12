@@ -45,11 +45,11 @@ class GithubClient implements VersionControlInterface
     }
 
     /**
-     * Get the webhook for the specific repository.
+     * Get the webhooks for the specific repository.
      *
      * @return mixed The decoded response.
      */
-    public function getWebhook(): Response
+    public function getWebhooks(): Response
     {
         try {
             $response = $this->client->get('beerquest/hooks');

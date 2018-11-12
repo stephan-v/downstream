@@ -22,13 +22,26 @@
         data() {
             return {
                 active: false,
-                webhook: {}
+                webhook: {},
             }
         },
 
+        created() {
+            this.get();
+        },
+
         methods: {
+            get() {
+                axios.get('/webhooks')
+                    .then((response) => {
+                        this.active = response.data.find((webhook) => {
+                            return webhook.config.url === 'http://downstream.test/webhook';
+                        })
+                    })
+            },
+
             create() {
-                axios.post('/webhooks/')
+                axios.post('/webhooks')
                     .then(() => {
                         this.active = true;
                     });

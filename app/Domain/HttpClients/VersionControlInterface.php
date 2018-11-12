@@ -14,11 +14,11 @@ interface VersionControlInterface
     public function getCommits();
 
     /**
-     * Get the webhook for the specific repository.
+     * Get the webhooks for the specific repository.
      *
      * @return mixed The decoded response.
      */
-    public function getWebhook(): Response;
+    public function getWebhooks(): Response;
 
     /**
      * Set the webhook on the specific repository.
