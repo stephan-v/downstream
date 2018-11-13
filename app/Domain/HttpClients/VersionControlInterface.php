@@ -21,9 +21,17 @@ interface VersionControlInterface
     public function getWebhooks(): Response;
 
     /**
-     * Set the webhook on the specific repository.
+     * Create the webhook on the specific repository.
      *
      * @return mixed The decoded response.
      */
-    public function setWebhook(): Response;
+    public function createWebhook(): Response;
+
+    /**
+     * Delete the webhook on the specific repository.
+     *
+     * @param int $id The id of the webhook to delete.
+     * @return Response The decoded response.
+     */
+    public function deleteWebhook($id): Response;
 }

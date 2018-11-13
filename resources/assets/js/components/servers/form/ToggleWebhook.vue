@@ -1,6 +1,6 @@
 <template>
     <div class="switch">
-        <input v-if="active"
+        <input v-if="webhook"
                @click="destroy"
                id="toggle-webhook"
                class="cmn-toggle cmn-toggle-round"
@@ -21,8 +21,7 @@
     export default {
         data() {
             return {
-                active: false,
-                webhook: {},
+                webhook: null,
             }
         },
 
@@ -34,7 +33,7 @@
             get() {
                 axios.get('/webhooks')
                     .then((response) => {
-                        this.active = response.data.find((webhook) => {
+                        this.webhook = response.data.find((webhook) => {
                             return webhook.config.url === 'http://downstream.test/webhook';
                         })
                     })
@@ -42,15 +41,15 @@
 
             create() {
                 axios.post('/webhooks')
-                    .then(() => {
-                        this.active = true;
+                    .then((response) => {
+                        this.webhook = response.data;
                     });
             },
 
             destroy() {
                 axios.delete(`/webhooks/${this.webhook.id}`)
                     .then(() => {
-                        this.active = false;
+                        this.webhook = null;
                     });
             }
         }

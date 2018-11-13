@@ -61,11 +61,11 @@ class GithubClient implements VersionControlInterface
     }
 
     /**
-     * Set the webhook on the specific repository.
+     * Create the webhook on the specific repository.
      *
-     * @return mixed The decoded response.
+     * @return Response The decoded response.
      */
-    public function setWebhook(): Response
+    public function createWebhook(): Response
     {
         try {
             $response = $this->client->post('beerquest/hooks', [
@@ -77,6 +77,23 @@ class GithubClient implements VersionControlInterface
                     ]
                 ]
             ]);
+        } catch(ClientException $e) {
+            $response = $e->getResponse();
+        }
+
+        return $response;
+    }
+
+    /**
+     * Delete the webhook on the specific repository.
+     *
+     * @param int $id The id of the webhook to delete.
+     * @return Response The decoded response.
+     */
+    public function deleteWebhook($id): Response
+    {
+        try {
+            $response = $this->client->delete("beerquest/hooks/{$id}");
         } catch(ClientException $e) {
             $response = $e->getResponse();
         }
