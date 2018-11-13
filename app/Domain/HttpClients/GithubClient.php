@@ -72,7 +72,7 @@ class GithubClient implements VersionControlInterface
                 'json' => [
                     'name' => 'web',
                     'config' => [
-                        'url' => env('APP_URL') . '/webhook',
+                        'url' => env('GITHUB_WEBHOOK_URL'),
                         'content_type' => 'json'
                     ]
                 ]

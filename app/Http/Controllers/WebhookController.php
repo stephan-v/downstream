@@ -30,7 +30,7 @@ class WebhookController extends Controller
     public function store(VersionControlInterface $client): Response
     {
         $response = $client->createWebhook();
-        $body = $response->getBody();;
+        $body = $response->getBody();
 
         return response($body, $response->getStatusCode());
     }
@@ -42,11 +42,21 @@ class WebhookController extends Controller
      * @param int $id The id of the webhook to delete.
      * @return Response The HTTP response message.
      */
-    public function destroy(VersionControlInterface $client, int $id)
+    public function destroy(VersionControlInterface $client, int $id): Response
     {
         $response = $client->deleteWebhook($id);
         $body = $response->getBody();
 
         return response($body, $response->getStatusCode());
+    }
+
+    /**
+     * The webhook endpoint.
+     *
+     * @return Response The HTTP response message.
+     */
+    public function webhook(): Response
+    {
+        return response(['Webhook received successful']);
     }
 }
