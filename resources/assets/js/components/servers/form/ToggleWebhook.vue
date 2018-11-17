@@ -25,32 +25,46 @@
             }
         },
 
+        props: {
+            project: {
+                required: true,
+                type: Object
+            }
+        },
+
         created() {
             this.get();
         },
 
         methods: {
             get() {
-                axios.get('/webhooks')
+                axios.get(`/projects/${this.project.id}/webhooks`)
                     .then((response) => {
                         this.webhook = response.data.find((webhook) => {
-                            return webhook.config.url === 'http://downstream.test/webhook';
+                            return this.validateWebhook(webhook.config.url);
                         })
                     })
             },
 
             create() {
-                axios.post('/webhooks')
+                axios.post(`/projects/${this.project.id}/webhooks`)
                     .then((response) => {
                         this.webhook = response.data;
                     });
             },
 
             destroy() {
-                axios.delete(`/webhooks/${this.webhook.id}`)
+                axios.delete(`/projects/${this.project.id}/webhooks/${this.webhook.id}`)
                     .then(() => {
                         this.webhook = null;
                     });
+            },
+
+            /**
+             * Validate whether the given url matches the url from our .env file.
+             */
+            validateWebhook(url) {
+                return url === process.env.MIX_GITHUB_WEBHOOK_URL;
             }
         }
     };

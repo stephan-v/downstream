@@ -51,7 +51,7 @@ class WebhookController extends Controller
     }
 
     /**
-     * The webhook endpoint.
+     * The webhook endpoint(also known as the payload url).
      *
      * @return Response The HTTP response message.
      */

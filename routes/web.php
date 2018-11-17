@@ -12,7 +12,7 @@
 */
 
 // Deploy code.
-Route::post('/deploy/{project}', 'DeploymentController@deploy')->name('deploy');
+Route::post('deploy/{project}', 'DeploymentController@deploy')->name('deploy');
 
 // Login authentication routes.
 Auth::routes();
@@ -21,26 +21,26 @@ Route::get('auth/github/callback', 'Auth\LoginController@handleProviderCallback'
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::resource('/projects', 'ProjectController');
+Route::resource('projects', 'ProjectController');
 
 // Single deployment view.
-Route::get('/projects/{projectId}/deployments/{deployment}', 'DeploymentController@show');
+Route::get('projects/{projectId}/deployments/{deployment}', 'DeploymentController@show');
 
 // Test server connection.
-Route::post('/servers/connection/{serverId}', 'ServerController@connection');
+Route::post('servers/connection/{serverId}', 'ServerController@connection');
 // Server routes.
-Route::resource('/servers', 'ServerController');
+Route::resource('servers', 'ServerController');
 
-Route::resource('/projects/{project}/pipeline/servers', 'ActionServerController')->only(['store', 'destroy']);
+Route::resource('projects/{project}/pipeline/servers', 'ActionServerController')->only(['store', 'destroy']);
 
 // Custom action.
-Route::resource('/projects/{project}/pipeline/actions', 'ActionController')->only(['store', 'update', 'destroy']);
+Route::resource('projects/{project}/pipeline/actions', 'ActionController')->only(['store', 'update', 'destroy']);
 
 // Pipeline.
-Route::get('/projects/{project}/pipeline', 'PipelineController@show')->name('pipeline');
-Route::patch('/projects/{project}/pipeline', 'PipelineController@update');
-Route::resource('/projects/{project}/pipeline', 'PipelineController')->only(['store']);
+Route::get('projects/{project}/pipeline', 'PipelineController@show')->name('pipeline');
+Route::patch('projects/{project}/pipeline', 'PipelineController@update');
+Route::resource('projects/{project}/pipeline', 'PipelineController')->only(['store']);
 
-Route::delete('/projects/{project}/pipeline/{action}', 'PipelineController@destroy');
+Route::delete('projects/{project}/pipeline/{action}', 'PipelineController@destroy');
 
-Route::resource('/webhooks', 'WebhookController');
+Route::resource('projects.webhooks', 'WebhookController');
