@@ -30,23 +30,24 @@
         data() {
             return {
                 webhook: null,
-                pending: true
+                pending: false
             }
         },
 
         props: {
             project: {
-                required: true,
                 type: Object
             }
         },
 
         created() {
-            this.get();
+            if (this.project) this.get();
         },
 
         methods: {
             get() {
+                this.pending = true;
+
                 axios.get(`/projects/${this.project.id}/webhooks`)
                     .then((response) => {
                         this.webhook = response.data.find((webhook) => {
