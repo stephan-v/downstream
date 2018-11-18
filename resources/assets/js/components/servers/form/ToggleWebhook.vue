@@ -1,17 +1,25 @@
 <template>
     <div class="switch">
-        <input v-if="webhook"
-               @click="destroy"
-               id="toggle-webhook"
-               class="cmn-toggle cmn-toggle-round"
-               type="checkbox"
-               checked>
+        <transition name="fade" mode="out-in">
+            <span v-if="pending">
+                <i class="fas fa-spinner fa-spin"></i>
+            </span>
 
-        <input v-else
-               id="toggle-webhook"
-               @click="create"
-               class="cmn-toggle cmn-toggle-round"
-               type="checkbox">
+            <template v-else>
+                <input v-if="webhook"
+                       @click="destroy"
+                       id="toggle-webhook"
+                       class="cmn-toggle cmn-toggle-round"
+                       type="checkbox"
+                       checked>
+
+                <input v-else
+                       id="toggle-webhook"
+                       @click="create"
+                       class="cmn-toggle cmn-toggle-round"
+                       type="checkbox">
+            </template>
+        </transition>
 
         <label for="toggle-webhook"></label>
     </div><!-- /.switch -->
@@ -22,6 +30,7 @@
         data() {
             return {
                 webhook: null,
+                pending: true
             }
         },
 
@@ -42,7 +51,9 @@
                     .then((response) => {
                         this.webhook = response.data.find((webhook) => {
                             return this.validateWebhook(webhook.config.url);
-                        })
+                        });
+
+                        this.pending = false;
                     })
             },
 
@@ -123,5 +134,12 @@
 
     input.cmn-toggle-round:checked + label:after {
         margin-left: 15px;
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
     }
 </style>

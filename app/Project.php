@@ -53,6 +53,14 @@ class Project extends Model
     }
 
     /**
+     * Get the user that owns the project.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Get the servers belonging to this project.
      */
     public function servers()

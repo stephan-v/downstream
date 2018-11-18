@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\HttpClients\VersionControlInterface;
+use App\Project;
 use Illuminate\Http\Response;
 
 class WebhookController extends Controller
@@ -11,11 +12,12 @@ class WebhookController extends Controller
      * Display a listing of the resource.
      *
      * @param VersionControlInterface $client The GithubClient Guzzle instance.
+     * @param Project $project The project containing the repository we want to target.
      * @return Response The HTTP response message.
      */
-    public function index(VersionControlInterface $client): Response
+    public function index(VersionControlInterface $client, Project $project): Response
     {
-        $response = $client->getWebhooks();
+        $response = $client->getWebhooks($project->repository);
         $body = $response->getBody();
 
         return response($body, $response->getStatusCode());
@@ -25,11 +27,12 @@ class WebhookController extends Controller
      * Store a newly created resource in storage.
      *
      * @param VersionControlInterface $client The GithubClient Guzzle instance.
+     * @param Project $project The project containing the repository we want to target.
      * @return Response The HTTP response message.
      */
-    public function store(VersionControlInterface $client): Response
+    public function store(VersionControlInterface $client, Project $project): Response
     {
-        $response = $client->createWebhook();
+        $response = $client->createWebhook($project->repository);
         $body = $response->getBody();
 
         return response($body, $response->getStatusCode());
@@ -40,11 +43,12 @@ class WebhookController extends Controller
      *
      * @param VersionControlInterface $client The GithubClient Guzzle instance.
      * @param int $id The id of the webhook to delete.
+     * @param Project $project The project containing the repository we want to target.
      * @return Response The HTTP response message.
      */
-    public function destroy(VersionControlInterface $client, int $id): Response
+    public function destroy(VersionControlInterface $client, int $id, Project $project): Response
     {
-        $response = $client->deleteWebhook($id);
+        $response = $client->deleteWebhook($id, $project->repository);
         $body = $response->getBody();
 
         return response($body, $response->getStatusCode());

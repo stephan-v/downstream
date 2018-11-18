@@ -31,12 +31,13 @@ class GithubClient implements VersionControlInterface
     /**
      * Get a  list of commits on a repository.
      *
+     * @param string $repository The repository that we want to fetch commits for.
      * @return mixed The decoded response.
      */
-    public function getCommits()
+    public function getCommits(string $repository)
     {
         try {
-            $response = $this->client->get('beerquest/commits/master');
+            $response = $this->client->get("{$repository}/commits/master");
         } catch(ClientException $e) {
             $response = $e->getResponse();
         }
@@ -47,12 +48,13 @@ class GithubClient implements VersionControlInterface
     /**
      * Get the webhooks for the specific repository.
      *
+     * @param string $repository The repository that we want to fetch webhooks for.
      * @return mixed The decoded response.
      */
-    public function getWebhooks(): Response
+    public function getWebhooks(string $repository): Response
     {
         try {
-            $response = $this->client->get('beerquest/hooks');
+            $response = $this->client->get("{$repository}/hooks");
         } catch(ClientException $e) {
             $response = $e->getResponse();
         }
@@ -63,12 +65,13 @@ class GithubClient implements VersionControlInterface
     /**
      * Create the webhook on the specific repository.
      *
+     * @param string $repository The repository that we want to create a webhook for.
      * @return Response The decoded response.
      */
-    public function createWebhook(): Response
+    public function createWebhook(string $repository): Response
     {
         try {
-            $response = $this->client->post('beerquest/hooks', [
+            $response = $this->client->post("{$repository}/hooks", [
                 'json' => [
                     'name' => 'web',
                     'config' => [
@@ -88,12 +91,13 @@ class GithubClient implements VersionControlInterface
      * Delete the webhook on the specific repository.
      *
      * @param int $id The id of the webhook to delete.
+     * @param string $repository The repository that we want to delete a webhook for.
      * @return Response The decoded response.
      */
-    public function deleteWebhook($id): Response
+    public function deleteWebhook($id, $repository): Response
     {
         try {
-            $response = $this->client->delete("beerquest/hooks/{$id}");
+            $response = $this->client->delete("{$repository}/hooks/{$id}");
         } catch(ClientException $e) {
             $response = $e->getResponse();
         }

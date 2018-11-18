@@ -17,19 +17,9 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $projects = $request->user()->projects;
-        $projects->load('deployments');
+        $projects->load('deployments', 'user');
 
         return view('projects/index', compact('projects'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -66,17 +56,6 @@ class ProjectController extends Controller
         $project->load('deployments');
 
         return view('projects/show', compact('project'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

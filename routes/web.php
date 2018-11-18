@@ -21,7 +21,7 @@ Route::get('auth/github/callback', 'Auth\LoginController@handleProviderCallback'
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::resource('projects', 'ProjectController');
+Route::apiResource('projects', 'ProjectController');
 
 // Single deployment view.
 Route::get('projects/{projectId}/deployments/{deployment}', 'DeploymentController@show');

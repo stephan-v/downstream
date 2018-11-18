@@ -42,8 +42,12 @@
                 return lastDeployment ? lastDeployment.created_at : 'N/A';
             },
 
+            user() {
+                return this.project.user;
+            },
+
             url() {
-                return `https://github.com/${this.project.repository}`
+                return `https://github.com/${this.user.name}/${this.project.repository}`
             },
 
             route() {
