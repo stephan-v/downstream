@@ -8,7 +8,7 @@
                        class="form-control"
                        id="name"
                        aria-describedby="name"
-                       placeholder="My project"
+                       placeholder="My server"
                        v-model="name">
             </div><!-- /.col-sm-* -->
         </div><!-- /.form-group -->

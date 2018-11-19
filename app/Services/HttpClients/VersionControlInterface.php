@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\HttpClients;
+namespace App\Services\HttpClients;
 
 use GuzzleHttp\Psr7\Response;
 

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\HttpClients\VersionControlInterface;
+use App\Jobs\StartDeployment;
+use App\Services\HttpClients\VersionControlInterface;
 use App\Project;
+use App\Services\Webhook\Webhook;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class WebhookController extends Controller
@@ -42,11 +45,11 @@ class WebhookController extends Controller
      * Remove the specified resource from storage.
      *
      * @param VersionControlInterface $client The GithubClient Guzzle instance.
-     * @param int $id The id of the webhook to delete.
      * @param Project $project The project containing the repository we want to target.
+     * @param int $id The id of the webhook to delete.
      * @return Response The HTTP response message.
      */
-    public function destroy(VersionControlInterface $client, int $id, Project $project): Response
+    public function destroy(VersionControlInterface $client, Project $project, int $id): Response
     {
         $response = $client->deleteWebhook($id, $project->repository);
         $body = $response->getBody();
@@ -57,10 +60,23 @@ class WebhookController extends Controller
     /**
      * The webhook endpoint(also known as the payload url).
      *
+     * @param Request $request The incoming HTTP server request.
+     * @param VersionControlInterface $client The GithubClient Guzzle instance.
      * @return Response The HTTP response message.
      */
-    public function webhook(): Response
+    public function webhook(Request $request, VersionControlInterface $client): Response
     {
-        return response(['Webhook received successful']);
+        if (Webhook::isNotSecure($request)) {
+            abort(401, 'Unauthorized request.');
+        }
+
+        if ($request->header('X-GitHub-Event') === Webhook::PUSH_EVENT) {
+            $payload = json_decode($request->getContent());
+            $project = Project::where('repository', $payload->repository->full_name);
+
+            StartDeployment::dispatch($project, $client);
+        }
+
+        return response(['success' => 'Webhook event received successfully.']);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\HttpClients;
+namespace App\Services\HttpClients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -40,6 +40,7 @@ class GithubClient implements VersionControlInterface
             $response = $this->client->get("{$repository}/commits/master");
         } catch(ClientException $e) {
             $response = $e->getResponse();
+            abort($response->getStatusCode(), $response->getReasonPhrase());
         }
 
         return json_decode($response->getBody());
@@ -57,6 +58,7 @@ class GithubClient implements VersionControlInterface
             $response = $this->client->get("{$repository}/hooks");
         } catch(ClientException $e) {
             $response = $e->getResponse();
+            abort($response->getStatusCode(), $response->getReasonPhrase());
         }
 
         return $response;
@@ -75,13 +77,15 @@ class GithubClient implements VersionControlInterface
                 'json' => [
                     'name' => 'web',
                     'config' => [
-                        'url' => env('MIX_GITHUB_WEBHOOK_URL'),
-                        'content_type' => 'json'
+                        'content_type' => 'json',
+                        'secret' => env('GITHUB_WEBHOOK_SECRET'),
+                        'url' => env('MIX_GITHUB_WEBHOOK_URL')
                     ]
                 ]
             ]);
         } catch(ClientException $e) {
             $response = $e->getResponse();
+            abort($response->getStatusCode(), $response->getReasonPhrase());
         }
 
         return $response;
@@ -100,6 +104,7 @@ class GithubClient implements VersionControlInterface
             $response = $this->client->delete("{$repository}/hooks/{$id}");
         } catch(ClientException $e) {
             $response = $e->getResponse();
+            abort($response->getStatusCode(), $response->getReasonPhrase());
         }
 
         return $response;

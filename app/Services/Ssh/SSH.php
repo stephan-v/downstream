@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Ssh;
+namespace App\Services\Ssh;
 
 use App\Events\CommandExecuted;
 use App\Events\JobUpdated;

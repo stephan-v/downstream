@@ -21,7 +21,7 @@
                        class="form-control"
                        id="repository"
                        aria-describedby="repository"
-                       placeholder="name"
+                       placeholder="user/repository"
                        v-model="repository">
             </div><!-- /.col-sm-* -->
         </div><!-- /.form-group -->

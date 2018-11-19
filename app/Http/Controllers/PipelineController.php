@@ -17,7 +17,7 @@ class PipelineController extends Controller
      */
     public function show(Project $project)
     {
-        $project = $project->with(['actions.servers', 'servers'])->first();
+        $project = $project->load('actions.servers', 'servers');
 
         // Available default pipeline actions to choose from.
         $actions = Action::where('custom', false)->get();

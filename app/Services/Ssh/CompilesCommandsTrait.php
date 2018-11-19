@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Ssh;
+namespace App\Services\Ssh;
 
 use App\Server;
 use Illuminate\Support\Facades\Blade;
