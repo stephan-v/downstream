@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Deployment;
 use App\Jobs\StartDeployment;
 use App\Services\HttpClients\VersionControlInterface;
 use App\Project;
@@ -61,10 +62,9 @@ class WebhookController extends Controller
      * The webhook endpoint(also known as the payload url).
      *
      * @param Request $request The incoming HTTP server request.
-     * @param VersionControlInterface $client The GithubClient Guzzle instance.
      * @return Response The HTTP response message.
      */
-    public function webhook(Request $request, VersionControlInterface $client): Response
+    public function webhook(Request $request): Response
     {
         if (Webhook::isNotSecure($request)) {
             abort(401, 'Unauthorized request.');
@@ -72,9 +72,15 @@ class WebhookController extends Controller
 
         if ($request->header('X-GitHub-Event') === Webhook::PUSH_EVENT) {
             $payload = json_decode($request->getContent());
-            $project = Project::where('repository', $payload->repository->full_name);
+            $project = Project::where('repository', $payload->repository->full_name)->firstOrFail();
 
-            StartDeployment::dispatch($project, $client);
+            $deployment = new Deployment([
+                'user_id' => $project->user->id,
+                'commit' => $payload->head_commit->id,
+                'commit_url' => $payload->repository->full_name
+            ]);
+
+            StartDeployment::dispatch($project, $deployment);
         }
 
         return response(['success' => 'Webhook event received successfully.']);

@@ -11,9 +11,6 @@
 |
 */
 
-// Deploy code.
-Route::post('deploy/{project}', 'DeploymentController@deploy')->name('deploy');
-
 // Login authentication routes.
 Auth::routes();
 Route::get('login/github', 'Auth\LoginController@redirectToProvider')->name('github');
@@ -43,4 +40,7 @@ Route::resource('projects/{project}/pipeline', 'PipelineController')->only(['sto
 
 Route::delete('projects/{project}/pipeline/{action}', 'PipelineController@destroy');
 
-Route::resource('projects.webhooks', 'WebhookController');
+Route::group(['middleware' => ['vcs']], function () {
+    Route::post('deploy/{project}', 'DeploymentController@deploy')->name('deploy');
+    Route::resource('projects.webhooks', 'WebhookController');
+});

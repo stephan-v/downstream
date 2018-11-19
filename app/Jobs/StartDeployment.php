@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Deployment;
 use App\Events\DeploymentStarted;
 use App\Project;
-use App\Services\HttpClients\GithubClient;
 use App\Services\HttpClients\VersionControlInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -35,11 +34,12 @@ class StartDeployment implements ShouldQueue
      * Deployment constructor.
      *
      * @param Project $project
-     * @param GithubClient $client The GithubClient Guzzle instance.
+     * @param Deployment $deployment
+     * @internal param GithubClient $client The GithubClient Guzzle instance.
      */
-    public function __construct(Project $project, GithubClient $client)
+    public function __construct(Project $project, Deployment $deployment)
     {
-        $this->deployment = $this->createDeployment($project, $client);
+        $this->createDeployment($project, $deployment);
         $this->createDeploymentChain($project);
         $this->cleanOldDeployments($project);
     }
@@ -48,18 +48,11 @@ class StartDeployment implements ShouldQueue
      * Create the deployment.
      *
      * @param Project $project The project to create the deployment for.
-     * @param VersionControlInterface $client The client we want to fetch commits for.
-     * @return Deployment The newly created deployment.
+     * @param Deployment $deployment
      */
-    private function createDeployment(Project $project, VersionControlInterface $client): Deployment
+    private function createDeployment(Project $project, Deployment $deployment)
     {
-        $commits = $client->getCommits($project->repository);
-
-        return $project->deployments()->create([
-            'user_id' => $project->user()->id,
-            'commit' => $commits->sha,
-            'commit_url' => $commits->html_url
-        ]);
+        $this->deployment = $project->deployments()->save($deployment);
     }
 
     /**

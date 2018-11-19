@@ -32,16 +32,28 @@ class FinishDeployment implements ShouldQueue
     }
 
     /**
+     * Mark the deployment as finished within storage.
+     *
+     * @return Deployment The saved deployment.
+     */
+    private function markDeploymentAsFinished(): Deployment
+    {
+        $deployment = $this->deployment;
+        $deployment->finished_at = now();
+        $deployment->status = 0;
+        $deployment->save();
+
+        return $deployment;
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
      */
     public function handle()
     {
-        $deployment = $this->deployment;
-        $deployment->finished_at = now();
-        $deployment->status = 0;
-        $deployment->save();
+        $deployment = $this->markDeploymentAsFinished();
 
         event(new DeploymentFinished($deployment, Deployment::FINISHED));
     }

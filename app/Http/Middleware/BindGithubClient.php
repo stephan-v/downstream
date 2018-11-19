@@ -10,8 +10,6 @@ use Illuminate\Http\Request;
 
 /**
  * Bind a Guzzle HTTP client instance configured for Github in the service container.
- *
- * @TODO check if middleware can be added to Guzzle to abort() with the exception and code.
  */
 class BindGithubClient
 {
