@@ -56,7 +56,7 @@ class StartDeployment implements ShouldQueue
         $commits = $client->getCommits($project->repository);
 
         return $project->deployments()->create([
-            'user_id' => auth()->id(),
+            'user_id' => $project->user()->id,
             'commit' => $commits->sha,
             'commit_url' => $commits->html_url
         ]);
