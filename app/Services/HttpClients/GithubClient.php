@@ -4,7 +4,6 @@ namespace App\Services\HttpClients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * The GithubClient configures and provide a Guzzle HTTP client for Github API requests.
@@ -52,43 +51,33 @@ class GithubClient implements VersionControlInterface
      * @param string $repository The repository that we want to fetch webhooks for.
      * @return mixed The decoded response.
      */
-    public function getWebhooks(string $repository): Response
+    public function getWebhooks(string $repository): ?array
     {
-        try {
-            $response = $this->client->get("{$repository}/hooks");
-        } catch(ClientException $e) {
-            $response = $e->getResponse();
-            abort($response->getStatusCode(), $response->getReasonPhrase());
-        }
+        $response = $this->client->get("{$repository}/hooks");
 
-        return $response;
+        return json_decode($response->getBody());
     }
 
     /**
      * Create the webhook on the specific repository.
      *
      * @param string $repository The repository that we want to create a webhook for.
-     * @return Response The decoded response.
+     * @return object The response.
      */
-    public function createWebhook(string $repository): Response
+    public function createWebhook(string $repository)
     {
-        try {
-            $response = $this->client->post("{$repository}/hooks", [
-                'json' => [
-                    'name' => 'web',
-                    'config' => [
-                        'content_type' => 'json',
-                        'secret' => env('GITHUB_WEBHOOK_SECRET'),
-                        'url' => env('MIX_GITHUB_WEBHOOK_URL')
-                    ]
+        $response = $this->client->post("{$repository}/hooks", [
+            'json' => [
+                'name' => 'web',
+                'config' => [
+                    'content_type' => 'json',
+                    'secret' => env('GITHUB_WEBHOOK_SECRET'),
+                    'url' => env('MIX_GITHUB_WEBHOOK_URL')
                 ]
-            ]);
-        } catch(ClientException $e) {
-            $response = $e->getResponse();
-            abort($response->getStatusCode(), $response->getReasonPhrase());
-        }
+            ]
+        ]);
 
-        return $response;
+        return $response->getBody();
     }
 
     /**
@@ -96,17 +85,12 @@ class GithubClient implements VersionControlInterface
      *
      * @param int $id The id of the webhook to delete.
      * @param string $repository The repository that we want to delete a webhook for.
-     * @return Response The decoded response.
+     * @return null The decoded response.
      */
-    public function deleteWebhook($id, $repository): Response
+    public function deleteWebhook($id, $repository)
     {
-        try {
-            $response = $this->client->delete("{$repository}/hooks/{$id}");
-        } catch(ClientException $e) {
-            $response = $e->getResponse();
-            abort($response->getStatusCode(), $response->getReasonPhrase());
-        }
+        $response = $this->client->delete("{$repository}/hooks/{$id}");
 
-        return $response;
+        return json_decode($response->getBody());
     }
 }

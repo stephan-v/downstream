@@ -21,10 +21,7 @@ class WebhookController extends Controller
      */
     public function index(VersionControlInterface $client, Project $project): Response
     {
-        $response = $client->getWebhooks($project->repository);
-        $body = $response->getBody();
-
-        return response($body, $response->getStatusCode());
+        return response($client->getWebhooks($project->repository));
     }
 
     /**
@@ -36,10 +33,7 @@ class WebhookController extends Controller
      */
     public function store(VersionControlInterface $client, Project $project): Response
     {
-        $response = $client->createWebhook($project->repository);
-        $body = $response->getBody();
-
-        return response($body, $response->getStatusCode());
+        return response($client->createWebhook($project->repository));
     }
 
     /**
@@ -52,10 +46,7 @@ class WebhookController extends Controller
      */
     public function destroy(VersionControlInterface $client, Project $project, int $id): Response
     {
-        $response = $client->deleteWebhook($id, $project->repository);
-        $body = $response->getBody();
-
-        return response($body, $response->getStatusCode());
+        return response($client->deleteWebhook($id, $project->repository));
     }
 
     /**

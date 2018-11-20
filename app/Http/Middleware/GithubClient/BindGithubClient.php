@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\GithubClient;
 
 use App\Services\HttpClients\GithubClient;
 use App\Services\HttpClients\VersionControlInterface;
 use Closure;
 use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
 use Illuminate\Http\Request;
 
 /**
@@ -23,11 +24,15 @@ class BindGithubClient
     public function handle(Request $request, Closure $next)
     {
         if ($user = $request->user()) {
+            $stack = HandlerStack::create();
+            $stack->push(new GuzzleExceptionMiddleware);
+
             $client = new Client([
                 'base_uri' => "https://api.github.com/repos/",
                 'headers' => [
                     'Authorization' => 'token ' . decrypt($user->access_token)
-                ]
+                ],
+                'handler' => $stack,
             ]);
 
             app()->instance(VersionControlInterface::class, new GithubClient($client));
