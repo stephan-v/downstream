@@ -14,9 +14,38 @@
 // SVG helper classes.
 @import 'svg';
 
-.navbar-laravel {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+// @TODO WIP remove.
+nav {
+    a {
+        background: #4678E7;
+        padding: 1rem;
+        color: white;
+        display: block;
+        font-size: 1.125rem;
+    }
+}
+
+.deployment-overview {
+    background: white;
+    border-bottom: 1px solid #EDEDEF;
+    overflow: hidden;
+
+    .environment, .project {
+        padding: 2.5rem 5rem;
+
+        span {
+            color: #616F7A;
+        }
+    }
+
+    .skewed-border  {
+        transform: rotate(15deg);
+        margin-bottom: -15px;
+        margin-top: -15px;
+        background: #EDEDEF;
+        max-width: 1px;
+        flex: 1;
+    }
 }
 
 [v-cloak] {

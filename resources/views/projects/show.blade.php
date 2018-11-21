@@ -1,6 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="deployment-overview d-flex mb-3">
+        <div class="project">
+            <span>PROJECT</span>
+            <h2 class="pt-1 pb-0">{{ $project->name }}</h2>
+        </div><!-- /.project -->
+
+        <div class="skewed-border"></div>
+
+        <div class="environment">
+            <span>ENVIRONMENT</span>
+            <h2 class="pt-1 pb-0">Master</h2>
+        </div><!-- /.environment -->
+    </div><!-- /.deployment-overview -->
+
     <div class="container dashboard">
         <div class="row">
             <ul class="list-group">
@@ -14,10 +28,6 @@
                     <a href="https://github.com/{{ $project->repository }}">
                         <i class="fab fa-github"></i> {{ $project->repository }}
                     </a>
-                </li>
-
-                <li class="list-group-item">
-                    Deploy branch: <span class="badge badge-secondary">master</span>
                 </li>
             </ul><!-- /.list-group -->
         </div><!-- /.row -->
