@@ -82,5 +82,7 @@
 </script>
 
 <style lang="scss" scoped>
-    //
+    label {
+        cursor: pointer;
+    }
 </style>
