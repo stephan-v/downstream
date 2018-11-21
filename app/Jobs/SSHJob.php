@@ -85,6 +85,7 @@ class SSHJob implements ShouldQueue
     public function failed()
     {
         $deployment = $this->deployment;
+        $deployment->finished_at = now();
         $deployment->status = Deployment::FAILED;
         $deployment->save();
 

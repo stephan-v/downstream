@@ -40,7 +40,7 @@ class FinishDeployment implements ShouldQueue
     {
         $deployment = $this->deployment;
         $deployment->finished_at = now();
-        $deployment->status = 0;
+        $deployment->status = Deployment::FINISHED;
         $deployment->save();
 
         return $deployment;

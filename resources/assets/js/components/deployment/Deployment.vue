@@ -1,5 +1,5 @@
 <template>
-    <li class="deployment d-flex justify-content-between align-items-center">
+    <li class="deployment d-flex justify-content-between align-items-center" :class="{ failed }">
         <div class="title">
             <h2>Hooked up websockets</h2>
 
@@ -177,6 +177,10 @@
         margin: 0 0 1rem 0;
         padding: 1rem;
         color: #A5A9B5;
+
+        &.failed {
+            border-left-color: #ff2929;
+        }
 
         h2 {
             color: black;
