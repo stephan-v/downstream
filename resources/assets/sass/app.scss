@@ -64,6 +64,7 @@ nav {
     overflow: hidden;
 
     .environment, .project {
+        position: relative;
         padding: 3rem 5rem;
 
         span {
@@ -76,12 +77,29 @@ nav {
     }
 
     .skewed-border  {
-        transform: rotate(15deg);
-        margin-bottom: -15px;
-        margin-top: -15px;
+        height: 200px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
+        width: 1px;
         background: #EDEDEF;
-        max-width: 1px;
-        flex: 1;
+        margin-top: -15px;
+        margin-bottom: -15px;
+        transform: rotate(15deg);
+    }
+
+    .start-deployment {
+        margin: 0 3rem 0 auto;
+    }
+}
+
+.repository {
+    font-size: 1rem;
+
+    span {
+        color: #b1b1b1;
+
     }
 }
 

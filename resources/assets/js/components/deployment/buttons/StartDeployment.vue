@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-success" @click="deploy">
+    <button type="button" class="btn" @click="deploy">
         <i class="fas fa-spinner fa-spin" v-if="status === 1 || status === 2 "></i>
         <span>{{ text }}</span>
     </button>
@@ -62,3 +62,13 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .btn {
+        background: none;
+        border-radius: 20px;
+        padding: 0.5rem 1.5rem;
+        border: 2px solid black;
+        color: black;
+    }
+</style>
