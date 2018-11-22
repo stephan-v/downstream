@@ -17,19 +17,11 @@
 
     <div class="container dashboard">
         <div class="row">
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-action list-group-item-info">
-                    Project details
-                </li>
+            <span>Repository: </span>
 
-                <li class="list-group-item">
-                    <span>Repository:</span>
-
-                    <a href="https://github.com/{{ $project->repository }}">
-                        <i class="fab fa-github"></i> {{ $project->repository }}
-                    </a>
-                </li>
-            </ul><!-- /.list-group -->
+            <a href="https://github.com/{{ $project->repository }}">
+                {{ $project->repository }}
+            </a>
         </div><!-- /.row -->
 
         <div class="row justify-content-center mt-3" v-cloak>
