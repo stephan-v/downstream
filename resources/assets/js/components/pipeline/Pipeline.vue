@@ -1,5 +1,5 @@
 <template>
-    <div class="pipeline">
+    <div class="pipeline mt-4">
         <pipeline-options :actions="actions" @create="create"></pipeline-options>
         <pipeline-actions :project="project" :pipeline="pipeline" @destroy="destroy" @update="update"></pipeline-actions>
     </div><!-- /.pipeline -->
