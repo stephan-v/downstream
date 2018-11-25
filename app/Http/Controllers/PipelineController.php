@@ -22,7 +22,7 @@ class PipelineController extends Controller
         // Available default pipeline actions to choose from.
         $actions = Action::where('custom', false)->get();
 
-        return view('pipeline/show', compact('actions', 'project'));
+        return view('pipeline.show', compact('actions', 'project'));
     }
 
     /**

@@ -171,12 +171,11 @@
     .deployment {
         font-size: 1rem;
         background: white;
-        border: 1px solid #E4E3E3;
         border-left: 10px solid $green;
-        border-radius: 5px;
-        margin: 0 0 1rem 0;
+        margin: 0 0 .8rem 0;
         padding: 1rem;
         color: #A5A9B5;
+        box-shadow: 0 1px 1px #00000021;
 
         &.failed {
             border-left-color: #ff2929;

@@ -1,5 +1,7 @@
 <template>
     <div class="deployments">
+        <h2>Recent deployments</h2>
+
         <ul class="deployments" v-if="deployments.length">
             <transition-group name="list">
                 <deployment v-for="deployment in deployments"

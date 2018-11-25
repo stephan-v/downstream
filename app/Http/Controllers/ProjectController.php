@@ -19,7 +19,7 @@ class ProjectController extends Controller
         $projects = $request->user()->projects;
         $projects->load('deployments', 'user');
 
-        return view('projects/index', compact('projects'));
+        return view('projects.index', compact('projects'));
     }
 
     /**
@@ -55,7 +55,7 @@ class ProjectController extends Controller
     {
         $project->load('deployments');
 
-        return view('projects/show', compact('project'));
+        return view('projects.show', compact('project'));
     }
 
     /**

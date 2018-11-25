@@ -1,3 +1,5 @@
+import VueRouter from 'vue-router'
+import router from './router/routes';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -10,12 +12,9 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import Autoloader from 'vue-autoloader';
-import {Tabs, Tab} from 'vue-tabs-component';
-
-Vue.component('tabs', Tabs);
-Vue.component('tab', Tab);
 
 Vue.use(Autoloader);
+Vue.use(VueRouter);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -23,6 +22,10 @@ Vue.use(Autoloader);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+
+    router
 });

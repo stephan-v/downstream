@@ -20,11 +20,14 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::apiResource('projects', 'ProjectController');
 
+// SPA routes for Vue.
+Route::get('projects/{project}/servers', 'ProjectController@show');
+
 // Single deployment view.
-Route::get('projects/{projectId}/deployments/{deployment}', 'DeploymentController@show');
+Route::get('projects/{project}/deployments/{deployment}', 'DeploymentController@show');
 
 // Test server connection.
-Route::post('servers/connection/{serverId}', 'ServerController@connection');
+Route::post('servers/connection/{server}', 'ServerController@connection');
 // Server routes.
 Route::resource('servers', 'ServerController');
 

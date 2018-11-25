@@ -31,15 +31,15 @@ class DeploymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $projectId
+     * @param int $project
      * @param Deployment $deployment
      * @return \Illuminate\Http\Response
      */
-    public function show(int $projectId, Deployment $deployment)
+    public function show(int $project, Deployment $deployment)
     {
         // Lazy eager load the server that the job runs on as well.
         $deployment->jobs->load('server');
 
-        return view('deployments/show', compact('deployment'));
+        return view('deployments.show', compact('deployment'));
     }
 }

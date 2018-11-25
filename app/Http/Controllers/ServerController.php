@@ -78,12 +78,10 @@ class ServerController extends Controller
     /**
      * Check the SSH connection status.
      *
-     * @param int $id The server id we want retrieve a model for.
+     * @param Server $server The server id we want retrieve a model for.
      */
-    public function connection(int $id)
+    public function connection(Server $server)
     {
-        $server = Server::findOrFail($id);
-
         $process = new Process("ssh -q $server->target exit");
         $process->setTimeout(10);
 

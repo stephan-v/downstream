@@ -1,29 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="deployment-overview d-flex align-items-center mb-4">
-        <div class="project">
-            <span>PROJECT</span>
-            <h2 class="pt-1 pb-0">{{ $project->name }}</h2>
+    @include('projects.header')
 
-            <div class="skewed-border"></div>
-        </div><!-- /.project -->
+    <aside class="project-sidebar">
+        <ul>
+            <router-link :to="{ name: 'deployments' }" tag="li">
+                <i class="fas fa-code"></i>
+                Deployments
+            </router-link>
 
-        <div class="environment">
-            <span>ENVIRONMENT</span>
-            <h2 class="pt-1 pb-0">Master</h2>
-        </div><!-- /.environment -->
-
-        <div class="start-deployment">
-            @if ($project->servers)
-                <start-deployment :project-id="{{ $project->id }}"></start-deployment>
-            @else
-                <div class="alert alert-warning mt-3" role="alert">
-                    Add a server to start a new deployment.
-                </div><!-- /.alert -->
-            @endif
-        </div><!-- /.start-deployment -->
-    </div><!-- /.deployment-overview -->
+            <router-link :to="{ name: 'servers' }" tag="li">
+                <i class="fas fa-server"></i>
+                Servers
+            </router-link>
+        </ul>
+    </aside>
 
     <div class="container dashboard">
         <div class="row mb-4">
@@ -38,28 +30,20 @@
 
         <div class="row justify-content-center mb-4" v-cloak>
             <div class="content">
-                <tabs>
-                    <tab name="Deployments">
-                        <h2>Recent deployments</h2>
-                        
-                        <deployments :project="{{ $project }}"></deployments>
-                    </tab>
+                <router-view :project="{{ $project }}"></router-view>
 
-                    <tab name="Servers">
-                        <servers :project="{{ $project }}"></servers>
-                    </tab>
+                {{--<tabs>--}}
+                    {{--<tab name="Pipeline">--}}
+                        {{--<div class="alert alert-warning mt-3" role="alert">--}}
+                            {{--The pipeline contains all your actions that are performed during a deployment.--}}
+                        {{--</div><!-- /.alert -->--}}
 
-                    <tab name="Pipeline">
-                        <div class="alert alert-warning mt-3" role="alert">
-                            The pipeline contains all your actions that are performed during a deployment.
-                        </div><!-- /.alert -->
-
-                        <a href="{{ route('pipeline', ['project' => $project->id]) }}" class="btn btn-primary">
-                            <i class="fas fa-edit"></i>
-                            Edit pipeline
-                        </a>
-                    </tab>
-                </tabs>
+                        {{--<a href="{{ route('pipeline', ['project' => $project->id]) }}" class="btn btn-primary">--}}
+                            {{--<i class="fas fa-edit"></i>--}}
+                            {{--Edit pipeline--}}
+                        {{--</a>--}}
+                    {{--</tab>--}}
+                {{--</tabs>--}}
             </div><!-- /.content -->
         </div><!-- /.row -->
     </div><!-- /.container -->
