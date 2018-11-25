@@ -9,10 +9,10 @@
         <table class="table position-relative mt-3" v-if="servers.length">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Connect as</th>
-                    <th>IP Address </th>
-                    <th>Connection status</th>
+                    <th>NAME</th>
+                    <th>CONNECT AS</th>
+                    <th>IP ADDRESS </th>
+                    <th>CONNECTION STATUS</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -78,10 +78,32 @@
 </script>
 
 <style lang="scss" scoped>
-    td {
-        &.wrap-content {
-            width: 1%;
-            white-space: nowrap;
+    table {
+        tbody {
+            background: white;
+            box-shadow: 0 1px 1px #00000021;
+        }
+
+        th {
+            border: 0;
+            color: #616F7A;
+            font-weight: normal;
+        }
+
+        tr:first-child {
+            td {
+                border: 0;
+            }
+        }
+
+        td {
+            border-color: #EDEDEF;
+            vertical-align: middle;
+
+            &.wrap-content {
+                width: 1%;
+                white-space: nowrap;
+            }
         }
     }
 </style>
