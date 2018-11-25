@@ -19,7 +19,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div class="metadata mr-3">
                 <div class="row mb-1">
-                    <div class="col-5">
+                    <div class="col-5" title="The commit hash related to this deployment">
                         <i class="fab fa-github-alt"></i>
 
                         <a :href="commitUrl" target="_blank">
@@ -27,7 +27,7 @@
                         </a>
                     </div><!-- /.col -->
 
-                    <div class="col-7">
+                    <div class="col-7" title="The total runtime of this deployment">
                         <i class="far fa-clock"></i>
                         <span v-if="deployment.finished_at">{{ totalRuntime }}</span>
                         <span v-else>Unknown</span>
@@ -35,12 +35,12 @@
                 </div><!-- /.row -->
 
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-5" title="The branch used for this deployment">
                         <i class="fas fa-code-branch"></i>
                         <span>master</span>
                     </div><!-- /.col -->
 
-                    <div class="col-7">
+                    <div class="col-7" title="The time that passed since this deployment ran">
                         <i class="far fa-calendar-alt"></i>
                         <span class="text-nowrap">{{ timePassedSinceCreation }}</span>
                     </div><!-- /.col -->
@@ -52,7 +52,7 @@
                     <i class="fas fa-redo-alt"></i>
                 </redeploy>
 
-                <a :href="deploymentUrl" target="_blank">
+                <a :href="deploymentUrl" title="View deployment" target="_blank">
                     <i class="far fa-eye"></i>
                 </a>
             </div><!-- /.actions -->

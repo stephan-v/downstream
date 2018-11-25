@@ -1,5 +1,5 @@
 <template>
-    <a href="#" @click.prevent="deploy">
+    <a href="#" @click.prevent="deploy" title="Redeploy this deployment">
         <slot></slot>
     </a>
 </template>
