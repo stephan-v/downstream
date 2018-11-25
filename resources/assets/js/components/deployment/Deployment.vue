@@ -158,14 +158,15 @@
 </script>
 
 <style lang="scss" scoped>
-    $green: #2CAF76;
+    $green: #37C490;
+    $red: #E96360;
 
     .green {
         color: $green;
     }
 
     .red {
-        color: #ff2929;
+        color: $red;
     }
 
     .deployment {
@@ -178,7 +179,7 @@
         box-shadow: 0 1px 1px #00000021;
 
         &.failed {
-            border-left-color: #ff2929;
+            border-left-color: $red;
         }
 
         h2 {

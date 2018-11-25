@@ -1,10 +1,10 @@
 @include('layouts/header')
 
-<nav>
+<nav class="dashboard-navigation">
     <a href="{{ url('/') }}">
         {{ config('app.name', 'Laravel') }}
     </a>
-</nav>
+</nav><!-- /.dashboard-navigation -->
 
 <main>
     @yield('content')

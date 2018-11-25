@@ -15,7 +15,7 @@
 @import 'svg';
 
 // @TODO WIP remove.
-nav {
+nav.dashboard-navigation {
     background: linear-gradient(90deg, #33AFE2, #4D85FE);
 
     a {
@@ -65,7 +65,7 @@ nav {
 
     .environment, .project {
         position: relative;
-        padding: 3rem 5rem;
+        padding: 3rem 6rem;
 
         span {
             color: #616F7A;
