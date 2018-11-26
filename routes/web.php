@@ -11,10 +11,10 @@
 |
 */
 
-// Login authentication routes.
-Auth::routes();
+// Authentication routes.
 Route::get('login/github', 'Auth\LoginController@redirectToProvider')->name('github');
 Route::get('auth/github/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('/', 'HomeController@index')->name('home');
 
