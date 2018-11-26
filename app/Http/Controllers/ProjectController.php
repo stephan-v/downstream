@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Action;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,6 +19,7 @@ class ProjectController extends Controller
     {
         $projects = $request->user()->projects;
         $projects->load('deployments', 'user');
+
 
         return view('projects.index', compact('projects'));
     }
@@ -53,9 +55,12 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project->load('deployments');
+        $project->load('deployments', 'actions.servers', 'servers');
 
-        return view('projects.show', compact('project'));
+        // Available default pipeline actions to choose from.
+        $actions = Action::where('custom', false)->get();
+
+        return view('projects.show', compact('actions', 'project'));
     }
 
     /**

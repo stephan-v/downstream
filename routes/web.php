@@ -22,6 +22,7 @@ Route::apiResource('projects', 'ProjectController');
 
 // SPA routes for Vue.
 Route::get('projects/{project}/servers', 'ProjectController@show');
+Route::get('projects/{project}/pipeline', 'ProjectController@show')->name('pipeline');
 
 // Single deployment view.
 Route::get('projects/{project}/deployments/{deployment}', 'DeploymentController@show');
@@ -37,7 +38,6 @@ Route::resource('projects/{project}/pipeline/servers', 'ActionServerController')
 Route::resource('projects/{project}/pipeline/actions', 'ActionController')->only(['store', 'update', 'destroy']);
 
 // Pipeline.
-Route::get('projects/{project}/pipeline', 'PipelineController@show')->name('pipeline');
 Route::patch('projects/{project}/pipeline', 'PipelineController@update');
 Route::resource('projects/{project}/pipeline', 'PipelineController')->only(['store']);
 

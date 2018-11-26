@@ -15,12 +15,10 @@
                 Servers
             </router-link>
 
-            <li>
-                <a href="{{ route('pipeline', ['project' => $project->id]) }}">
-                    <i class="fas fa-ellipsis-v fa-fw"></i>
-                    Pipeline
-                </a>
-            </li>
+            <router-link :to="{ name: 'pipeline' }" tag="li">
+                <i class="fas fa-ellipsis-v fa-fw"></i>
+                Pipeline
+            </router-link>
         </ul>
     </aside>
 
@@ -37,7 +35,7 @@
 
         <div class="row justify-content-center mb-4" v-cloak>
             <div class="content">
-                <router-view :project="{{ $project }}"></router-view>
+                <router-view :project="{{ $project }}" :actions="{{ $actions }}"></router-view>
             </div><!-- /.content -->
         </div><!-- /.row -->
     </div><!-- /.container -->

@@ -10,22 +10,6 @@ use Illuminate\Http\Response;
 class PipelineController extends Controller
 {
     /**
-     * Display the specified resource.
-     *
-     * @param Project $project
-     * @return Response
-     */
-    public function show(Project $project)
-    {
-        $project = $project->load('actions.servers', 'servers');
-
-        // Available default pipeline actions to choose from.
-        $actions = Action::where('custom', false)->get();
-
-        return view('pipeline.show', compact('actions', 'project'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param Project $project
