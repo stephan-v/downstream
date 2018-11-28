@@ -35,17 +35,4 @@
             margin: 0 .5em 0 0;
         }
     }
-
-    .polygons {
-        svg {
-            width: 30rem;
-            height: 100%;
-            position: absolute;
-            transform: rotate(60deg);
-        }
-
-        polygon  {
-            fill: rgba(255, 255, 255, 0.15);
-        }
-    }
 }
