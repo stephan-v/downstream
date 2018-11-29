@@ -1,6 +1,8 @@
 @include('layouts/header')
 
 <section class="hero d-flex align-items-center position-relative">
+    <div class="skew"></div>
+
     <div class="main-menu container position-absolute">
         <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="#">
@@ -27,11 +29,12 @@
 
     <div class="container d-flex align-items-center justify-content-between">
         <div class="intro">
-            <h1>Powerful and intuitive <br> instant deployments</h1>
+            <h1>Deployments you can rely on</h1>
 
             <p class="lead text-light">
-                <span class="line"></span>
-                <span>You don't have to yell at your rubber ducky anymore.</span>
+                No more nervous sweating before pressing that deployment button.
+                Feel confident in your deployments with real-time feedback, atomic deployments and
+                a well defined deployment process.
             </p><!-- /.lead -->
         </div><!-- /.intro -->
     </div><!-- /.container -->
