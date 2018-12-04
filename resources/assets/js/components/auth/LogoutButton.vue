@@ -1,7 +1,7 @@
 <template>
-    <button type="button" class="btn btn-dark" @click="showConfirmationModal">
+    <a href="#" class="nav-link" @click="showConfirmationModal">
         <slot></slot>
-    </button><!-- /.btn -->
+    </a>
 </template>
 
 <script>

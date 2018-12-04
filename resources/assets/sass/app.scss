@@ -27,14 +27,19 @@ nav.dashboard-navigation {
         display: inline-block;
         font-size: 1.125rem;
 
+        &.brand {
+            font-family: 'Permanent Marker', cursive;
+        }
+
         &:hover {
             color: white;
+            text-decoration: none;
         }
 
         &:before {
             content: '';
             border-radius: 50%;
-            background: #3a3a3a;
+            background: #00759c;
             width: 25px;
             height: 25px;
             top: 50%;

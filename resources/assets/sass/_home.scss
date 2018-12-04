@@ -9,14 +9,21 @@
     }
 
     .navbar {
+        padding: 0.5rem 0;
+
         a {
             color: #FFF;
+        }
+
+        .navbar-brand {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.5rem;
         }
     }
 
     .intro {
         z-index: 1;
-        margin-top: -5%;
+        margin-top: -7%;
     }
 
     .skew {

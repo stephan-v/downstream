@@ -5,9 +5,7 @@
 
     <div class="main-menu container position-absolute">
         <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="#">
-                <img src="#" alt="downstream">
-            </a><!-- /.navbar-brand -->
+            <a class="navbar-brand" href="#">downstream</a>
 
             <ul class="navbar-nav ml-auto">
                 @auth
@@ -34,7 +32,7 @@
             <p class="lead text-light">
                 No more nervous sweating before pressing that deployment button.
                 Feel confident in your deployments with real-time feedback, atomic deployments and
-                a well defined deployment process.
+                a clearly defined deployment process.
             </p><!-- /.lead -->
         </div><!-- /.intro -->
     </div><!-- /.container -->
