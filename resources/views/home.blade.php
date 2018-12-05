@@ -31,10 +31,16 @@
 
             <p class="lead text-light">
                 No more nervous sweating before pressing that deployment button.
-                Feel confident in your deployments with real-time feedback, atomic deployments and
-                a clearly defined deployment process.
+                Feel confident in your deployments with an easy to use, powerful and and flexible
+                deployment service.
             </p><!-- /.lead -->
+
+            {{-- use these points for usps or banners  --}}
+            {{--real-time feedback, atomic deployments and--}}
+            {{--a clearly defined deployment process.--}}
         </div><!-- /.intro -->
+
+        <img src="/images/downstream.png" alt="" class="teaser-image">
     </div><!-- /.container -->
 </section><!-- /.hero -->
 

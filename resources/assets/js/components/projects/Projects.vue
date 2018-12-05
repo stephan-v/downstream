@@ -1,5 +1,5 @@
 <template>
-    <div class="projects">
+    <div class="projects mt-5">
         <h1>Project overview</h1>
 
         <create-project @create="create"></create-project>
