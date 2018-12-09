@@ -3,7 +3,7 @@
 @section('content')
     @include('projects.header')
 
-    <aside class="project-sidebar">
+    <aside class="project-sidebar" v-cloak>
         <ul>
             <router-link :to="{ name: 'deployments' }" tag="li">
                 <i class="fas fa-code fa-fw"></i>
@@ -22,7 +22,7 @@
         </ul>
     </aside>
 
-    <div class="container dashboard">
+    <div class="container dashboard" v-cloak>
         <div class="row mb-4">
             <div class="repository">
                 <span>Best Project Ever /</span>
@@ -33,7 +33,7 @@
             </div><!-- /.repository -->
         </div><!-- /.row -->
 
-        <div class="row justify-content-center mb-4" v-cloak>
+        <div class="row justify-content-center mb-4">
             <div class="content">
                 <router-view :project="{{ $project }}" :actions="{{ $actions }}"></router-view>
             </div><!-- /.content -->

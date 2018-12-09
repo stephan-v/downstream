@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActionProjectTable extends Migration
+class CreatePipelineTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateActionProjectTable extends Migration
      */
     public function up()
     {
-        Schema::create('action_project', function (Blueprint $table) {
+        Schema::create('pipeline', function (Blueprint $table) {
             $table->increments('id');
 
             $table->unsignedInteger('action_id');
@@ -35,6 +35,6 @@ class CreateActionProjectTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('action_project');
+        Schema::dropIfExists('pipeline');
     }
 }

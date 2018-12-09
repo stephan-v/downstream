@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class PipelineTableSeeder extends Seeder
+class UsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,10 +13,10 @@ class PipelineTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('pipeline')->insert([
-            'action_id' => 1,
-            'project_id' => 1,
-            'order' => 0,
+        DB::table('users')->insert([
+            'name' => 'Stephan',
+            'email' => 'test@gmail.com',
+            'password' => bcrypt('downstream'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
