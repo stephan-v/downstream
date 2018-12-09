@@ -34,10 +34,6 @@
                 Feel confident in your deployments with an easy to use, powerful and and flexible
                 deployment service.
             </p><!-- /.lead -->
-
-            {{-- use these points for usps or banners  --}}
-            {{--real-time feedback, atomic deployments and--}}
-            {{--a clearly defined deployment process.--}}
         </div><!-- /.intro -->
 
         <img src="/images/downstream.png" alt="" class="teaser-image">
@@ -49,28 +45,22 @@
         <div class="col-md">
             @svg('001-software', 'mb-3')
 
-            <p>
-                Get insight in your deployments with real-time feedback to let you know exact what
-                is happening during your deployment process at any time.
-            </p>
+            <p>Get insight in your deployments with real-time feedback to let you know exact what
+            is happening during your deployment process at any time.</p>
         </div><!-- /.col-md -->
 
         <div class="col-md">
             @svg('002-inspection', 'mb-3')
 
-            <p>
-                Highly customizable to suit your needs for every type of deployment. Create an
-                entirely custom process or make a selection from our pre-defined deployment steps.
-            </p>
+            <p>Highly customizable to suit your needs for every type of deployment. Create an
+            entirely custom process or make a selection from our pre-defined deployment steps.</p>
         </div><!-- /.col-md -->
 
         <div class="col-md">
             @svg('003-atom', 'mb-3')
 
-            <p>
-                Atomic deployments ensure zero downtime. If anything goes
-                wrong during your deployment process downstream will detect it and cancel your deployment.
-            </p>
+            <p>Atomic deployments ensure zero downtime. If anything goes wrong during your
+            deployment process downstream will detect it and cancel your deployment.</p>
         </div><!-- /.col-md -->
     </div><!-- /.row -->
 </section><!-- /.features -->
