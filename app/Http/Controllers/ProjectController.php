@@ -55,7 +55,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project->load('deployments', 'actions.servers', 'servers');
+        $project->load('deployments', 'pipeline.servers', 'servers');
 
         // Available default pipeline actions to choose from.
         $actions = Action::where('custom', false)->get();

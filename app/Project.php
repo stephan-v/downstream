@@ -24,9 +24,9 @@ class Project extends Model
     }
 
     /**
-     * Get the actions belonging to this project.
+     * Get the actions belonging to the deployment pipeline of the project.
      */
-    public function actions()
+    public function pipeline()
     {
         return $this
             ->belongsToMany(Action::class)
