@@ -21,8 +21,6 @@
 
         methods: {
             create(action) {
-                console.log(action);
-
                 this.$emit('create', action);
                 this.toggle();
             },

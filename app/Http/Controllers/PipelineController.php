@@ -62,11 +62,6 @@ class PipelineController extends Controller
         // Detach from the pivot.
         $project->pipeline()->detach($action->id);
 
-        // Only delete the action if it is a custom action.
-        if ($action->custom) {
-            $action->delete();
-        }
-
         return response(null, Response::HTTP_OK);
     }
 }

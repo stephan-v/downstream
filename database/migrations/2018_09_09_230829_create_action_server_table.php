@@ -22,7 +22,6 @@ class CreateActionServerTable extends Migration
             $table->unsignedInteger('server_id');
             $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
 
-
             $table->timestamps();
         });
     }
