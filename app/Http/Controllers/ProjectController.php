@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Action;
+use App\DefaultAction;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -58,7 +58,7 @@ class ProjectController extends Controller
         $project->load('deployments', 'pipeline.servers', 'servers');
 
         // Available default pipeline actions to choose from.
-        $actions = Action::where('custom', false)->get();
+        $actions = DefaultAction::all();
 
         return view('projects.show', compact('actions', 'project'));
     }
