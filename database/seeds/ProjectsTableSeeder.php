@@ -15,7 +15,7 @@ class ProjectsTableSeeder extends Seeder
     {
         DB::table('projects')->insert([
             'name' => 'BeerQuest',
-            'repository' => 'beerquest',
+            'repository' => 'stephan-v/beerquest',
             'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

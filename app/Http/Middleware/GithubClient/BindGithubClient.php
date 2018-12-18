@@ -20,12 +20,17 @@ class BindGithubClient
      * @param Request $request The incoming HTTP server request.
      * @param \Closure $next
      * @return mixed
+     * @throws \Exception
      */
     public function handle(Request $request, Closure $next)
     {
         if ($user = $request->user()) {
             $stack = HandlerStack::create();
             $stack->push(new GuzzleExceptionMiddleware);
+
+            if (!$user->access_token) {
+                throw new \Exception('User access token could not be found');
+            }
 
             $client = new Client([
                 'base_uri' => "https://api.github.com/repos/",
