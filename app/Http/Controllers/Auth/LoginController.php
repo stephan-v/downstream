@@ -60,8 +60,7 @@ class LoginController extends Controller
     {
         $github = Socialite::driver('github')->user();
 
-        // @TODO update the information if this is updated. Especially necessary for the token!
-        $user = User::firstOrCreate(['email' => $github->email], [
+        $user = User::updateOrCreate(['email' => $github->email], [
             'name' => $github->nickname,
             'email' => $github->email,
             'access_token' => encrypt($github->token),
