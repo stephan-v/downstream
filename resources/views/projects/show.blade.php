@@ -35,7 +35,9 @@
 
         <div class="row justify-content-center mb-4">
             <div class="content">
-                <router-view :project="{{ $project }}" :actions="{{ $actions }}"></router-view>
+                <keep-alive>
+                    <router-view :project="{{ $project }}" :actions="{{ $actions }}"></router-view>
+                </keep-alive>
             </div><!-- /.content -->
         </div><!-- /.row -->
     </div><!-- /.container -->

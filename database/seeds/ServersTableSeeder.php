@@ -25,9 +25,9 @@ class ServersTableSeeder extends Seeder
         DB::table('servers')->insert([
             'name' => 'Another Server',
             'path' => '/home/forge/downstream-test.nl',
-            'ip_address' => '1270.0.0.1',
-            'user' => 'localhost',
-            'project_id' => 1,
+            'ip_address' => '188.166.100.191',
+            'user' => 'forge',
+            'project_id' => 2,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

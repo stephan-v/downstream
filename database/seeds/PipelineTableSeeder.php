@@ -20,5 +20,13 @@ class PipelineTableSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+
+        DB::table('pipeline')->insert([
+            'action_id' => 1,
+            'project_id' => 2,
+            'order' => 0,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }

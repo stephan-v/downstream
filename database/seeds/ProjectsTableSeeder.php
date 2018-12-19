@@ -20,5 +20,13 @@ class ProjectsTableSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+
+        DB::table('projects')->insert([
+            'name' => 'Test',
+            'repository' => 'stephan-v/beerquest',
+            'user_id' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }
