@@ -30,7 +30,7 @@ class ActionController extends Controller
         $action->script = preg_split("/\r\n|\n|\r/", $request->script);
         $action->save();
 
-        $project->actions()->attach(
+        $project->pipeline()->attach(
             $action->id, [
                 'order' => $project->actionOrder()
             ]
