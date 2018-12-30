@@ -26,10 +26,10 @@ class Project extends Model
     /**
      * Get the actions belonging to the deployment pipeline of the project.
      */
-    public function pipeline()
+    public function actions()
     {
         return $this
-            ->belongsToMany(Action::class, 'pipeline')
+            ->belongsToMany(Action::class)
             ->withPivot('id', 'order')
             ->withTimestamps()
             ->orderBy('order');
@@ -42,12 +42,7 @@ class Project extends Model
      */
     public function actionOrder(): int
     {
-        $action = $this
-            ->belongsToMany(Action::class, 'pipeline')
-            ->withPivot('id', 'order')
-            ->withTimestamps()
-            ->latest('order')
-            ->first();
+        $action = $this->actions()->latest('order')->first();
 
         return $action ? ++$action->pivot->order : 0;
     }

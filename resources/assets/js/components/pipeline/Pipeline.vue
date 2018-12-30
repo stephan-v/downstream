@@ -9,7 +9,7 @@
     export default {
         data() {
             return {
-                pipeline: this.project.pipeline
+                pipeline: this.project.actions
             }
         },
 

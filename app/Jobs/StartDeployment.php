@@ -85,7 +85,7 @@ class StartDeployment implements ShouldQueue
         // Prepare the chain of deployment jobs.
         $chain = [];
 
-        foreach ($project->pipeline as $action) {
+        foreach ($project->actions as $action) {
             $chain[] = new SSHJob($deployment, $action);
         }
 

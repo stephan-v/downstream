@@ -22,7 +22,7 @@ class PipelineController extends Controller
         $action = Action::findOrFail($request->action_id);
         $action = $action->load('servers');
 
-        $project->pipeline()->attach(
+        $project->actions()->attach(
             $action->id, [
                 'order' => $project->actionOrder()
             ]
@@ -44,7 +44,7 @@ class PipelineController extends Controller
 
         // Update the 'order' column of the pivot(pipeline) table.
         for ($i = 0; $i < count($actions); ++$i) {
-            $project->pipeline()->updateExistingPivot($actions[$i]['id'], ['order' => $i]);
+            $project->actions()->updateExistingPivot($actions[$i]['id'], ['order' => $i]);
         }
 
         return response(null, Response::HTTP_OK);
@@ -60,7 +60,7 @@ class PipelineController extends Controller
     public function destroy(Project $project, Action $action)
     {
         // Detach from the pivot.
-        $project->pipeline()->detach($action->id);
+        $project->actions()->detach($action->id);
 
         // Only delete the action if it is a custom action.
         if ($action->custom) {
