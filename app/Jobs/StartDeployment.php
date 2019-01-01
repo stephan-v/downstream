@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Deployment;
 use App\Events\DeploymentStarted;
 use App\Project;
-use App\Services\HttpClients\VersionControlInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;

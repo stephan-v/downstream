@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Action;
+use App\DefaultAction;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,8 +19,10 @@ class PipelineController extends Controller
      */
     public function store(Project $project, Request $request)
     {
-        /** @var Action $action */
-        $action = Action::findOrFail($request->action_id);
+        /** @var DefaultAction $action */
+        $action = DefaultAction::findOrFail($request->action_id);
+        $action = Action::create($action->toArray());
+
         $action = $action->load('servers');
 
         $project->actions()->attach(
@@ -61,11 +64,6 @@ class PipelineController extends Controller
     {
         // Detach from the pivot.
         $project->actions()->detach($action->id);
-
-        // Only delete the action if it is a custom action.
-        if ($action->custom) {
-            $action->delete();
-        }
 
         return response(null, Response::HTTP_OK);
     }

@@ -22,7 +22,7 @@ class ActionProjectTableSeeder extends Seeder
         ]);
 
         DB::table('action_project')->insert([
-            'action_id' => 1,
+            'action_id' => 2,
             'project_id' => 2,
             'order' => 0,
             'created_at' => Carbon::now(),

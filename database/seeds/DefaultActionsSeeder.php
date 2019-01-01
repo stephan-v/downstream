@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class ActionsSeeder extends Seeder
+class DefaultActionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +16,7 @@ class ActionsSeeder extends Seeder
         $this->insertCloneRepositoryScript();
         $this->insertComposerInstallScript();
         $this->insertCleanOldReleasesScript();
+        $this->copyToActionsTable();
     }
 
     /**
@@ -24,7 +25,7 @@ class ActionsSeeder extends Seeder
     private function insertCloneRepositoryScript()
     {
         // Clone repository script.
-        DB::table('actions')->insert([
+        DB::table('default_actions')->insert([
             'name' => 'Clone repository',
             'description' => 'Clone a Github repository',
             'icon' => 'github',
@@ -33,7 +34,6 @@ class ActionsSeeder extends Seeder
                 'git clone --depth 1 {{ $repository }} {{ $release }}',
                 'exit'
             ]),
-            'custom' => false,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -45,7 +45,7 @@ class ActionsSeeder extends Seeder
     private function insertComposerInstallScript()
     {
         // Composer install script.
-        DB::table('actions')->insert([
+        DB::table('default_actions')->insert([
             'name' => 'Composer install',
             'description' => 'Run the composer installer',
             'icon' => 'php',
@@ -53,7 +53,6 @@ class ActionsSeeder extends Seeder
                 'cd {{ $release }}',
                 'composer install -o --no-interaction --prefer-dist'
             ]),
-            'custom' => false,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -65,7 +64,7 @@ class ActionsSeeder extends Seeder
     private function insertCleanOldReleasesScript()
     {
         // Clean old releases script.
-        DB::table('actions')->insert([
+        DB::table('default_actions')->insert([
             'name' => 'Clean old releases',
             'description' => 'Clean previous deployments except the first 5',
             'icon' => 'clean',
@@ -73,9 +72,20 @@ class ActionsSeeder extends Seeder
                 'ln -snf {{ $release }} {{ $symlink }}',
                 'cd {{ $releases }} && ls -t | tail -n +6 | xargs rm -rf'
             ]),
-            'custom' => false,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
+    }
+
+    /**
+     * Copy the default actions we just inserted over to the actions table.
+     */
+    private function copyToActionsTable()
+    {
+        $actions = DB::table('default_actions')->get();
+
+        foreach ($actions as $action) {
+            DB::table('actions')->insert(get_object_vars($action));
+        }
     }
 }
