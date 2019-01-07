@@ -5,7 +5,7 @@ namespace App\Services\HttpClients;
 interface VersionControlInterface
 {
     /**
-     * Get a  list of commits on a repository.
+     * Get a list of commits on a repository.
      *
      * @param string $repository The repository that we want to fetch commits for.
      * @return mixed The decoded response.

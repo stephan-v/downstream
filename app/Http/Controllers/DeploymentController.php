@@ -19,13 +19,13 @@ class DeploymentController extends Controller
     {
         $commits = $client->getCommits($project->repository);
 
-        $deployment = new Deployment([
+        $deployment = $project->deployments()->create([
             'user_id' => $project->user->id,
             'commit' => $commits->sha,
             'commit_url' => $commits->html_url
         ]);
 
-        StartDeployment::dispatch($project, $deployment);
+        StartDeployment::dispatch($deployment);
     }
 
     /**
@@ -37,7 +37,7 @@ class DeploymentController extends Controller
      */
     public function show(int $project, Deployment $deployment)
     {
-        // Lazy eager load the server that the job runs on as well.
+        // Eager load the server(s) that the actions run on.
         $deployment->jobs->load('server');
 
         return view('deployments.show', compact('deployment'));

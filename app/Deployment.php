@@ -22,6 +22,13 @@ class Deployment extends Model
     const FAILED = 2;
 
     /**
+     * The maximum number of deployments that are being kept for re-deploy purposes.
+     *
+     * @var int MAX_DEPLOYMENTS
+     */
+    const MAX_DEPLOYMENTS = 5;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

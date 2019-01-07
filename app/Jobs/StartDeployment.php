@@ -16,14 +16,7 @@ class StartDeployment implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The maximum number of deployments that are being kept for re-deploy purposes.
-     *
-     * @var int MAX_DEPLOYMENTS
-     */
-    private const MAX_DEPLOYMENTS = 5;
-
-    /**
-     * The freshly started deployment.
+     * The newly created deployment.
      *
      * @var Deployment $deployment
      */
@@ -32,42 +25,14 @@ class StartDeployment implements ShouldQueue
     /**
      * Deployment constructor.
      *
-     * @param Project $project
-     * @param Deployment $deployment
+     * @param Deployment $deployment The newly created deployment.
      * @internal param GithubClient $client The GithubClient Guzzle instance.
      */
-    public function __construct(Project $project, Deployment $deployment)
+    public function __construct(Deployment $deployment)
     {
-        $this->createDeployment($project, $deployment);
-        $this->createDeploymentChain($project);
-        $this->cleanOldDeployments($project);
-    }
-
-    /**
-     * Create the deployment.
-     *
-     * @param Project $project The project to create the deployment for.
-     * @param Deployment $deployment
-     */
-    private function createDeployment(Project $project, Deployment $deployment)
-    {
-        $this->deployment = $project->deployments()->save($deployment);
-    }
-
-    /**
-     * Remove deployments exceeding the MAX_DEPLOYMENTS count from the database.
-     *
-     * @param Project $project The project to clean deployments for.
-     */
-    private function cleanOldDeployments(Project $project)
-    {
-        $skip = self::MAX_DEPLOYMENTS;
-        $deployments = $project->deployments();
-        $count = $deployments->count();
-
-        if ($count > $skip) {
-            $deployments->skip($skip)->take($count - $skip)->delete();
-        }
+        $this->deployment = $deployment;
+        $this->createDeploymentChain($deployment->project);
+        $this->cleanOldDeployments($deployment->project);
     }
 
     /**
@@ -81,7 +46,6 @@ class StartDeployment implements ShouldQueue
     {
         $deployment = $this->deployment;
 
-        // Prepare the chain of deployment jobs.
         $chain = [];
 
         foreach ($project->actions as $action) {
@@ -92,6 +56,22 @@ class StartDeployment implements ShouldQueue
 
         // Start the chain.
         $this->chain($chain);
+    }
+
+    /**
+     * Remove deployments exceeding the MAX_DEPLOYMENTS count from the database.
+     *
+     * @param Project $project The project to clean deployments for.
+     */
+    private function cleanOldDeployments(Project $project)
+    {
+        $skip = deployment::MAX_DEPLOYMENTS;
+        $deployments = $project->deployments();
+        $count = $deployments->count();
+
+        if ($count > $skip) {
+            $deployments->skip($skip)->take($count - $skip)->delete();
+        }
     }
 
     /**

@@ -14,6 +14,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
+/**
+ * The SSHJob class runs a job per server and executes the script from the corresponding action.
+ */
 class SSHJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, CompilesCommandsTrait;
