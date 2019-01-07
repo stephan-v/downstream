@@ -66,7 +66,6 @@ class WebhookController extends Controller
             $project = Project::where('repository', $payload->repository->full_name)->firstOrFail();
 
             $deployment = new Deployment([
-                'user_id' => $project->user->id,
                 'commit' => $payload->head_commit->id,
                 'commit_url' => $payload->repository->full_name
             ]);

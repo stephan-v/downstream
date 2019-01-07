@@ -10,7 +10,7 @@ interface VersionControlInterface
      * @param string $repository The repository that we want to fetch commits for.
      * @return mixed The decoded response.
      */
-    public function getCommits(string $repository);
+    public function getRepositoryCommits(string $repository);
 
     /**
      * Get the webhooks for the specific repository.

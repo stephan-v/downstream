@@ -17,10 +17,9 @@ class DeploymentController extends Controller
      */
     public function deploy(Project $project, VersionControlInterface $client)
     {
-        $commits = $client->getCommits($project->repository);
+        $commits = $client->getRepositoryCommits($project->repository);
 
         $deployment = $project->deployments()->create([
-            'user_id' => $project->user->id,
             'commit' => $commits->sha,
             'commit_url' => $commits->html_url
         ]);

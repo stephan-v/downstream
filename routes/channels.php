@@ -22,5 +22,5 @@ Broadcast::channel('project.{projectId}', function ($user, $projectId) {
  * * Verify that the user is allowed to listen to this private deployment.
  */
 Broadcast::channel('task.{taskId}', function ($user, $taskId) {
-    return $user->id === \App\Job::findOrNew($taskId)->deployment->user_id;
+    return $user->id === \App\Job::findOrNew($taskId)->deployment->project->user_id;
 });

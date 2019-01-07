@@ -24,9 +24,6 @@ class CreateDeploymentsTable extends Migration
             $table->unsignedInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-
             $table->timestamps();
             $table->timestamp('finished_at')->nullable();
         });
