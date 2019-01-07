@@ -32,7 +32,6 @@ class StartDeployment implements ShouldQueue
     {
         $this->deployment = $deployment;
         $this->createDeploymentChain($deployment->project);
-        $this->cleanOldDeployments($deployment->project);
     }
 
     /**
@@ -52,26 +51,12 @@ class StartDeployment implements ShouldQueue
             $chain[] = new SSHJob($deployment, $action);
         }
 
+        // The final 2 required jobs to finish up the deployment chain.
+        $chain[] = new PurgeOldReleases($deployment);
         $chain[] = new FinishDeployment($deployment);
 
         // Start the chain.
         $this->chain($chain);
-    }
-
-    /**
-     * Remove deployments exceeding the MAX_DEPLOYMENTS count from the database.
-     *
-     * @param Project $project The project to clean deployments for.
-     */
-    private function cleanOldDeployments(Project $project)
-    {
-        $skip = deployment::MAX_DEPLOYMENTS;
-        $deployments = $project->deployments();
-        $count = $deployments->count();
-
-        if ($count > $skip) {
-            $deployments->skip($skip)->take($count - $skip)->delete();
-        }
     }
 
     /**

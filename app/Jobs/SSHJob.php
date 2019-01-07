@@ -68,19 +68,6 @@ class SSHJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @param SSH $ssh The SSH singleton to run remote commands.
-     */
-    public function handle(SSH $ssh)
-    {
-        foreach ($this->jobs as $job) {
-            $ssh->setJob($job);
-            $ssh->fire();
-        }
-    }
-
-    /**
      * The job failed to process.
      *
      * If a job failed in the chain we make sure to set the entire deployment to 'failed'.
@@ -93,5 +80,18 @@ class SSHJob implements ShouldQueue
         $deployment->save();
 
         event(new DeploymentFinished($deployment, Deployment::FAILED));
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @param SSH $ssh The SSH singleton to run remote commands.
+     */
+    public function handle(SSH $ssh)
+    {
+        foreach ($this->jobs as $job) {
+            $ssh->setJob($job);
+            $ssh->fire();
+        }
     }
 }
