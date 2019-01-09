@@ -22,8 +22,8 @@ class ProjectsTableSeeder extends Seeder
         ]);
 
         DB::table('projects')->insert([
-            'name' => 'Test',
-            'repository' => 'stephan-v/beerquest',
+            'name' => 'Webhook trigger test',
+            'repository' => 'stephan-v/webhook-trigger-test',
             'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

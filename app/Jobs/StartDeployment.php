@@ -43,19 +43,15 @@ class StartDeployment implements ShouldQueue
      */
     private function createDeploymentChain(Project $project)
     {
-        $deployment = $this->deployment;
-
         $chain = [];
 
         foreach ($project->actions as $action) {
-            $chain[] = new SSHJob($deployment, $action);
+            $chain[] = new SSHJob($this->deployment, $action);
         }
 
-        // The final 2 required jobs to finish up the deployment chain.
-        $chain[] = new PurgeOldReleases($deployment);
-        $chain[] = new FinishDeployment($deployment);
+        $chain[] = new FinishDeployment($this->deployment);
 
-        // Start the chain.
+        // Continue the chain when this initial job has finished.
         $this->chain($chain);
     }
 

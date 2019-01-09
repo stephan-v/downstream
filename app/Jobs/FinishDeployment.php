@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Deployment;
 use App\Events\DeploymentFinished;
+use App\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
@@ -47,6 +48,22 @@ class FinishDeployment implements ShouldQueue
     }
 
     /**
+     * Purge deployments exceeding the MAX_DEPLOYMENTS count from the database and the filesystem.
+     *
+     * @param Project $project The project to clean deployments for.
+     */
+    private function purgeOldReleases(Project $project)
+    {
+        $skip = deployment::MAX_DEPLOYMENTS;
+        $deployments = $project->deployments();
+        $count = $deployments->count();
+
+        if ($count > $skip) {
+            $deployments->skip($skip)->take($count - $skip)->delete();
+        }
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
@@ -54,6 +71,7 @@ class FinishDeployment implements ShouldQueue
     public function handle()
     {
         $deployment = $this->markDeploymentAsFinished();
+        $this->purgeOldReleases($deployment->project);
 
         event(new DeploymentFinished($deployment, Deployment::FINISHED));
     }
