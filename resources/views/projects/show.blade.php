@@ -23,22 +23,24 @@
     </aside>
 
     <div class="container dashboard" v-cloak>
-        <div class="row mb-4">
-            <div class="repository">
-                <span>Best Project Ever /</span>
+        <div class="container-offset">
+            <div class="row mb-4">
+                <div class="repository">
+                    <span>Best Project Ever /</span>
 
-                <a href="https://github.com/{{ $project->repository }}">
-                    {{ $project->repository }}
-                </a>
-            </div><!-- /.repository -->
-        </div><!-- /.row -->
+                    <a href="https://github.com/{{ $project->repository }}">
+                        {{ $project->repository }}
+                    </a>
+                </div><!-- /.repository -->
+            </div><!-- /.row -->
 
-        <div class="row justify-content-center mb-4">
-            <div class="content">
-                <keep-alive>
-                    <router-view :project="{{ $project }}" :actions="{{ $actions }}"></router-view>
-                </keep-alive>
-            </div><!-- /.content -->
-        </div><!-- /.row -->
+            <div class="row justify-content-center mb-4">
+                <div class="content">
+                    <keep-alive>
+                        <router-view :project="{{ $project }}" :actions="{{ $actions }}"></router-view>
+                    </keep-alive>
+                </div><!-- /.content -->
+            </div><!-- /.row -->
+        </div><!-- /.container-offset -->
     </div><!-- /.container -->
 @endsection

@@ -1,7 +1,11 @@
 .container.dashboard {
     width: calc(100% - 500px);
-    transform: translateX(100px);
     padding: 1.5rem 0 0 0;
+
+    .container-offset {
+        margin-right: -100px;
+        margin-left: 100px;
+    }
 
     .content {
         width: 100%;
