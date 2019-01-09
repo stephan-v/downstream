@@ -6,6 +6,7 @@ use App\Action;
 use App\Deployment;
 use App\Events\DeploymentFinished;
 use App\Job;
+use App\Server;
 use App\Services\Ssh\CompilesCommandsTrait;
 use App\Services\Ssh\SSH;
 use Illuminate\Bus\Queueable;
@@ -55,16 +56,29 @@ class SSHJob implements ShouldQueue
     private function persistJobs(Action $action)
     {
         foreach ($action->servers as $server) {
-            $job = new Job();
-
-            $job->name = $action->name;
-            $job->commands = $this->compileWithBlade($server, $action->script);
-            $job->deployment()->associate($this->deployment);
-            $job->server()->associate($server);
-            $job->status = Job::PENDING;
-
-            $this->jobs[] = tap($job)->save();
+            $this->jobs[] = $this->createJob($action, $server);
         }
+    }
+
+    /**
+     * Create the job for the given server belonging to the action.
+     *
+     * @param Action $action The action that we want to execute.
+     * @param Server $server The specific server that we want the action to execute on.
+     * @return Job The created job.
+     */
+    private function createJob(Action $action, Server $server)
+    {
+        $job = new Job();
+
+        $job->name = $action->name;
+        $job->commands = $this->compileWithBlade($server, $action->script);
+        $job->status = Job::PENDING;
+        $job->deployment()->associate($this->deployment);
+        $job->server()->associate($server);
+        $job->save();
+
+        return $job;
     }
 
     /**
