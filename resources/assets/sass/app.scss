@@ -19,7 +19,7 @@ nav.dashboard-navigation {
     background: linear-gradient(90deg, #33AFE2, #4D85FE);
 
     a {
-        padding: 1.2rem;
+        padding: 1rem 1.2rem;
         background: #4678E7;
         position: relative;
         z-index: 1;
@@ -29,7 +29,10 @@ nav.dashboard-navigation {
     }
 
     a.brand {
-        font-family: 'Permanent Marker', cursive;
+        svg {
+            height: 25px;
+            fill: white;
+        }
 
         &:hover {
             color: white;

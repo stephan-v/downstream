@@ -5,7 +5,9 @@
 
     <div class="main-menu container position-absolute">
         <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="#">downstream</a>
+            <a class="navbar-brand" href="#">
+                @svg('downstream')
+            </a>
 
             <ul class="navbar-nav ml-auto">
                 @auth

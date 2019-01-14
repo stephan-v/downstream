@@ -9,7 +9,7 @@
     }
 
     .navbar {
-        padding: 0.5rem 0;
+        padding: 1.5rem 0;
 
         a {
             color: #FFF;
@@ -20,8 +20,10 @@
         }
 
         .navbar-brand {
-            font-family: 'Permanent Marker', cursive;
-            font-size: 1.5rem;
+            svg {
+                height: 35px;
+                fill: white;
+            }
         }
     }
 
