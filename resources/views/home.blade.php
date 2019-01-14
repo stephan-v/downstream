@@ -33,7 +33,7 @@
 
             <p class="lead text-light">
                 No more nervous sweating before pressing that deployment button.
-                Feel confident in your deployments with an easy to use, powerful and and flexible
+                Feel confident in your deployments with an easy to use, powerful and flexible
                 deployment service.
             </p><!-- /.lead -->
         </div><!-- /.intro -->
