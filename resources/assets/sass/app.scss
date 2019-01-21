@@ -39,19 +39,6 @@ nav.dashboard-navigation {
             text-decoration: none;
         }
 
-        &:before {
-            content: '';
-            border-radius: 50%;
-            background: #00759c;
-            width: 25px;
-            height: 25px;
-            top: 50%;
-            right: -25px;
-            position: absolute;
-            transform: translateY(-40%);
-            border: 3px solid #00ade7;
-        }
-
         &:after {
             content: '';
             z-index: -1;
