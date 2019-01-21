@@ -18,7 +18,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .sourceMaps(true, 'cheap-module-inline-source-map')
     .disableNotifications();
 
-
 mix.webpackConfig({
     module: {
         rules: [

@@ -25,7 +25,6 @@ nav.dashboard-navigation {
         z-index: 1;
         color: white;
         display: inline-block;
-        font-size: 1.125rem;
     }
 
     a.brand {
@@ -100,4 +99,15 @@ nav.dashboard-navigation {
 
 [v-cloak] {
     display: none
+}
+
+footer {
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid #d4d4d4;
+}
+
+.sign-up {
+    background: #3396f6;
+    border: 0;
 }

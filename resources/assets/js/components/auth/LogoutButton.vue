@@ -39,7 +39,7 @@
                     timer: 2000,
                     icon: 'success'
                 }).then(() => {
-                    location.reload();
+                    window.location.href = '/';
                 });
             }
         }

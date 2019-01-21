@@ -67,6 +67,11 @@
     </div><!-- /.row -->
 </section><!-- /.features -->
 
-<div style="margin-top: 500px"></div>
+<section class="container text-center">
+    <h4 class="mt-5">Sounds like a good deal?</h4>
+    <button type="button" class="btn btn-primary btn-lg sign-up mt-1">Try it out for yourself</button>
+</section>
+
+<div style="margin-top: 200px"></div>
 
 @include('layouts/footer')
