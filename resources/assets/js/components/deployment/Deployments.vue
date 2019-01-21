@@ -11,7 +11,10 @@
             </transition-group>
         </ul>
 
-        <p v-else>No recent deployments</p>
+        <div class="alert alert-warning" role="alert" v-else>
+            No recent deployments. Get started by setting up your servers and pipeline and
+            press <strong>start deployment</strong>.
+        </div>
     </div><!-- /.deployments -->
 </template>
 
