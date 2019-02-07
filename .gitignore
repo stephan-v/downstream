@@ -4,6 +4,7 @@
 /public/images/svg
 /public/hot
 /public/storage
+/public/mix-manifest.json
 /storage/*.key
 /vendor
 /.idea
