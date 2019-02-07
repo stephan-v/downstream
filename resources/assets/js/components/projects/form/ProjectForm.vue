@@ -26,16 +26,9 @@
             </div><!-- /.col-sm-* -->
         </div><!-- /.form-group -->
 
-        <div class="form-group row">
-            <label for="toggle" class="col-sm-3 col-form-label">Webhook</label>
-            <toggle-webhook :project="project" class="col-sm-9 d-flex align-items-center"></toggle-webhook>
-
-            <small id="emailHelp" class="col-sm-12 text-muted">
-                Deploy your code whenever you commit changes.
-            </small>
-        </div><!-- /.form-group -->
-
-        <button type="submit" class="btn btn-primary">Save project</button>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Save project</button>
+        </div><!-- /.text-center -->
     </form>
 </template>
 

@@ -10,7 +10,7 @@ use App\Services\Webhook\Webhook;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class WebhookController extends Controller
+class ProjectWebhookController extends Controller
 {
     /**
      * Display a listing of the resource.

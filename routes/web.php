@@ -45,5 +45,5 @@ Route::delete('projects/{project}/pipeline/{action}', 'PipelineController@destro
 
 Route::group(['middleware' => ['vcs']], function () {
     Route::post('deploy/{project}', 'DeploymentController@deploy')->name('deploy');
-    Route::resource('projects.webhooks', 'WebhookController');
+    Route::resource('projects.webhooks', 'ProjectWebhookController');
 });

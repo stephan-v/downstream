@@ -11,6 +11,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Third party overrides.
+@import 'sweet-alert';
+
 // SVG helper classes.
 @import 'svg';
 

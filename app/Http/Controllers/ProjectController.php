@@ -12,14 +12,13 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request The incoming HTTP server request.
+     * @return Response The HTTP response message.
      */
     public function index(Request $request)
     {
         $projects = $request->user()->projects;
         $projects->load('deployments', 'user');
-
 
         return view('projects.index', compact('projects'));
     }
@@ -27,8 +26,8 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request The incoming HTTP server request.
+     * @return Response The HTTP response message.
      */
     public function store(Request $request)
     {
@@ -50,8 +49,8 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Project $project
-     * @return Response
+     * @param Project $project The project entity to display.
+     * @return Response The HTTP response message.
      */
     public function show(Project $project)
     {
@@ -65,9 +64,9 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Project $project
-     * @return Response
+     * @param Request $request The incoming HTTP server request.
+     * @param Project $project The project entity to be updated.
+     * @return Response The HTTP response message.
      */
     public function update(Request $request, Project $project)
     {
@@ -86,8 +85,8 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Project $project
-     * @return Response
+     * @param Project $project The project entity to be destroyed.
+     * @return Response The HTTP response message.
      */
     public function destroy(Project $project)
     {

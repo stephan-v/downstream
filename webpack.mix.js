@@ -15,8 +15,13 @@ const path = require('path');
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
-    .sourceMaps(true, 'cheap-module-inline-source-map')
     .disableNotifications();
+
+if (mix.inProduction()) {
+    mix.version();
+} else {
+    mix.sourceMaps(true, 'cheap-module-inline-source-map');
+}
 
 mix.webpackConfig({
     module: {

@@ -23,4 +23,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  * Within the Github dashboard this is referred to as  the "payload URL".
  * This can be found under the repository in settings > webhooks.
  */
-Route::post('/webhook', 'WebhookController@webhook');
+Route::post('/webhook', 'ProjectWebhookController@webhook');
