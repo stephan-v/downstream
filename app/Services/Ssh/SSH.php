@@ -52,11 +52,12 @@ class SSH
         $delimiter = 'EOF-DOWNSTREAM-APP';
 
         $job = $this->job;
+        $disableHostAuthentication = "-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
         $target = $job->server->target;
         $commands = $this->getCommands();
 
         return new Process(
-            "ssh $target 'bash -se' << \\$delimiter".PHP_EOL
+            "ssh $disableHostAuthentication $target 'bash -se' << \\$delimiter".PHP_EOL
             .$commands.PHP_EOL
             .$delimiter
         );

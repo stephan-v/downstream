@@ -38,7 +38,7 @@
 
                         swal({
                             title: 'Success!',
-                            text: 'Server created',
+                            text: 'Server added',
                             icon: 'success',
                             buttons: false,
                             timer: 1500

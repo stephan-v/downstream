@@ -82,7 +82,7 @@ class ServerController extends Controller
      */
     public function connection(Server $server)
     {
-        $process = new Process("ssh -q $server->target exit");
+        $process = new Process("ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $server->target exit");
         $process->setTimeout(10);
 
         try {
