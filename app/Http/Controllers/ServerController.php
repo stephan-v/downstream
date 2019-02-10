@@ -103,6 +103,6 @@ class ServerController extends Controller
         $server->status = Server::SUCCESSFUL;
         $server->save();
 
-        return response(null, Response::HTTP_OK);
+        return response('Pinged server successfully', Response::HTTP_OK);
     }
 }

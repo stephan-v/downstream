@@ -43,7 +43,12 @@ class SSH
     }
 
     /**
-     * Get the instantiated PHP process.
+     * Get a newly instantiated Symfony process.
+     *
+     * This allows us to perform bash scripts on a remote server.
+     *
+     * The -s bash option allows bash to read its command from standard input,
+     * rather than from a file named by the first positional argument.
      *
      * @return Process The Symfony proc_* functions wrapper.
      */
@@ -58,6 +63,7 @@ class SSH
 
         return new Process(
             "ssh $disableHostAuthentication $target 'bash -se' << \\$delimiter".PHP_EOL
+            .'set -e'.PHP_EOL
             .$commands.PHP_EOL
             .$delimiter
         );
