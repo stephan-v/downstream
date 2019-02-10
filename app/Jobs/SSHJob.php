@@ -23,6 +23,13 @@ class SSHJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, CompilesCommandsTrait;
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int $tries
+     */
+    public $tries = 1;
+
+    /**
      * The freshly started deployment.
      *
      * @var Deployment $deployment

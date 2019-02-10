@@ -16,7 +16,7 @@ class ServerController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response The HTTP response message.
      */
     public function store(Request $request)
     {
@@ -39,7 +39,7 @@ class ServerController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response The HTTP response message.
      */
     public function update(Request $request, int $id)
     {
@@ -65,7 +65,7 @@ class ServerController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response The HTTP response message.
      */
     public function destroy($id)
     {
@@ -79,6 +79,7 @@ class ServerController extends Controller
      * Check the SSH connection status.
      *
      * @param Server $server The server id we want retrieve a model for.
+     * @return Response The HTTP response message.
      */
     public function connection(Server $server)
     {
@@ -101,5 +102,7 @@ class ServerController extends Controller
 
         $server->status = Server::SUCCESSFUL;
         $server->save();
+
+        return response(null, Response::HTTP_OK);
     }
 }
