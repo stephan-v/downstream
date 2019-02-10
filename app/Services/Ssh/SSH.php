@@ -78,6 +78,8 @@ class SSH
 
         $process = $this->getRemoteProcess();
 
+        $process->setIdleTimeout(60);
+
         $process->run(function ($type, $output) {
             event(new CommandExecuted(
                 $output,
