@@ -37,9 +37,9 @@ class SSHJob implements ShouldQueue
     protected $jobs = [];
 
     /**
-     * CloneRepository constructor.
+     * Finish deployment constructor.
      *
-     * @param Deployment $deployment
+     * @param Deployment $deployment The current deployment.
      * @param Action $action
      */
     public function __construct(Deployment $deployment, Action $action)
