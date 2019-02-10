@@ -61,8 +61,6 @@
                 axios.post(this.route, {
                     'action_id': this.actionId,
                     'server_id': this.server.id
-                }).then(() => {
-                    console.log('Attach record to the pivot table')
                 });
             },
 
@@ -72,10 +70,7 @@
                     data: {
                         'action_id': this.actionId
                     }
-                })
-                    .then(() => {
-                        console.log('Detached record from the pivot table')
-                    });
+                });
             }
         }
     };

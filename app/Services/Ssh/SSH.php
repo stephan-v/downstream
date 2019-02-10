@@ -72,7 +72,7 @@ class SSH
 
         $process = $this->getRemoteProcess();
 
-        $process->start(function ($type, $output) {
+        $process->run(function ($type, $output) {
             event(new CommandExecuted(
                 $output,
                 $this->job
