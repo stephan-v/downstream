@@ -16,7 +16,7 @@
         props: {
             output: {
                 required: true,
-                type: String
+                type: Array
             }
         },
 
@@ -68,6 +68,7 @@
             color: white;
             text-align: left;
             white-space: pre-wrap;
+            min-height: 30px;
         }
     }
 </style>

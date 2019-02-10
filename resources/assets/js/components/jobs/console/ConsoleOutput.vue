@@ -19,7 +19,7 @@
         props: {
             output: {
                 required: true,
-                type: String
+                type: Array
             }
         },
 

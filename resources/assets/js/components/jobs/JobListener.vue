@@ -30,7 +30,7 @@
     export default {
         data() {
             return {
-                output: this.job.output || '',
+                output: [this.job.output] || [],
                 status: this.job.status
             };
         },

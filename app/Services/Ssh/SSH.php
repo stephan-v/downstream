@@ -6,6 +6,7 @@ use App\Events\CommandExecuted;
 use App\Events\JobUpdated;
 use App\Job;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -78,14 +79,18 @@ class SSH
 
         $process = $this->getRemoteProcess();
 
-        $process->setIdleTimeout(60);
+        $process->setTimeout(null);
 
-        $process->run(function ($type, $output) {
-            event(new CommandExecuted(
-                $output,
-                $this->job
-            ));
-        });
+        try {
+            $process->run(function ($type, $output) {
+                event(new CommandExecuted(
+                    $output,
+                    $this->job
+                ));
+            });
+        } catch(RuntimeException $exception) {
+            event(new JobUpdated(Job::FAILED, $this->job));
+        }
 
         if (!$process->isSuccessful()) {
             event(new JobUpdated(Job::FAILED, $this->job));
