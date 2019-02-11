@@ -83,10 +83,10 @@ class SSH
 
         try {
             $process->run(function ($type, $output) {
-                event(new CommandExecuted(
-                    $output,
-                    $this->job
-                ));
+//                event(new CommandExecuted(
+//                    $output,
+//                    $this->job
+//                ));
             });
         } catch(RuntimeException $exception) {
             event(new JobUpdated(Job::FAILED, $this->job));
