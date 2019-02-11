@@ -78,7 +78,7 @@ return [
                 'balance' => 'simple',
                 'processes' => 10,
                 'tries' => 3,
-                'timeout' => 300
+                'timeout' => 240 // timeout after 4 minutes.
             ],
         ],
 
