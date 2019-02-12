@@ -1,7 +1,7 @@
 <template>
     <li class="deployment d-flex justify-content-between align-items-center" :class="{ failed }">
         <div class="title">
-            <h2>Hooked up websockets</h2>
+            <h2>{{ deployment.message }}</h2>
 
             <span class="green" v-if="finished">
                 <i class="fas fa-check"></i> #{{ deployment.id }} passed
@@ -182,10 +182,18 @@
             border-left-color: $red;
         }
 
-        h2 {
-            color: black;
-            font-size: 1.1rem;
-            margin: 0 0 0.3rem 0;
+        .title {
+            overflow: hidden;
+
+            h2 {
+                color: black;
+                font-size: 1.1rem;
+                margin: 0 0 0.3rem 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 2rem 0 0;
+            }
         }
 
         .metadata {

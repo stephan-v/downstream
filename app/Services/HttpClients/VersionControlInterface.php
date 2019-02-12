@@ -5,12 +5,12 @@ namespace App\Services\HttpClients;
 interface VersionControlInterface
 {
     /**
-     * Get a list of commits on a repository.
+     * Get the last commit on a repository.
      *
-     * @param string $repository The repository that we want to fetch commits for.
+     * @param string $repository The repository that we want to fetch the last commit for.
      * @return mixed The decoded response.
      */
-    public function getRepositoryCommits(string $repository);
+    public function getLastRepositoryCommit(string $repository);
 
     /**
      * Get the webhooks for the specific repository.

@@ -6,6 +6,7 @@
 /public/storage
 /public/mix-manifest.json
 /storage/*.key
+/storage/horizon.log
 /vendor
 /.idea
 /.vscode

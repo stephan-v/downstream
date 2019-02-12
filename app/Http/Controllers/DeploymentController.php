@@ -17,11 +17,12 @@ class DeploymentController extends Controller
      */
     public function deploy(Project $project, VersionControlInterface $client)
     {
-        $commits = $client->getRepositoryCommits($project->repository);
+        $commit = $client->getLastRepositoryCommit($project->repository);
 
         $deployment = $project->deployments()->create([
-            'commit' => $commits->sha,
-            'commit_url' => $commits->html_url
+            'commit' => $commit->sha,
+            'commit_url' => $commit->html_url,
+            'message' => $commit->commit->message
         ]);
 
         StartDeployment::dispatch($deployment);

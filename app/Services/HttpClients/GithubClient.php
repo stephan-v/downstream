@@ -30,10 +30,10 @@ class GithubClient implements VersionControlInterface
     /**
      * Get a  list of commits on a repository.
      *
-     * @param string $repository The repository that we want to fetch commits for.
+     * @param string $repository The repository that we want to fetch the last commit for.
      * @return mixed The decoded response.
      */
-    public function getRepositoryCommits(string $repository)
+    public function getLastRepositoryCommit(string $repository)
     {
         try {
             $response = $this->client->get("{$repository}/commits/master");

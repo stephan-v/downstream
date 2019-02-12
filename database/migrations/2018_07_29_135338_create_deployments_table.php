@@ -18,6 +18,7 @@ class CreateDeploymentsTable extends Migration
             $table->increments('id');
             $table->string('commit');
             $table->string('commit_url');
+            $table->string('message');
 
             $table->unsignedTinyInteger('status')->default(Deployment::PENDING);
 
